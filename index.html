@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sumatif 3 Online - SMP Tunas Hidup Harapan Kita</title>
+    <meta name="description"
+        content="Portal Pelaksanaan Sumatif 3 Online SMP Tunas Hidup Harapan Kita. Akses link ujian, jadwal, dan panduan pengerjaan di sini.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container nav-content">
+            <div class="logo">
+                <img src="logo.jpg" alt="Logo SMP THHK" style="height: 40px; width: auto;">
+                <span>SMP THHK</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Beranda</a></li>
+                <li><a href="#jadwal">Jadwal</a></li>
+                <li><a href="#panduan">Panduan</a></li>
+                <li><a href="#kontak" class="btn-primary-small">Bantuan</a></li>
+            </ul>
+            <div class="menu-toggle" id="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu" id="mobile-menu">
+        <div class="mobile-menu-header">
+            <div class="logo">
+                <img src="logo.jpg" alt="Logo SMP THHK">
+                <span>SMP THHK</span>
+            </div>
+            <div class="close-menu" id="close-menu-btn">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <ul class="mobile-nav-links">
+            <li><a href="#home">Beranda</a></li>
+            <li><a href="#jadwal">Jadwal</a></li>
+            <li><a href="#panduan">Panduan</a></li>
+            <li><a href="#kontak" class="mobile-btn-primary">Bantuan</a></li>
+        </ul>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-overlay"></div>
+        <div class="container hero-content" data-aos="fade-up">
+            <span class="badge">Semester Genap 2025/2026</span>
+            <h1>Pelaksanaan Sumatif 3 Online</h1>
+            <p>Selamat datang di portal resmi Sumatif 3. Pastikan Anda membaca panduan dan mematuhi jadwal yang telah
+                ditentukan.</p>
+            <div class="hero-btns">
+                <a href="#jadwal" class="btn-main">Lihat Jadwal Ujian</a>
+                <a href="#panduan" class="btn-outline">Panduan Peserta</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Status Bar -->
+    <section class="status-bar">
+        <div class="container status-content">
+            <div class="status-item">
+                <i class="far fa-clock"></i>
+                <div class="status-text">
+                    <span class="label">Waktu Sekarang</span>
+                    <span id="current-time" class="value">00:00:00</span>
+                </div>
+            </div>
+            <div class="status-divider"></div>
+            <div class="status-item">
+                <i class="fas fa-hourglass-half"></i>
+                <div class="status-text">
+                    <span class="label">Sesi Berikutnya</span>
+                    <span id="countdown" class="value">Memuat...</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Jadwal & Link Section -->
+    <section id="jadwal" class="schedule section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2>Jadwal & Link Ujian</h2>
+                <p>Klik tombol "Kerjakan" pada mata pelajaran yang sedang berlangsung.</p>
+            </div>
+
+            <!-- Class Selector Tabs -->
+            <div class="class-selector" data-aos="fade-up" data-aos-delay="100">
+                <div class="tabs">
+                    <button class="tab-btn active" data-class="7">Kelas 7</button>
+                    <button class="tab-btn" data-class="8">Kelas 8</button>
+                    <button class="tab-btn" data-class="9">Kelas 9</button>
+                </div>
+            </div>
+
+            <div class="schedule-grid">
+                <!-- Kamis, 5 Maret 2026 -->
+                <div class="exam-card" data-aos="zoom-in" id="card-agama">
+                    <div class="card-status upcoming">Mendatang</div>
+                    <div class="card-icon"><i class="fas fa-praying-hands"></i></div>
+                    <h3>Pendidikan Agama</h3>
+                    <div class="card-info">
+                        <span><i class="far fa-calendar"></i> Kamis, 5 Maret 2026</span>
+                        <span><i class="far fa-clock"></i> 07:15 - 08:45</span>
+                    </div>
+                    <div class="religion-links" style="display: flex; flex-direction: column; gap: 0.8rem;">
+                        <a href="#" class="btn-card disabled religion-btn" data-exam="agama-islam"
+                            id="btn-agama-islam">Islam</a>
+                        <a href="#" class="btn-card disabled religion-btn" data-exam="agama-kristen"
+                            id="btn-agama-kristen">Kristen</a>
+                        <a href="#" class="btn-card disabled religion-btn" data-exam="agama-katolik"
+                            id="btn-agama-katolik">Katolik</a>
+                        <a href="#" class="btn-card disabled religion-btn" data-exam="agama-budha"
+                            id="btn-agama-budha">Budha</a>
+                        <a href="#" class="btn-card disabled religion-btn" data-exam="agama-khonghucu"
+                            id="btn-agama-khonghucu">Khonghucu</a>
+                    </div>
+                </div>
+
+                <div class="exam-card" data-aos="zoom-in" id="card-b-indo">
+                    <div class="card-status upcoming">Mendatang</div>
+                    <div class="card-icon"><i class="fas fa-book"></i></div>
+                    <h3>Bahasa Indonesia</h3>
+                    <div class="card-info">
+                        <span><i class="far fa-calendar"></i> Kamis, 5 Maret 2026</span>
+                        <span><i class="far fa-clock"></i> 09:15 - 10:45</span>
+                    </div>
+                    <a href="#" class="btn-card disabled" id="btn-b-indo">Belum Tersedia</a>
+                </div>
+
+                <!-- Jumat, 6 Maret 2026 -->
+                <div class="exam-card" data-aos="zoom-in" id="card-b-inggris">
+                    <div class="card-status upcoming">Mendatang</div>
+                    <div class="card-icon"><i class="fas fa-language"></i></div>
+                    <h3>Bahasa Inggris</h3>
+                    <div class="card-info">
+                        <span><i class="far fa-calendar"></i> Jumat, 6 Maret 2026</span>
+                        <span><i class="far fa-clock"></i> 07:15 - 08:45</span>
+                    </div>
+                    <a href="#" class="btn-card disabled" id="btn-b-inggris">Belum Tersedia</a>
+                </div>
+
+                <div class="exam-card" data-aos="zoom-in" id="card-seni">
+                    <div class="card-status upcoming">Mendatang</div>
+                    <div class="card-icon"><i class="fas fa-palette"></i></div>
+                    <h3>Seni Budaya</h3>
+                    <div class="card-info">
+                        <span><i class="far fa-calendar"></i> Jumat, 6 Maret 2026</span>
+                        <span><i class="far fa-clock"></i> 09:15 - 10:45</span>
+                    </div>
+                    <a href="#" class="btn-card disabled" id="btn-seni">Belum Tersedia</a>
+                </div>
+
+                <!-- Senin, 9 Maret 2026 -->
+                <div class="exam-card" data-aos="zoom-in" id="card-matematika">
+                    <div class="card-status upcoming">Mendatang</div>
+                    <div class="card-icon"><i class="fas fa-calculator"></i></div>
+                    <h3>Matematika</h3>
+                    <div class="card-info">
+                        <span><i class="far fa-calendar"></i> Senin, 9 Maret 2026</span>
+                        <span><i class="far fa-clock"></i> 07:15 - 09:15</span>
+                    </div>
+                    <a href="#" class="btn-card disabled" id="btn-matematika">Belum Tersedia</a>
+                </div>
+
+                <div class="exam-card" data-aos="zoom-in" id="card-pjok">
+                    <div class="card-status upcoming">Mendatang</div>
+                    <div class="card-icon"><i class="fas fa-running"></i></div>
+                    <h3>PJOK</h3>
+                    <div class="card-info">
+                        <span><i class="far fa-calendar"></i> Senin, 9 Maret 2026</span>
+                        <span><i class="far fa-clock"></i> 09:30 - 11:00</span>
+                    </div>
+                    <a href="#" class="btn-card disabled" id="btn-pjok">Belum Tersedia</a>
+                </div>
+
+                <!-- Selasa, 10 Maret 2026 -->
+                <div class="exam-card" data-aos="zoom-in" id="card-ipa">
+                    <div class="card-status upcoming">Mendatang</div>
+                    <div class="card-icon"><i class="fas fa-microscope"></i></div>
+                    <h3>IPA</h3>
+                    <div class="card-info">
+                        <span><i class="far fa-calendar"></i> Selasa, 10 Maret 2026</span>
+                        <span><i class="far fa-clock"></i> 07:15 - 08:45</span>
+                    </div>
+                    <a href="#" class="btn-card disabled" id="btn-ipa">Belum Tersedia</a>
+                </div>
+
+                <div class="exam-card" data-aos="zoom-in" id="card-ppkn">
+                    <div class="card-status upcoming">Mendatang</div>
+                    <div class="card-icon"><i class="fas fa-balance-scale"></i></div>
+                    <h3>PPKn</h3>
+                    <div class="card-info">
+                        <span><i class="far fa-calendar"></i> Selasa, 10 Maret 2026</span>
+                        <span><i class="far fa-clock"></i> 09:15 - 10:45</span>
+                    </div>
+                    <a href="#" class="btn-card disabled" id="btn-ppkn">Belum Tersedia</a>
+                </div>
+
+                <!-- Rabu, 11 Maret 2026 -->
+                <div class="exam-card" data-aos="zoom-in" id="card-ips">
+                    <div class="card-status upcoming">Mendatang</div>
+                    <div class="card-icon"><i class="fas fa-globe-asia"></i></div>
+                    <h3>IPS</h3>
+                    <div class="card-info">
+                        <span><i class="far fa-calendar"></i> Rabu, 11 Maret 2026</span>
+                        <span><i class="far fa-clock"></i> 07:15 - 08:45</span>
+                    </div>
+                    <a href="#" class="btn-card disabled" id="btn-ips">Belum Tersedia</a>
+                </div>
+
+                <div class="exam-card" data-aos="zoom-in" id="card-b-jawa">
+                    <div class="card-status upcoming">Mendatang</div>
+                    <div class="card-icon"><i class="fas fa-font"></i></div>
+                    <h3>Bahasa Jawa</h3>
+                    <div class="card-info">
+                        <span><i class="far fa-calendar"></i> Rabu, 11 Maret 2026</span>
+                        <span><i class="far fa-clock"></i> 09:15 - 10:45</span>
+                    </div>
+                    <a href="#" class="btn-card disabled" id="btn-b-jawa">Belum Tersedia</a>
+                </div>
+
+                <div class="exam-card" data-aos="zoom-in" id="card-coding">
+                    <div class="card-status upcoming">Mendatang</div>
+                    <div class="card-icon"><i class="fas fa-code"></i></div>
+                    <h3>Coding/Prakarya/TKA</h3>
+                    <div class="card-info">
+                        <span><i class="far fa-calendar"></i> Rabu, 11 Maret 2026</span>
+                        <span><i class="far fa-clock"></i> 11:00 - 12:30</span>
+                    </div>
+                    <a href="#" class="btn-card disabled" id="btn-coding">Belum Tersedia</a>
+                </div>
+
+                <!-- Kamis, 12 Maret 2026 -->
+                <div class="exam-card" data-aos="zoom-in" id="card-informatika">
+                    <div class="card-status upcoming">Mendatang</div>
+                    <div class="card-icon"><i class="fas fa-laptop-code"></i></div>
+                    <h3>Informatika</h3>
+                    <div class="card-info">
+                        <span><i class="far fa-calendar"></i> Kamis, 12 Maret 2026</span>
+                        <span><i class="far fa-clock"></i> 07:15 - 08:45</span>
+                    </div>
+                    <a href="#" class="btn-card disabled" id="btn-informatika">Belum Tersedia</a>
+                </div>
+
+                <div class="exam-card" data-aos="zoom-in" id="card-b-mandarin">
+                    <div class="card-status upcoming">Mendatang</div>
+                    <div class="card-icon"><i class="fas fa-language"></i></div>
+                    <h3>Bahasa Mandarin</h3>
+                    <div class="card-info">
+                        <span><i class="far fa-calendar"></i> Kamis, 12 Maret 2026</span>
+                        <span><i class="far fa-clock"></i> 09:15 - 10:45</span>
+                    </div>
+                    <a href="#" class="btn-card disabled" id="btn-b-mandarin">Belum Tersedia</a>
+                </div>
+
+                <div class="exam-card" data-aos="zoom-in" id="card-bk">
+                    <div class="card-status upcoming">Mendatang</div>
+                    <div class="card-icon"><i class="fas fa-user-friends"></i></div>
+                    <h3>BK/BP</h3>
+                    <div class="card-info">
+                        <span><i class="far fa-calendar"></i> Kamis, 12 Maret 2026</span>
+                        <span><i class="far fa-clock"></i> 11:00 - 12:00</span>
+                    </div>
+                    <a href="#" class="btn-card disabled" id="btn-bk">Belum Tersedia</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Panduan Section -->
+    <section id="panduan" class="instructions section bg-alt">
+        <div class="container grid-2">
+            <div class="instruction-img" data-aos="fade-right">
+                <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                    alt="Panduan" class="floating">
+            </div>
+            <div class="instruction-text" data-aos="fade-left">
+                <h2>Panduan Pelaksanaan</h2>
+                <ul class="rule-list">
+                    <li>
+                        <div class="rule-num">1</div>
+                        <div class="rule-content">
+                            <h4>Koneksi Stabil</h4>
+                            <p>Pastikan perangkat Anda terhubung dengan koneksi internet yang stabil sebelum memulai.
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="rule-num">2</div>
+                        <div class="rule-content">
+                            <h4>Login Akun Sekolah</h4>
+                            <p>Wajib menggunakan akun Google sekolah (@student.thhk.sch.id) untuk mengakses formulir.
+                            </p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="rule-num">3</div>
+                        <div class="rule-content">
+                            <h4>Tepat Waktu</h4>
+                            <p>Link ujian akan otomatis ditutup saat waktu pengerjaan berakhir.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="rule-num">4</div>
+                        <div class="rule-content">
+                            <h4>Jujur & Mandiri</h4>
+                            <p>Segala bentuk kecurangan akan terekam oleh sistem pemantau ujian.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="kontak">
+        <div class="container footer-content">
+            <div class="footer-info">
+                <div class="logo">
+                    <img src="logo.jpg" alt="Logo SMP THHK" style="height: 40px; width: auto;">
+                    <span>SMP THHK</span>
+                </div>
+                <p>Mencetak Generasi Unggul, Berkarakter, dan Berdaya Saing Global.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Bantuan</h4>
+                <a href="#"><i class="fab fa-whatsapp"></i> Chat Admin</a>
+                <a href="#"><i class="fas fa-envelope"></i> Email Support</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 SMP Tunas Hidup Harapan Kita. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            once: true
+        });
+
+        // Time script
+        function updateTime() {
+            const now = new Date();
+            document.getElementById('current-time').textContent = now.toLocaleTimeString('id-ID');
+        }
+        setInterval(updateTime, 1000);
+        updateTime();
+
+        // Countdown to Sumatif 3 Start (March 5, 2026, 07:15)
+        function startCountdown() {
+            const target = new Date('2026-03-05T07:15:00').getTime();
+
+            function update() {
+                const now = new Date().getTime();
+                const diff = target - now;
+
+                if (diff <= 0) {
+                    document.getElementById('countdown').textContent = "Sedang Berlangsung";
+                    checkActiveSession(); // Update session status
+                    return;
+                }
+
+                const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const s = Math.floor((diff % (1000 * 60)) / 1000);
+
+                let countdownText = "";
+                if (d > 0) countdownText += `${d}h `;
+                countdownText += `${h}j ${m}m ${s}p`;
+
+                document.getElementById('countdown').textContent = countdownText;
+            }
+            setInterval(update, 1000);
+            update();
+        }
+
+        // ==========================================
+        // KONFIGURASI LINK UJIAN (Berdasarkan Kelas)
+        // ==========================================
+        const linkUjian = {
+            '7': {
+                'agama-islam': 'https://drive.google.com/file/d/1QBCz6jRY1dUnCtUXWVe0baVYjSgYpBhx/view?usp=drive_link', 'agama-kristen': '', 'agama-katolik': '', 'agama-budha': '', 'agama-khonghucu': '',
+                'b-indo': '', 'b-inggris': '', 'seni': '', 'matematika': '', 'pjok': '',
+                'ipa': '', 'ppkn': '', 'ips': '', 'b-jawa': '', 'coding': '',
+                'informatika': '', 'b-mandarin': '', 'bk': ''
+            },
+            '8': {
+                'agama-islam': '', 'agama-kristen': '', 'agama-katolik': '', 'agama-budha': '', 'agama-khonghucu': '',
+                'b-indo': '', 'b-inggris': '', 'seni': '', 'matematika': '', 'pjok': '',
+                'ipa': '', 'ppkn': '', 'ips': '', 'b-jawa': '', 'coding': '',
+                'informatika': '', 'b-mandarin': '', 'bk': ''
+            },
+            '9': {
+                'agama-islam': '', 'agama-kristen': '', 'agama-katolik': '', 'agama-budha': '', 'agama-khonghucu': '',
+                'b-indo': '', 'b-inggris': '', 'seni': '', 'matematika': '', 'pjok': '',
+                'ipa': '', 'ppkn': '', 'ips': '', 'b-jawa': '', 'coding': '',
+                'informatika': '', 'b-mandarin': '', 'bk': ''
+            }
+        };
+
+        let activeClass = '7';
+
+        // Fungsi untuk mengaktifkan tombol jika link tersedia
+        function activateButtons() {
+            const classLinks = linkUjian[activeClass];
+
+            // Dapatkan semua ID subject dari config
+            const subjectIds = [
+                'agama-islam', 'agama-kristen', 'agama-katolik', 'agama-budha', 'agama-khonghucu',
+                'b-indo', 'b-inggris', 'seni', 'matematika', 'pjok',
+                'ipa', 'ppkn', 'ips', 'b-jawa', 'coding', 'informatika', 'b-mandarin', 'bk'
+            ];
+
+            subjectIds.forEach(id => {
+                const btn = document.getElementById(`btn-${id}`);
+                const url = classLinks[id];
+
+                if (btn) {
+                    if (url && url !== '') {
+                        btn.href = url;
+                        btn.classList.remove('disabled');
+                        btn.target = '_blank';
+                        // Reset text if it was 'Belum Tersedia'
+                        if (id.startsWith('agama-')) {
+                            // Keep religious text
+                        } else {
+                            btn.innerHTML = 'Kerjakan Sekarang <i class="fas fa-arrow-right"></i>';
+                        }
+                    } else {
+                        btn.href = '#';
+                        btn.classList.add('disabled');
+                        btn.removeAttribute('target');
+                        if (!id.startsWith('agama-')) {
+                            btn.innerText = 'Belum Tersedia';
+                        }
+                    }
+                }
+            });
+        }
+
+        // Tab Switcher Logic
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                activeClass = btn.dataset.class;
+                activateButtons();
+            });
+        });
+
+        // Mobile Menu Logic
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const closeMenuBtn = document.getElementById('close-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-nav-links a');
+
+        function toggleMenu() {
+            mobileMenu.classList.toggle('active');
+            document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+        }
+
+        mobileMenuBtn.addEventListener('click', toggleMenu);
+        closeMenuBtn.addEventListener('click', toggleMenu);
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        });
+
+        startCountdown();
+        activateButtons();
+    </script>
+</body>
+
+</html>
