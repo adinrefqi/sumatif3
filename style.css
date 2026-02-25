@@ -492,6 +492,20 @@ footer {
     font-size: 0.9rem;
 }
 
+/* Base styles for new components */
+.menu-toggle,
+.mobile-menu {
+    display: none;
+}
+
+.btn-primary-small {
+    padding: 0.6rem 1.5rem;
+    background: var(--primary);
+    color: white !important;
+    border-radius: 10px;
+    font-weight: 600;
+}
+
 /* Mobile Responsive */
 @media (max-width: 768px) {
     .nav-links {
@@ -651,7 +665,8 @@ footer {
 }
 
 /* Base styles for new components */
-.menu-toggle {
+.menu-toggle,
+.mobile-menu {
     display: none;
 }
 
