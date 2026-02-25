@@ -401,11 +401,31 @@
         }
 
         // ==========================================
+        // DATA JADWAL UJIAN
+        // ==========================================
+        const scheduleData = {
+            'agama': { date: '2026-03-05', start: '07:15', end: '08:45' },
+            'b-indo': { date: '2026-03-05', start: '09:15', end: '10:45' },
+            'b-inggris': { date: '2026-03-06', start: '07:15', end: '08:45' },
+            'seni': { date: '2026-03-06', start: '09:15', end: '10:45' },
+            'matematika': { date: '2026-03-09', start: '07:15', end: '09:15' },
+            'pjok': { date: '2026-03-09', start: '09:30', end: '11:00' },
+            'ipa': { date: '2026-03-10', start: '07:15', end: '08:45' },
+            'ppkn': { date: '2026-03-10', start: '09:15', end: '10:45' },
+            'ips': { date: '2026-03-11', start: '07:15', end: '08:45' },
+            'b-jawa': { date: '2026-03-11', start: '09:15', end: '10:45' },
+            'coding': { date: '2026-03-11', start: '11:00', end: '12:30' },
+            'informatika': { date: '2026-03-12', start: '07:15', end: '08:45' },
+            'b-mandarin': { date: '2026-03-12', start: '09:15', end: '10:45' },
+            'bk': { date: '2026-03-12', start: '11:00', end: '12:00' }
+        };
+
+        // ==========================================
         // KONFIGURASI LINK UJIAN (Berdasarkan Kelas)
         // ==========================================
         const linkUjian = {
             '7': {
-                'agama-islam': 'https://drive.google.com/file/d/1QBCz6jRY1dUnCtUXWVe0baVYjSgYpBhx/view?usp=drive_link', 'agama-kristen': '', 'agama-katolik': '', 'agama-budha': '', 'agama-khonghucu': '',
+                'agama-islam': '', 'agama-kristen': '', 'agama-katolik': '', 'agama-budha': '', 'agama-khonghucu': '',
                 'b-indo': '', 'b-inggris': '', 'seni': '', 'matematika': '', 'pjok': '',
                 'ipa': '', 'ppkn': '', 'ips': '', 'b-jawa': '', 'coding': '',
                 'informatika': '', 'b-mandarin': '', 'bk': ''
@@ -426,43 +446,94 @@
 
         let activeClass = '7';
 
-        // Fungsi untuk mengaktifkan tombol jika link tersedia
+        // Fungsi pengecekan waktu
+        function getExamStatus(subjectKey) {
+            const sched = scheduleData[subjectKey];
+            if (!sched) return 'upcoming';
+
+            const now = new Date();
+            const start = new Date(`${sched.date}T${sched.start}:00`);
+            const end = new Date(`${sched.date}T${sched.end}:00`);
+
+            if (now < start) return 'upcoming';
+            if (now >= start && now <= end) return 'active';
+            return 'passed';
+        }
+
+        // Fungsi untuk mengaktifkan tombol jika link tersedia & waktu cocok
         function activateButtons() {
             const classLinks = linkUjian[activeClass];
+            const now = new Date();
 
-            // Dapatkan semua ID subject dari config
-            const subjectIds = [
-                'agama-islam', 'agama-kristen', 'agama-katolik', 'agama-budha', 'agama-khonghucu',
-                'b-indo', 'b-inggris', 'seni', 'matematika', 'pjok',
-                'ipa', 'ppkn', 'ips', 'b-jawa', 'coding', 'informatika', 'b-mandarin', 'bk'
+            const subjects = [
+                { id: 'agama-islam', key: 'agama' }, { id: 'agama-kristen', key: 'agama' },
+                { id: 'agama-katolik', key: 'agama' }, { id: 'agama-budha', key: 'agama' },
+                { id: 'agama-khonghucu', key: 'agama' }, { id: 'b-indo', key: 'b-indo' },
+                { id: 'b-inggris', key: 'b-inggris' }, { id: 'seni', key: 'seni' },
+                { id: 'matematika', key: 'matematika' }, { id: 'pjok', key: 'pjok' },
+                { id: 'ipa', key: 'ipa' }, { id: 'ppkn', key: 'ppkn' },
+                { id: 'ips', key: 'ips' }, { id: 'b-jawa', key: 'b-jawa' },
+                { id: 'coding', key: 'coding' }, { id: 'informatika', key: 'informatika' },
+                { id: 'b-mandarin', key: 'b-mandarin' }, { id: 'bk', key: 'bk' }
             ];
 
-            subjectIds.forEach(id => {
-                const btn = document.getElementById(`btn-${id}`);
-                const url = classLinks[id];
+            subjects.forEach(sub => {
+                const btn = document.getElementById(`btn-${sub.id}`);
+                const card = document.getElementById(`card-${sub.key}`);
+                const statusBadge = card ? card.querySelector('.card-status') : null;
+                const url = classLinks[sub.id];
+                const status = getExamStatus(sub.key);
 
                 if (btn) {
-                    if (url && url !== '') {
+                    if (status === 'active' && url && url !== '') {
+                        // Sedang Berlangsung & Link Ada
                         btn.href = url;
                         btn.classList.remove('disabled');
                         btn.target = '_blank';
-                        // Reset text if it was 'Belum Tersedia'
-                        if (id.startsWith('agama-')) {
-                            // Keep religious text
-                        } else {
+                        if (!sub.id.startsWith('agama-')) {
                             btn.innerHTML = 'Kerjakan Sekarang <i class="fas fa-arrow-right"></i>';
                         }
-                    } else {
+                        if (statusBadge) {
+                            statusBadge.className = 'card-status active';
+                            statusBadge.innerText = 'Sedang Berlangsung';
+                        }
+                    } else if (status === 'passed') {
+                        // Waktu Habis
                         btn.href = '#';
                         btn.classList.add('disabled');
                         btn.removeAttribute('target');
-                        if (!id.startsWith('agama-')) {
+                        if (!sub.id.startsWith('agama-')) {
+                            btn.innerText = 'Waktu Habis';
+                        }
+                        if (statusBadge) {
+                            statusBadge.className = 'card-status';
+                            statusBadge.style.background = 'rgba(244, 63, 94, 0.2)';
+                            statusBadge.style.color = '#fb7185';
+                            statusBadge.innerText = 'Selesai';
+                        }
+                    } else if (status === 'upcoming' && url && url !== '') {
+                        // Belum Waktunya tapi Link Ada
+                        btn.href = '#';
+                        btn.classList.add('disabled');
+                        btn.removeAttribute('target');
+                        if (!sub.id.startsWith('agama-')) {
+                            btn.innerText = 'Belum Waktunya';
+                        }
+                    } else {
+                        // Default / Belum Tersedia
+                        btn.href = '#';
+                        btn.classList.add('disabled');
+                        btn.removeAttribute('target');
+                        if (!sub.id.startsWith('agama-')) {
                             btn.innerText = 'Belum Tersedia';
                         }
                     }
                 }
             });
         }
+
+        // Jalankan pengecekan setiap menit
+        setInterval(activateButtons, 60000);
 
         // Tab Switcher Logic
         document.querySelectorAll('.tab-btn').forEach(btn => {
