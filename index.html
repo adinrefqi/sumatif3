@@ -20,6 +20,112 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <link rel="stylesheet" href="style.css">
+
+    <!-- Security Script: User-Agent Filtering -->
+    <script>
+        (function () {
+            const ua = navigator.userAgent;
+            const isExamBrowser = ua.indexOf("ExamBrowser-School-Secure/1.0") > -1;
+            const isDesktopOS = ua.indexOf("Windows NT") > -1 || ua.indexOf("Macintosh") > -1 || ua.indexOf("X11; Linux") > -1;
+            const isMobileUA = ua.indexOf("Mobile") > -1 || ua.indexOf("Android") > -1 || ua.indexOf("iPhone") > -1;
+
+            const isAuthorized = isExamBrowser || (isDesktopOS && !isMobileUA);
+
+            if (!isAuthorized) {
+                document.write(`
+                    <!DOCTYPE html>
+                    <html lang="id">
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>AKSES DITOLAK - Sumatif 3</title>
+                        <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+                        <style>
+                            :root {
+                                --bg: #0f172a;
+                                --accent: #f43f5e;
+                                --text: #f8fafc;
+                                --muted: #94a3b8;
+                                --glass-bg: rgba(255, 255, 255, 0.05);
+                                --glass-border: rgba(255, 255, 255, 0.1);
+                                --primary: #6366f1;
+                            }
+                            body {
+                                margin: 0;
+                                padding: 2rem;
+                                background-color: var(--bg);
+                                color: var(--text);
+                                font-family: 'Outfit', sans-serif;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                                min-height: 100vh;
+                                text-align: center;
+                                overflow: hidden;
+                            }
+                            .denied-card {
+                                max-width: 500px;
+                                background: var(--glass-bg);
+                                backdrop-filter: blur(20px);
+                                -webkit-backdrop-filter: blur(20px);
+                                border: 1px solid var(--glass-border);
+                                padding: 3rem 2rem;
+                                border-radius: 24px;
+                                box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+                            }
+                            .icon {
+                                font-size: 4rem;
+                                margin-bottom: 1.5rem;
+                                display: inline-block;
+                            }
+                            h1 {
+                                font-size: 1.8rem;
+                                font-weight: 700;
+                                margin-bottom: 1.2rem;
+                                color: var(--accent);
+                                letter-spacing: 1px;
+                                text-transform: uppercase;
+                            }
+                            p {
+                                font-size: 1.1rem;
+                                line-height: 1.6;
+                                color: var(--muted);
+                                margin-bottom: 2.5rem;
+                            }
+                            .btn-retry {
+                                display: inline-block;
+                                padding: 0.8rem 2rem;
+                                background: rgba(255, 255, 255, 0.05);
+                                border: 1px solid var(--glass-border);
+                                color: var(--text);
+                                text-decoration: none;
+                                border-radius: 12px;
+                                font-weight: 600;
+                                transition: 0.3s;
+                            }
+                            .btn-retry:hover {
+                                background: var(--glass-border);
+                                border-color: var(--text-white);
+                                transform: translateY(-2px);
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <div class="denied-card">
+                            <div class="icon">🚫</div>
+                            <h1>AKSES DITOLAK</h1>
+                            <p>Ujian melalui HP hanya dapat dikerjakan menggunakan Aplikasi ExamBrowser Resmi. Jika Anda menggunakan Laptop/Komputer, silakan muat ulang halaman ini di perangkat tersebut.</p>
+                            <a href="." class="btn-retry">Muat Ulang Halaman</a>
+                        </div>
+                    </body>
+                    </html>
+                `);
+                document.close();
+                if (window.stop) window.stop();
+                throw new Error("Akses Ditolak: Gunakan Aplikasi Resmi atau Desktop.");
+            }
+        })();
+    </script>
 </head>
 
 <body>
