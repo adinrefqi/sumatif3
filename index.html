@@ -21,55 +21,58 @@
 
     <link rel="stylesheet" href="style.css">
 
-    <!-- Security Script: Ultra-Strict Device Fingerprinting (Anti-Spoofing) -->
+    <!-- Security Script: Advanced Physical Device Fingerprinting (Anti-Spoofing) -->
     <script>
         /* 
-         * SMP THHK SECURITY SYSTEM v2.0
-         * Protected by Client-Side Fingerprinting
+         * SMP THHK SECURITY SYSTEM v2.1
+         * Dual-Layer Physical Fingerprinting
          */
         (function () {
-            const _0xS = () => {
+            const _validate = () => {
                 const _ua = navigator.userAgent;
                 const _ud = navigator.userAgentData;
                 const _sw = window.screen.width;
                 const _tp = navigator.maxTouchPoints > 0 || 'ontouchstart' in window;
+                const _ori = typeof window.orientation !== 'undefined';
 
                 // 1. VIP PATH: Aplikasi Resmi (ExamBrowser)
-                if (_ua.includes("ExamBrowser-School-Secure/1.0")) return false;
+                if (_ua.indexOf("ExamBrowser-School-Secure/1.0") !== -1) return false;
 
-                // 2. DETEKSI 'DESKTOP MODE' PALSU & MOBILE
-                let _b = false;
+                // 2. DETEKSI FISIK MOBILE (Anti-Situs Desktop)
+                let _isMobile = false;
 
-                // A. Check Modern API (UserAgentData)
-                if (_ud && _ud.mobile) _b = true;
+                // A. Check Modern API
+                if (_ud && _ud.mobile) _isMobile = true;
 
-                // B. Hardware Fingerprinting: Touch + Small Screen + Desktop UA (Spoofing Detected)
-                const _isD = _ua.includes("Windows NT") || _ua.includes("Macintosh");
-                if (_isD && _tp && _sw < 900) _b = true;
+                // B. Sensor Orientasi (Hanya ada di perangkat mobile/tablet)
+                else if (_ori) _isMobile = true;
 
-                // C. Standard Mobile UA Check
-                if (/Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(_ua)) _b = true;
+                // C. Hardware Check: Touch + Screen Width Resolution
+                else if (_tp && _sw < 1024) _isMobile = true;
 
-                return _b;
+                // D. Basic UA Fallback
+                else if (/Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(_ua)) _isMobile = true;
+
+                return _isMobile;
             };
 
-            if (_0xS()) {
+            if (_validate()) {
                 const _halt = () => {
                     window.stop();
                     const _html = `
                         <head>
-                            <title>PELANGGARAN KEAMANAN</title>
+                            <title>AKSES DITOLAK - SMP THHK</title>
                             <meta name="viewport" content="width=device-width, initial-scale=1.0">
                         </head>
                         <body style="background:#fff!important; color:red; font-family:sans-serif; text-align:center; padding:50px 20px; margin:0; display:flex; align-items:center; justify-content:center; height:100vh;">
-                            <div style="border:4px solid red; padding:30px; border-radius:20px; max-width:500px; box-shadow:0 10px 30px rgba(0,0,0,0.1);">
-                                <div style="font-size:50px; margin-bottom:20px;">🚫</div>
-                                <h1 style="font-size:22px; margin-bottom:15px; text-transform:uppercase;">Akses Terblokir</h1>
-                                <p style="font-size:16px; color:#333; line-height:1.6; font-weight:bold;">
-                                    PELANGGARAN: Mode Situs Desktop Terdeteksi. <br><br>
-                                    Harap gunakan perangkat Komputer/Laptop asli, atau gunakan Aplikasi ExamBrowser Resmi.
-                                </p>
-                                <div style="margin-top:25px; font-size:12px; color:#999;">Security ID: DEVICE_FINGERPRINT_MISMATCH</div>
+                            <div style="border:4px solid red; padding:30px; border-radius:20px; max-width:600px; box-shadow:0 10px 30px rgba(0,0,0,0.1);">
+                                <div style="font-size:60px; margin-bottom:20px;">🚫</div>
+                                <h1 style="font-size:28px; margin-bottom:15px; text-transform:uppercase; font-weight:900;">AKSES DITOLAK</h1>
+                                <div style="font-size:18px; color:#333; line-height:1.6;">
+                                    <p style="margin-bottom:20px;"><b>PELANGGARAN:</b> Anda terdeteksi menggunakan HP dengan fitur 'Situs Desktop'.</p>
+                                    <p style="margin-bottom:25px;">Harap gunakan <b>Komputer/Laptop asli</b>, atau gunakan <b>Aplikasi ExamBrowser Resmi SMP THHK</b>.</p>
+                                </div>
+                                <div style="margin-top:25px; font-size:12px; color:#999; border-top:1px solid #eee; pt:15px;">Security ID: PHYSICAL_SENSORS_MISMATCH_V2</div>
                             </div>
                         </body>`;
                     if (document.documentElement) {
@@ -82,12 +85,12 @@
 
                 _halt();
 
-                // Anti-Bypass / Anti-Inspect
+                // Anti-Bypass / Anti-Inspect Protection
                 setInterval(_halt, 50);
                 setInterval(function () { (function () { return false }["constructor"]("debugger")["call"]()) }, 50);
 
                 window.onload = _halt;
-                throw new Error("SEC_BLOCK");
+                throw new Error("SECURITY_BLOCK_ACTIVE");
             }
         })();
     </script>
