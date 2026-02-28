@@ -34,6 +34,7 @@
             </div>
             <ul class="nav-links">
                 <li><a href="#home">Beranda</a></li>
+                <li><a href="#akses">Link Ujian</a></li>
                 <li><a href="#jadwal">Jadwal</a></li>
                 <li><a href="#panduan">Panduan</a></li>
                 <li><a href="#kontak" class="btn-primary-small">Bantuan</a></li>
@@ -57,6 +58,7 @@
         </div>
         <ul class="mobile-nav-links">
             <li><a href="#home">Beranda</a></li>
+            <li><a href="#akses">Link Ujian</a></li>
             <li><a href="#jadwal">Jadwal</a></li>
             <li><a href="#panduan">Panduan</a></li>
             <li><a href="#kontak" class="mobile-btn-primary">Bantuan</a></li>
@@ -72,8 +74,8 @@
             <p>Selamat datang di portal resmi Sumatif 3. Pastikan Anda membaca panduan dan mematuhi jadwal yang telah
                 ditentukan.</p>
             <div class="hero-btns">
-                <a href="#jadwal" class="btn-main">Lihat Jadwal Ujian</a>
-                <a href="#panduan" class="btn-outline">Panduan Peserta</a>
+                <a href="#akses" class="btn-main">Akses Link Ujian</a>
+                <a href="#jadwal" class="btn-outline">Lihat Jadwal</a>
             </div>
         </div>
     </section>
@@ -93,18 +95,18 @@
                 <i class="fas fa-hourglass-half"></i>
                 <div class="status-text">
                     <span class="label">Sesi Berikutnya</span>
-                    <span id="countdown" class="value">Memuat...</span>
+                    <span id="countdown" class="value">00j 00m 00d</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Jadwal & Link Section -->
-    <section id="jadwal" class="schedule section">
+    <!-- Link Akses Ujian Section -->
+    <section id="akses" class="section">
         <div class="container">
             <div class="section-header" data-aos="fade-up">
-                <h2>Jadwal & Link Ujian</h2>
-                <p>Klik tombol "Kerjakan" pada mata pelajaran yang sedang berlangsung.</p>
+                <h2>Pusat Akses Link Ujian</h2>
+                <p>Pilih kelas Anda dan klik tombol "Kerjakan" pada jam yang sesuai.</p>
             </div>
 
             <!-- Class Selector Tabs -->
@@ -116,16 +118,12 @@
                 </div>
             </div>
 
-            <div class="schedule-grid">
-                <!-- Kamis, 5 Maret 2026 -->
+            <div class="schedule-grid" id="link-container">
+                <!-- Subject Link Cards -->
                 <div class="exam-card" data-aos="zoom-in" id="card-agama">
                     <div class="card-status upcoming">Mendatang</div>
                     <div class="card-icon"><i class="fas fa-praying-hands"></i></div>
                     <h3>Pendidikan Agama</h3>
-                    <div class="card-info">
-                        <span><i class="far fa-calendar"></i> Kamis, 5 Maret 2026</span>
-                        <span><i class="far fa-clock"></i> 07:15 - 08:45</span>
-                    </div>
                     <div class="religion-links">
                         <a href="#" class="btn-card disabled religion-btn" data-exam="agama-islam"
                             id="btn-agama-islam">Islam</a>
@@ -144,22 +142,14 @@
                     <div class="card-status upcoming">Mendatang</div>
                     <div class="card-icon"><i class="fas fa-book"></i></div>
                     <h3>Bahasa Indonesia</h3>
-                    <div class="card-info">
-                        <span><i class="far fa-calendar"></i> Kamis, 5 Maret 2026</span>
-                        <span><i class="far fa-clock"></i> 09:15 - 10:45</span>
-                    </div>
                     <a href="#" class="btn-card disabled" id="btn-b-indo">Belum Tersedia</a>
                 </div>
 
-                <!-- Jumat, 6 Maret 2026 -->
+                <!-- Link buttons for other subjects -->
                 <div class="exam-card" data-aos="zoom-in" id="card-b-inggris">
                     <div class="card-status upcoming">Mendatang</div>
                     <div class="card-icon"><i class="fas fa-language"></i></div>
                     <h3>Bahasa Inggris</h3>
-                    <div class="card-info">
-                        <span><i class="far fa-calendar"></i> Jumat, 6 Maret 2026</span>
-                        <span><i class="far fa-clock"></i> 07:15 - 08:45</span>
-                    </div>
                     <a href="#" class="btn-card disabled" id="btn-b-inggris">Belum Tersedia</a>
                 </div>
 
@@ -167,22 +157,13 @@
                     <div class="card-status upcoming">Mendatang</div>
                     <div class="card-icon"><i class="fas fa-palette"></i></div>
                     <h3>Seni Budaya</h3>
-                    <div class="card-info">
-                        <span><i class="far fa-calendar"></i> Jumat, 6 Maret 2026</span>
-                        <span><i class="far fa-clock"></i> 09:15 - 10:45</span>
-                    </div>
                     <a href="#" class="btn-card disabled" id="btn-seni">Belum Tersedia</a>
                 </div>
 
-                <!-- Senin, 9 Maret 2026 -->
                 <div class="exam-card" data-aos="zoom-in" id="card-matematika">
                     <div class="card-status upcoming">Mendatang</div>
                     <div class="card-icon"><i class="fas fa-calculator"></i></div>
                     <h3>Matematika</h3>
-                    <div class="card-info">
-                        <span><i class="far fa-calendar"></i> Senin, 9 Maret 2026</span>
-                        <span><i class="far fa-clock"></i> 07:15 - 09:15</span>
-                    </div>
                     <a href="#" class="btn-card disabled" id="btn-matematika">Belum Tersedia</a>
                 </div>
 
@@ -190,22 +171,13 @@
                     <div class="card-status upcoming">Mendatang</div>
                     <div class="card-icon"><i class="fas fa-running"></i></div>
                     <h3>PJOK</h3>
-                    <div class="card-info">
-                        <span><i class="far fa-calendar"></i> Senin, 9 Maret 2026</span>
-                        <span><i class="far fa-clock"></i> 09:30 - 11:00</span>
-                    </div>
                     <a href="#" class="btn-card disabled" id="btn-pjok">Belum Tersedia</a>
                 </div>
 
-                <!-- Selasa, 10 Maret 2026 -->
                 <div class="exam-card" data-aos="zoom-in" id="card-ipa">
                     <div class="card-status upcoming">Mendatang</div>
                     <div class="card-icon"><i class="fas fa-microscope"></i></div>
                     <h3>IPA</h3>
-                    <div class="card-info">
-                        <span><i class="far fa-calendar"></i> Selasa, 10 Maret 2026</span>
-                        <span><i class="far fa-clock"></i> 07:15 - 08:45</span>
-                    </div>
                     <a href="#" class="btn-card disabled" id="btn-ipa">Belum Tersedia</a>
                 </div>
 
@@ -213,22 +185,13 @@
                     <div class="card-status upcoming">Mendatang</div>
                     <div class="card-icon"><i class="fas fa-balance-scale"></i></div>
                     <h3>PPKn</h3>
-                    <div class="card-info">
-                        <span><i class="far fa-calendar"></i> Selasa, 10 Maret 2026</span>
-                        <span><i class="far fa-clock"></i> 09:15 - 10:45</span>
-                    </div>
                     <a href="#" class="btn-card disabled" id="btn-ppkn">Belum Tersedia</a>
                 </div>
 
-                <!-- Rabu, 11 Maret 2026 -->
                 <div class="exam-card" data-aos="zoom-in" id="card-ips">
                     <div class="card-status upcoming">Mendatang</div>
                     <div class="card-icon"><i class="fas fa-globe-asia"></i></div>
                     <h3>IPS</h3>
-                    <div class="card-info">
-                        <span><i class="far fa-calendar"></i> Rabu, 11 Maret 2026</span>
-                        <span><i class="far fa-clock"></i> 07:15 - 08:45</span>
-                    </div>
                     <a href="#" class="btn-card disabled" id="btn-ips">Belum Tersedia</a>
                 </div>
 
@@ -236,10 +199,6 @@
                     <div class="card-status upcoming">Mendatang</div>
                     <div class="card-icon"><i class="fas fa-font"></i></div>
                     <h3>Bahasa Jawa</h3>
-                    <div class="card-info">
-                        <span><i class="far fa-calendar"></i> Rabu, 11 Maret 2026</span>
-                        <span><i class="far fa-clock"></i> 09:15 - 10:45</span>
-                    </div>
                     <a href="#" class="btn-card disabled" id="btn-b-jawa">Belum Tersedia</a>
                 </div>
 
@@ -247,22 +206,13 @@
                     <div class="card-status upcoming">Mendatang</div>
                     <div class="card-icon"><i class="fas fa-code"></i></div>
                     <h3>Coding/Prakarya/TKA</h3>
-                    <div class="card-info">
-                        <span><i class="far fa-calendar"></i> Rabu, 11 Maret 2026</span>
-                        <span><i class="far fa-clock"></i> 11:00 - 12:30</span>
-                    </div>
                     <a href="#" class="btn-card disabled" id="btn-coding">Belum Tersedia</a>
                 </div>
 
-                <!-- Kamis, 12 Maret 2026 -->
                 <div class="exam-card" data-aos="zoom-in" id="card-informatika">
                     <div class="card-status upcoming">Mendatang</div>
                     <div class="card-icon"><i class="fas fa-laptop-code"></i></div>
                     <h3>Informatika</h3>
-                    <div class="card-info">
-                        <span><i class="far fa-calendar"></i> Kamis, 12 Maret 2026</span>
-                        <span><i class="far fa-clock"></i> 07:15 - 08:45</span>
-                    </div>
                     <a href="#" class="btn-card disabled" id="btn-informatika">Belum Tersedia</a>
                 </div>
 
@@ -270,10 +220,6 @@
                     <div class="card-status upcoming">Mendatang</div>
                     <div class="card-icon"><i class="fas fa-language"></i></div>
                     <h3>Bahasa Mandarin</h3>
-                    <div class="card-info">
-                        <span><i class="far fa-calendar"></i> Kamis, 12 Maret 2026</span>
-                        <span><i class="far fa-clock"></i> 09:15 - 10:45</span>
-                    </div>
                     <a href="#" class="btn-card disabled" id="btn-b-mandarin">Belum Tersedia</a>
                 </div>
 
@@ -281,11 +227,112 @@
                     <div class="card-status upcoming">Mendatang</div>
                     <div class="card-icon"><i class="fas fa-user-friends"></i></div>
                     <h3>BK/BP</h3>
-                    <div class="card-info">
-                        <span><i class="far fa-calendar"></i> Kamis, 12 Maret 2026</span>
-                        <span><i class="far fa-clock"></i> 11:00 - 12:00</span>
-                    </div>
                     <a href="#" class="btn-card disabled" id="btn-bk">Belum Tersedia</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Jadwal Section -->
+    <section id="jadwal" class="section bg-alt">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2>Jadwal Pelaksanaan</h2>
+                <p>Informasi waktu dan mata pelajaran Sumatif 3 Semester Genap.</p>
+            </div>
+
+            <div class="jadwal-info-grid">
+                <!-- Grouped by Day -->
+                <div class="jadwal-day-card" data-aos="fade-up">
+                    <div class="day-header">Kamis, 5 Maret 2026</div>
+                    <div class="day-content">
+                        <div class="day-item">
+                            <span class="time">07:15 - 08:45</span>
+                            <span class="subject">Pendidikan Agama</span>
+                        </div>
+                        <div class="day-item">
+                            <span class="time">09:15 - 10:45</span>
+                            <span class="subject">Bahasa Indonesia</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="jadwal-day-card" data-aos="fade-up">
+                    <div class="day-header">Jumat, 6 Maret 2026</div>
+                    <div class="day-content">
+                        <div class="day-item">
+                            <span class="time">07:15 - 08:45</span>
+                            <span class="subject">Bahasa Inggris</span>
+                        </div>
+                        <div class="day-item">
+                            <span class="time">09:15 - 10:45</span>
+                            <span class="subject">Seni Budaya</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="jadwal-day-card" data-aos="fade-up">
+                    <div class="day-header">Senin, 9 Maret 2026</div>
+                    <div class="day-content">
+                        <div class="day-item">
+                            <span class="time">07:15 - 09:15</span>
+                            <span class="subject">Matematika</span>
+                        </div>
+                        <div class="day-item">
+                            <span class="time">09:30 - 11:00</span>
+                            <span class="subject">PJOK</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="jadwal-day-card" data-aos="fade-up">
+                    <div class="day-header">Selasa, 10 Maret 2026</div>
+                    <div class="day-content">
+                        <div class="day-item">
+                            <span class="time">07:15 - 08:45</span>
+                            <span class="subject">IPA</span>
+                        </div>
+                        <div class="day-item">
+                            <span class="time">09:15 - 10:45</span>
+                            <span class="subject">PPKn</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="jadwal-day-card" data-aos="fade-up">
+                    <div class="day-header">Rabu, 11 Maret 2026</div>
+                    <div class="day-content">
+                        <div class="day-item">
+                            <span class="time">07:15 - 08:45</span>
+                            <span class="subject">IPS</span>
+                        </div>
+                        <div class="day-item">
+                            <span class="time">09:15 - 10:45</span>
+                            <span class="subject">Bahasa Jawa</span>
+                        </div>
+                        <div class="day-item">
+                            <span class="time">11:00 - 12:30</span>
+                            <span class="subject">Coding/Prakarya/TKA</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="jadwal-day-card" data-aos="fade-up">
+                    <div class="day-header">Kamis, 12 Maret 2026</div>
+                    <div class="day-content">
+                        <div class="day-item">
+                            <span class="time">07:15 - 08:45</span>
+                            <span class="subject">Informatika</span>
+                        </div>
+                        <div class="day-item">
+                            <span class="time">09:15 - 10:45</span>
+                            <span class="subject">Bahasa Mandarin</span>
+                        </div>
+                        <div class="day-item">
+                            <span class="time">11:00 - 12:00</span>
+                            <span class="subject">BK/BP</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -368,7 +415,10 @@
         // Time script
         function updateTime() {
             const now = new Date();
-            document.getElementById('current-time').textContent = now.toLocaleTimeString('id-ID');
+            // Force use colons instead of periods that can appear in id-ID locale
+            let timeStr = now.toLocaleTimeString('id-ID');
+            timeStr = timeStr.replace(/\./g, ':');
+            document.getElementById('current-time').textContent = timeStr;
         }
         setInterval(updateTime, 1000);
         updateTime();
@@ -383,7 +433,6 @@
 
                 if (diff <= 0) {
                     document.getElementById('countdown').textContent = "Sedang Berlangsung";
-                    checkActiveSession(); // Update session status
                     return;
                 }
 
@@ -394,7 +443,7 @@
 
                 let countdownText = "";
                 if (d > 0) countdownText += `${d}h `;
-                countdownText += `${h}j ${m}m ${s}p`;
+                countdownText += `${h}j ${m}m ${s}d`;
 
                 document.getElementById('countdown').textContent = countdownText;
             }
@@ -501,8 +550,8 @@
                                 statusBadge.style.color = '#fb7185';
                                 statusBadge.innerText = 'Selesai';
                             }
-                        } else {
-                            // Link Tersedia (Bisa Aktivitas/Mendatang)
+                        } else if (status === 'active') {
+                            // Link Tersedia & Waktu Sesuai
                             btn.href = url;
                             btn.classList.remove('disabled');
                             btn.target = '_blank';
@@ -510,13 +559,20 @@
                                 btn.innerHTML = 'Kerjakan Sekarang <i class="fas fa-arrow-right"></i>';
                             }
                             if (statusBadge) {
-                                if (status === 'active') {
-                                    statusBadge.className = 'card-status active';
-                                    statusBadge.innerText = 'Sedang Berlangsung';
-                                } else {
-                                    statusBadge.className = 'card-status active'; // Set Green/Active since it's clickable
-                                    statusBadge.innerText = 'Link Siap';
-                                }
+                                statusBadge.className = 'card-status active';
+                                statusBadge.innerText = 'Sedang Berlangsung';
+                            }
+                        } else {
+                            // Link Tersedia tapi Belum Waktunya (Upcoming)
+                            btn.href = '#';
+                            btn.classList.add('disabled');
+                            btn.removeAttribute('target');
+                            if (!sub.id.startsWith('agama-')) {
+                                btn.innerText = 'Belum Tersedia';
+                            }
+                            if (statusBadge) {
+                                statusBadge.className = 'card-status upcoming';
+                                statusBadge.innerText = 'Mendatang';
                             }
                         }
                     } else {
@@ -530,6 +586,8 @@
                         if (statusBadge) {
                             if (status === 'passed') {
                                 statusBadge.className = 'card-status';
+                                statusBadge.style.background = 'rgba(244, 63, 94, 0.2)';
+                                statusBadge.style.color = '#fb7185';
                                 statusBadge.innerText = 'Selesai';
                             } else {
                                 statusBadge.className = 'card-status upcoming';
