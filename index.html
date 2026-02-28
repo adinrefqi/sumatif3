@@ -427,7 +427,7 @@
         // ==========================================
         const linkUjian = {
             '7': {
-                'agama-islam': '', 'agama-kristen': '', 'agama-katolik': '', 'agama-budha': '', 'agama-khonghucu': '',
+                'agama-islam': 'https://drive.google.com/file/d/1QBCz6jRY1dUnCtUXWVe0baVYjSgYpBhx/view?usp=drive_link', 'agama-kristen': '', 'agama-katolik': '', 'agama-budha': '', 'agama-khonghucu': '',
                 'b-indo': '', 'b-inggris': '', 'seni': '', 'matematika': '', 'pjok': '',
                 'ipa': '', 'ppkn': '', 'ips': '', 'b-jawa': '', 'coding': '',
                 'informatika': '', 'b-mandarin': '', 'bk': ''
@@ -487,47 +487,54 @@
                 const status = getExamStatus(sub.key);
 
                 if (btn) {
-                    if (status === 'active' && url && url !== '') {
-                        // Sedang Berlangsung & Link Ada
-                        btn.href = url;
-                        btn.classList.remove('disabled');
-                        btn.target = '_blank';
-                        if (!sub.id.startsWith('agama-')) {
-                            btn.innerHTML = 'Kerjakan Sekarang <i class="fas fa-arrow-right"></i>';
-                        }
-                        if (statusBadge) {
-                            statusBadge.className = 'card-status active';
-                            statusBadge.innerText = 'Sedang Berlangsung';
-                        }
-                    } else if (status === 'passed') {
-                        // Waktu Habis
-                        btn.href = '#';
-                        btn.classList.add('disabled');
-                        btn.removeAttribute('target');
-                        if (!sub.id.startsWith('agama-')) {
-                            btn.innerText = 'Waktu Habis';
-                        }
-                        if (statusBadge) {
-                            statusBadge.className = 'card-status';
-                            statusBadge.style.background = 'rgba(244, 63, 94, 0.2)';
-                            statusBadge.style.color = '#fb7185';
-                            statusBadge.innerText = 'Selesai';
-                        }
-                    } else if (status === 'upcoming' && url && url !== '') {
-                        // Belum Waktunya tapi Link Ada
-                        btn.href = '#';
-                        btn.classList.add('disabled');
-                        btn.removeAttribute('target');
-                        if (!sub.id.startsWith('agama-')) {
-                            btn.innerText = 'Belum Waktunya';
+                    if (url && url !== '') {
+                        // LINK SUDAH DIISI
+                        if (status === 'passed') {
+                            // Tapi Waktu Sudah Habis
+                            btn.href = '#';
+                            btn.classList.add('disabled');
+                            btn.removeAttribute('target');
+                            if (!sub.id.startsWith('agama-')) btn.innerText = 'Waktu Habis';
+                            if (statusBadge) {
+                                statusBadge.className = 'card-status';
+                                statusBadge.style.background = 'rgba(244, 63, 94, 0.2)';
+                                statusBadge.style.color = '#fb7185';
+                                statusBadge.innerText = 'Selesai';
+                            }
+                        } else {
+                            // Link Tersedia (Bisa Aktivitas/Mendatang)
+                            btn.href = url;
+                            btn.classList.remove('disabled');
+                            btn.target = '_blank';
+                            if (!sub.id.startsWith('agama-')) {
+                                btn.innerHTML = 'Kerjakan Sekarang <i class="fas fa-arrow-right"></i>';
+                            }
+                            if (statusBadge) {
+                                if (status === 'active') {
+                                    statusBadge.className = 'card-status active';
+                                    statusBadge.innerText = 'Sedang Berlangsung';
+                                } else {
+                                    statusBadge.className = 'card-status active'; // Set Green/Active since it's clickable
+                                    statusBadge.innerText = 'Link Siap';
+                                }
+                            }
                         }
                     } else {
-                        // Default / Belum Tersedia
+                        // LINK BELUM DIISI
                         btn.href = '#';
                         btn.classList.add('disabled');
                         btn.removeAttribute('target');
                         if (!sub.id.startsWith('agama-')) {
                             btn.innerText = 'Belum Tersedia';
+                        }
+                        if (statusBadge) {
+                            if (status === 'passed') {
+                                statusBadge.className = 'card-status';
+                                statusBadge.innerText = 'Selesai';
+                            } else {
+                                statusBadge.className = 'card-status upcoming';
+                                statusBadge.innerText = 'Mendatang';
+                            }
                         }
                     }
                 }
