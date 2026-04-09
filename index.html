@@ -1117,14 +1117,15 @@
         async function checkLoginStatus() {
             const isLoggedIn = sessionStorage.getItem('isLoggedIn');
             const loginScreen = document.getElementById('login-screen');
-            const mainContent = document.getElementById('main-content');            if (isLoggedIn === 'true') {
+            const mainContent = document.getElementById('main-content');
+            if (isLoggedIn === 'true') {
                 if (loginScreen) loginScreen.style.display = 'none';
-                if (mainContent) mainContent.style.display = 'block';                // Auto-set grade jika sudah login
+                if (mainContent) mainContent.style.display = 'block';
                 const savedGrade = sessionStorage.getItem('user_grade');
                 if (savedGrade) {
                     activeClass = savedGrade;
                     const overlay = document.getElementById('grade-selection-overlay');
-                    if (overlay) overlay.style.display = 'none';                    // Update tabs active state
+                    if (overlay) overlay.style.display = 'none';
                     document.querySelectorAll('.tab-btn:not(.riwayat-tab-btn)').forEach(b => {
                         b.classList.toggle('active', b.dataset.class === savedGrade);
                     });
@@ -1133,10 +1134,11 @@
                 if (loginScreen) loginScreen.style.display = 'flex';
                 if (mainContent) mainContent.style.display = 'none';
             }
+        }
+
         window.validateLogin = async function (e) {
             if (e) e.preventDefault();
             console.log('Cek Login...');
-            
             const inputNo = document.getElementById('login-no-ujian');
             const inputVal = inputNo.value.trim();
             const errorEl = document.getElementById('login-error');
@@ -1144,7 +1146,6 @@
 
             if (!inputVal) {
                 alert("Peringatan: ID atau Nomor Ujian tidak boleh kosong!");
-                showToast("Masukkan ID / Nomor Ujian!", "error");
                 return;
             }
 
@@ -1153,74 +1154,46 @@
                 btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Memverifikasi...';
                 errorEl.style.display = 'none';
 
-                console.log("Menghubungkan ke Supabase...");
                 const client = await getSupabase();
                 if (!client) {
-                    alert("Gagal terhubung ke database. Periksa koneksi internet Anda.");
-                    throw new Error("Koneksi Supabase Gagal");
+                    alert("Gagal terhubung ke database.");
+                    return;
                 }
 
                 // 1. CEK SEBAGAI SISWA
-                console.log("Mengecek data siswa untuk ID:", inputVal);
-                let { data: student, error: errS } = await client
-                    .from('master_siswa')
-                    .select('*')
-                    .eq('id', inputVal)
-                    .maybeSingle();
-
+                let { data: student } = await client.from('master_siswa').select('*').eq('id', inputVal).maybeSingle();
                 if (student) {
-                    console.log("Siswa ditemukan:", student.nama);
-                    // PENCEGAHAN DOUBLE LOGIN
                     if (student.is_login === true) {
-                        const msg = 'Akun sedang digunakan di perangkat lain! Lapor ke pengawas untuk mereset sesi.';
-                        alert(msg);
-                        errorEl.innerHTML = msg;
-                        errorEl.style.display = 'block';
+                        alert('Akun sedang digunakan!');
                         return;
                     }
-
-                    // UPDATE IS_LOGIN MENJADI TRUE
                     await client.from('master_siswa').update({ is_login: true }).eq('id', student.id);
-
                     sessionStorage.setItem('isLoggedIn', 'true');
                     sessionStorage.setItem('role', 'siswa');
                     sessionStorage.setItem('nomorUjian', student.id);
                     sessionStorage.setItem('namaSiswa', student.nama);
                     sessionStorage.setItem('user_grade', student.grade.toString());
-
                     activeClass = student.grade.toString();
                     localStorage.setItem('user_grade', activeClass);
                     proceedToDashboard(student.nama, false);
                     return;
                 }
 
-                // 2. JIKA BUKAN SISWA, CEK SEBAGAI GURU
-                console.log("Mengecek data guru untuk ID:", inputVal);
-                let { data: guru, error: errG } = await client
-                    .from('master_guru')
-                    .select('*')
-                    .eq('id', inputVal)
-                    .maybeSingle();
-
+                // 2. CEK SEBAGAI GURU
+                let { data: guru } = await client.from('master_guru').select('*').eq('id', inputVal).maybeSingle();
                 if (guru) {
-                    console.log("Guru ditemukan:", guru.nama);
                     sessionStorage.setItem('isLoggedIn', 'true');
                     sessionStorage.setItem('role', 'guru');
                     sessionStorage.setItem('namaGuru', guru.nama);
                     sessionStorage.setItem('isAdmin', 'true');
-
                     proceedToDashboard(guru.nama, true);
                     return;
                 }
 
-                // DATA TIDAK ADA
-                alert(`ID ${inputVal} tidak terdaftar! Pastikan Anda memasukkan kode yang benar.`);
-                errorEl.innerHTML = `ID <b>${inputVal}</b> tidak terdaftar!`;
-                errorEl.style.display = 'block';
-
+                alert(`ID ${inputVal} tidak terdaftar!`);
             } catch (err) {
                 console.error("Login Error:", err);
-                alert("Terjadi kesalahan saat memproses login. Silakan coba lagi.");
+                alert("Terjadi kesalahan.");
             } finally {
                 btn.disabled = false;
                 btn.innerHTML = 'Masuk ke Dashboard';
@@ -1228,36 +1201,26 @@
         };
 
         function proceedToDashboard(name, isGuru) {
-            console.log("Mengarahkan ke dashboard. IsGuru:", isGuru);
             if (isGuru) {
                 showToast(`Selamat datang, ${name} (Guru)!`);
-                setTimeout(() => {
-                    window.location.href = 'dashboard_pengawas.html';
-                }, 1000);
+                setTimeout(() => { window.location.href = 'dashboard_pengawas.html'; }, 1000);
                 return;
             }
-
             const loginScreen = document.getElementById('login-screen');
             const mainContent = document.getElementById('main-content');
-            loginScreen.style.opacity = '0';
-
+            if (loginScreen) loginScreen.style.opacity = '0';
             setTimeout(() => {
-                loginScreen.style.display = 'none';
-                mainContent.style.display = 'block';
-                mainContent.style.opacity = '0';
-
-                const overlay = document.getElementById('grade-selection-overlay');
-                if (overlay) overlay.style.display = 'none';
-
-                setTimeout(() => {
-                    mainContent.style.opacity = '1';
-                    AOS.refresh();
-                }, 50);
+                if (loginScreen) loginScreen.style.display = 'none';
+                if (mainContent) {
+                    mainContent.style.display = 'block';
+                    mainContent.style.opacity = '0';
+                    setTimeout(() => { mainContent.style.opacity = '1'; AOS.refresh(); }, 50);
+                }
             }, 500);
-
             showToast(`Selamat datang, ${name} (Siswa)!`);
         }
-        }        // Listen for Login Keypress & Check Status
+
+        // Listen for Login Keypress & Check Status
         document.addEventListener('DOMContentLoaded', () => {
             const loginInput = document.getElementById('login-no-ujian');
             if (loginInput) {
