@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<html lang="id"><head>
+<html lang="id">
+
+<head>
     <script>
         (function () {
             const urlParams = new URLSearchParams(window.location.search);
@@ -22,11 +24,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sumatif IV Online - SMP Tunas Hidup Harapan Kita</title>
     <meta name="description"
-        content="Portal Pelaksanaan Sumatif IV Online SMP Tunas Hidup Harapan Kita. Akses link ujian, jadwal, dan panduan pengerjaan di sini.">    <!-- Google Fonts -->
+        content="Portal Pelaksanaan Sumatif IV Online SMP Tunas Hidup Harapan Kita. Akses link ujian, jadwal, dan panduan pengerjaan di sini.">
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">    <!-- AOS Animation Library -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- AOS Animation Library -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -45,7 +50,9 @@
             justify-content: center;
             z-index: 30000;
             transition: opacity 0.5s ease;
-        }        .login-card {
+        }
+
+        .login-card {
             background: rgba(30, 41, 59, 0.7);
             backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -55,20 +62,28 @@
             max-width: 400px;
             text-align: center;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-        }        .login-logo {
+        }
+
+        .login-logo {
             width: 80px;
             height: auto;
             margin-bottom: 1.5rem;
             border-radius: 12px;
-        }        .login-card h2 {
+        }
+
+        .login-card h2 {
             color: white;
             margin-bottom: 0.5rem;
             font-size: 1.8rem;
-        }        .login-card p {
+        }
+
+        .login-card p {
             color: #94a3b8;
             margin-bottom: 2rem;
             font-size: 1rem;
-        }        .login-input {
+        }
+
+        .login-input {
             width: 100%;
             padding: 1rem 1.5rem;
             background: rgba(15, 23, 42, 0.6);
@@ -80,9 +95,13 @@
             outline: none;
             transition: border-color 0.3s;
             text-align: center;
-        }        .login-input:focus {
+        }
+
+        .login-input:focus {
             border-color: #6366f1;
-        }        .login-btn {
+        }
+
+        .login-btn {
             width: 100%;
             padding: 1rem;
             background: linear-gradient(135deg, #6366f1, #4f46e5);
@@ -93,27 +112,43 @@
             font-size: 1rem;
             cursor: pointer;
             transition: transform 0.2s, box-shadow 0.2s;
-        }        .login-btn:hover {
+        }
+
+        .login-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.4);
-        }        #login-error {
+        }
+
+        #login-error {
             color: #fb7185;
             font-size: 0.85rem;
             margin-top: 1rem;
             display: none;
-        }        @keyframes shake {            0%,
+        }
+
+        @keyframes shake {
+
+            0%,
             100% {
                 transform: translateX(0);
-            }            25% {
+            }
+
+            25% {
                 transform: translateX(-10px);
-            }            50% {
+            }
+
+            50% {
                 transform: translateX(10px);
-            }            75% {
+            }
+
+            75% {
                 transform: translateX(-10px);
             }
         }
     </style>
-</head><body>
+</head>
+
+<body>
     <div id="login-screen">
         <div class="login-card">
             <img src="logo.jpg" alt="Logo Sekolah" class="login-logo">
@@ -125,7 +160,8 @@
                 <p id="login-error">Nomor Ujian tidak ditemukan atau salah!</p>
             </div>
         </div>
-    </div>    <div id="main-content" style="display: none; transition: opacity 0.5s ease;">
+    </div>
+    <div id="main-content" style="display: none; transition: opacity 0.5s ease;">
         <!-- Navigation -->
         <nav class="navbar">
             <div class="container nav-content">
@@ -145,7 +181,7 @@
                     <i class="fas fa-bars"></i>
                 </div>
             </div>
-        </nav>        <!-- Mobile Menu Overlay -->
+        </nav> <!-- Mobile Menu Overlay -->
         <div class="mobile-menu" id="mobile-menu">
             <div class="mobile-menu-header">
                 <div class="logo">
@@ -164,7 +200,7 @@
                 <li><a href="#panduan">Panduan</a></li>
                 <li><a href="#kontak" class="mobile-btn-primary">Bantuan</a></li>
             </ul>
-        </div>        <!-- Hero Section -->
+        </div> <!-- Hero Section -->
         <section id="home" class="hero">
             <div class="hero-overlay"></div>
             <div class="container hero-content" data-aos="fade-up">
@@ -179,7 +215,7 @@
                     <a href="#jadwal" class="btn-outline">Lihat Jadwal</a>
                 </div>
             </div>
-        </section>        <!-- Status Bar -->
+        </section> <!-- Status Bar -->
         <section class="status-bar">
             <div class="container status-content">
                 <div class="status-item">
@@ -198,20 +234,21 @@
                     </div>
                 </div>
             </div>
-        </section>        <!-- Link Akses Ujian Section -->
+        </section> <!-- Link Akses Ujian Section -->
         <section id="akses" class="section">
             <div class="container">
                 <div class="section-header" data-aos="fade-up">
                     <h2>Pusat Akses Link Ujian</h2>
                     <p>Pilih kelas Anda dan klik tombol "Kerjakan" pada jam yang sesuai.</p>
-                </div>                <!-- Class Selector Tabs -->
+                </div> <!-- Class Selector Tabs -->
                 <div class="class-selector" data-aos="fade-up" data-aos-delay="100">
                     <div class="tabs">
                         <button class="tab-btn active" data-class="7"><i class="fas fa-7 mr-2"></i> Kelas 7</button>
                         <button class="tab-btn" data-class="8"><i class="fas fa-8 mr-2"></i> Kelas 8</button>
                         <button class="tab-btn" data-class="9"><i class="fas fa-9 mr-2"></i> Kelas 9</button>
                     </div>
-                </div>                <div class="schedule-grid" id="link-container">
+                </div>
+                <div class="schedule-grid" id="link-container">
                     <!-- Subject Link Cards -->
                     <div class="exam-card" data-aos="zoom-in" id="card-agama">
                         <div class="card-status upcoming">Mendatang</div>
@@ -229,48 +266,56 @@
                             <a href="#" class="btn-card disabled religion-btn" data-exam="agama-khonghucu"
                                 id="btn-agama-khonghucu">Khonghucu</a>
                         </div>
-                    </div>                    <div class="exam-card" data-aos="zoom-in" id="card-b-indo">
+                    </div>
+                    <div class="exam-card" data-aos="zoom-in" id="card-b-indo">
                         <div class="card-status upcoming">Mendatang</div>
                         <div class="card-icon"><i class="fas fa-book"></i></div>
                         <h3>Bahasa Indonesia</h3>
                         <a href="#" class="btn-card disabled" id="btn-b-indo">Belum Tersedia</a>
-                    </div>                    <!-- Link buttons for other subjects -->
+                    </div> <!-- Link buttons for other subjects -->
                     <div class="exam-card" data-aos="zoom-in" id="card-b-inggris">
                         <div class="card-status upcoming">Mendatang</div>
                         <div class="card-icon"><i class="fas fa-language"></i></div>
                         <h3>Bahasa Inggris</h3>
                         <a href="#" class="btn-card disabled" id="btn-b-inggris">Belum Tersedia</a>
-                    </div>                    <div class="exam-card" data-aos="zoom-in" id="card-seni">
+                    </div>
+                    <div class="exam-card" data-aos="zoom-in" id="card-seni">
                         <div class="card-status upcoming">Mendatang</div>
                         <div class="card-icon"><i class="fas fa-palette"></i></div>
                         <h3>Seni Budaya</h3>
                         <a href="#" class="btn-card disabled" id="btn-seni">Belum Tersedia</a>
-                    </div>                    <div class="exam-card" data-aos="zoom-in" id="card-matematika">
+                    </div>
+                    <div class="exam-card" data-aos="zoom-in" id="card-matematika">
                         <div class="card-status upcoming">Mendatang</div>
                         <div class="card-icon"><i class="fas fa-calculator"></i></div>
                         <h3>Matematika</h3>
                         <a href="#" class="btn-card disabled" id="btn-matematika">Belum Tersedia</a>
-                    </div>                    <div class="exam-card" data-aos="zoom-in" id="card-pjok">
+                    </div>
+                    <div class="exam-card" data-aos="zoom-in" id="card-pjok">
                         <div class="card-status upcoming">Mendatang</div>
                         <div class="card-icon"><i class="fas fa-running"></i></div>
                         <h3>PJOK</h3>
                         <a href="#" class="btn-card disabled" id="btn-pjok">Belum Tersedia</a>
-                    </div>                    <div class="exam-card" data-aos="zoom-in" id="card-ipa">
+                    </div>
+                    <div class="exam-card" data-aos="zoom-in" id="card-ipa">
                         <div class="card-status upcoming">Mendatang</div>
                         <div class="card-icon"><i class="fas fa-microscope"></i></div>
                         <h3>IPA</h3>
                         <a href="#" class="btn-card disabled" id="btn-ipa">Belum Tersedia</a>
-                    </div>                    <div class="exam-card" data-aos="zoom-in" id="card-ppkn">
+                    </div>
+                    <div class="exam-card" data-aos="zoom-in" id="card-ppkn">
                         <div class="card-status upcoming">Mendatang</div>
                         <div class="card-icon"><i class="fas fa-balance-scale"></i></div>
                         <h3>PPKn</h3>
                         <a href="#" class="btn-card disabled" id="btn-ppkn">Belum Tersedia</a>
-                    </div>                    <div class="exam-card" data-aos="zoom-in" id="card-ips">
+                    </div>
+                    <div class="exam-card" data-aos="zoom-in" id="card-ips">
                         <div class="card-status upcoming">Mendatang</div>
                         <div class="card-icon"><i class="fas fa-globe-asia"></i></div>
                         <h3>IPS</h3>
                         <a href="#" class="btn-card disabled" id="btn-ips">Belum Tersedia</a>
-                    </div>                    <div class="exam-card" data-aos="zoom-in" id="card-b-jawa">
+                    </div>
+                    <div class="exam-card" data-aos="zoom-in" id="card-b-jawa">
                         <div class="card-status upcoming">Mendatang</div>
                         <div class="card-icon"><i class="fas fa-font"></i></div>
                         <h3>Bahasa Jawa</h3>
@@ -296,13 +341,14 @@
                     </div>
                 </div>
             </div>
-        </section>        <!-- Administrasi Section -->
+        </section> <!-- Administrasi Section -->
         <section id="admin" class="section">
             <div class="container" style="max-width: 900px;">
                 <div class="section-header" data-aos="fade-up">
                     <h2>Administrasi Ujian</h2>
                     <p>Fitur untuk pengisian Daftar Hadir Siswa dan Berita Acara Guru.</p>
-                </div>                <div class="schedule-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+                </div>
+                <div class="schedule-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
                     <div class="exam-card" data-aos="zoom-in" style="border-top: 4px solid #10b981;">
                         <div class="card-status active" style="background: rgba(16, 185, 129, 0.2); color: #10b981;">
                             Siswa
@@ -316,7 +362,8 @@
                         </p>
                         <a href="javascript:void(0)" class="btn-card" id="btn-presensi-global"
                             onclick="openModal('modal-presensi')" style="background: #10b981;">Isi Presensi Sekarang</a>
-                    </div>                    <div class="exam-card" data-aos="zoom-in" style="border-top: 4px solid #f59e0b;">
+                    </div>
+                    <div class="exam-card" data-aos="zoom-in" style="border-top: 4px solid #f59e0b;">
                         <div class="card-status active" style="background: rgba(245, 158, 11, 0.2); color: #f59e0b;">
                             Guru
                         </div>
@@ -330,7 +377,8 @@
                         <a href="javascript:void(0)" class="btn-card" id="btn-ba-global" onclick="openModal('modal-ba')"
                             style="background: #f59e0b;">Isi
                             Berita Acara</a>
-                    </div>                    <div class="exam-card" data-aos="zoom-in" style="border-top: 4px solid #3b82f6;">
+                    </div>
+                    <div class="exam-card" data-aos="zoom-in" style="border-top: 4px solid #3b82f6;">
                         <div class="card-status active" style="background: rgba(59, 130, 246, 0.2); color: #3b82f6;">
                             Sistem
                         </div>
@@ -343,7 +391,7 @@
                         </p>
                         <a href="javascript:void(0)" class="btn-card" onclick="openModal('modal-riwayat')"
                             style="background: #3b82f6;">Lihat Riwayat Sekarang</a>
-                    </div>                    <!-- TOMBOL PANEL KURIKULUM -->
+                    </div> <!-- TOMBOL PANEL KURIKULUM -->
                     <div class="exam-card" data-aos="zoom-in"
                         style="border-top: 4px solid #f43f5e; grid-column: 1 / -1; max-width: 400px; margin: 0 auto;">
                         <div class="card-status active" style="background: rgba(244, 63, 94, 0.2); color: #f43f5e;">
@@ -361,7 +409,7 @@
                     </div>
                 </div>
             </div>
-        </section>        <!-- Jadwal Section -->
+        </section> <!-- Jadwal Section -->
         <section id="jadwal" class="section bg-alt">
             <div class="container">
                 <div class="section-header" data-aos="fade-up">
@@ -382,7 +430,8 @@
                             <b>Sesi 3:</b> 11.00 - 12.00
                         </div>
                     </div>
-                </div>                <div class="jadwal-info-grid">
+                </div>
+                <div class="jadwal-info-grid">
                     <!-- Grouped by Day -->
                     <div class="jadwal-day-card" data-aos="fade-up">
                         <div class="day-header">Senin, 13 April 2026</div>
@@ -396,7 +445,8 @@
                                 <span class="subject">Bahasa Indonesia</span>
                             </div>
                         </div>
-                    </div>                    <div class="jadwal-day-card" data-aos="fade-up">
+                    </div>
+                    <div class="jadwal-day-card" data-aos="fade-up">
                         <div class="day-header">Selasa, 14 April 2026</div>
                         <div class="day-content">
                             <div class="day-item">
@@ -408,7 +458,8 @@
                                 <span class="subject">Seni Budaya</span>
                             </div>
                         </div>
-                    </div>                    <div class="jadwal-day-card" data-aos="fade-up">
+                    </div>
+                    <div class="jadwal-day-card" data-aos="fade-up">
                         <div class="day-header">Rabu, 15 April 2026</div>
                         <div class="day-content">
                             <div class="day-item">
@@ -420,7 +471,8 @@
                                 <span class="subject">PJOK</span>
                             </div>
                         </div>
-                    </div>                    <div class="jadwal-day-card" data-aos="fade-up">
+                    </div>
+                    <div class="jadwal-day-card" data-aos="fade-up">
                         <div class="day-header">Kamis, 16 April 2026</div>
                         <div class="day-content">
                             <div class="day-item">
@@ -432,7 +484,8 @@
                                 <span class="subject">PPKn</span>
                             </div>
                         </div>
-                    </div>                    <div class="jadwal-day-card" data-aos="fade-up">
+                    </div>
+                    <div class="jadwal-day-card" data-aos="fade-up">
                         <div class="day-header">Jumat, 17 April 2026</div>
                         <div class="day-content">
                             <div class="day-item">
@@ -444,7 +497,8 @@
                                 <span class="subject">Bahasa Jawa</span>
                             </div>
                         </div>
-                    </div>                    <div class="jadwal-day-card" data-aos="fade-up">
+                    </div>
+                    <div class="jadwal-day-card" data-aos="fade-up">
                         <div class="day-header">Senin, 20 April 2026</div>
                         <div class="day-content">
                             <div class="day-item">
@@ -463,7 +517,7 @@
                     </div>
                 </div>
             </div>
-        </section>        <!-- Panduan Section -->
+        </section> <!-- Panduan Section -->
         <section id="panduan" class="instructions section bg-alt">
             <div class="container grid-2">
                 <div class="instruction-img" data-aos="fade-right">
@@ -508,7 +562,7 @@
                     </ul>
                 </div>
             </div>
-        </section>        <!-- ========== MODAL FORM: DAFTAR HADIR ========== -->
+        </section> <!-- ========== MODAL FORM: DAFTAR HADIR ========== -->
         <div class="modal-overlay" id="modal-presensi">
             <div class="admin-modal">
                 <!-- Header -->
@@ -528,7 +582,7 @@
                         <button class="admin-modal-close" onclick="closeModal('modal-presensi')"><i
                                 class="fas fa-times"></i></button>
                     </div>
-                </div>                <!-- Body -->
+                </div> <!-- Body -->
                 <div class="admin-modal-body">
                     <!-- Row 1: Mapel & Tanggal (Tetap ada untuk context) -->
                     <div class="amf-row">
@@ -555,7 +609,7 @@
                             <label class="amf-label">Tanggal <span class="amf-req">*</span></label>
                             <input type="date" id="dh-tanggal" class="amf-input" onchange="autoLoadPresensi()">
                         </div>
-                    </div>                    <!-- Tambahan Pilihan Jam untuk Siswa -->
+                    </div> <!-- Tambahan Pilihan Jam untuk Siswa -->
                     <div class="amf-group">
                         <label class="amf-label">Pukul Pelaksanaan <span class="amf-req">*</span></label>
                         <select id="dh-pukul" class="amf-input">
@@ -563,7 +617,9 @@
                             <option value="07.15 - 08.45">07.15 - 08.45</option>
                             <option value="09.15 - 10.45">09.15 - 10.45</option>
                         </select>
-                    </div>                    <div class="amf-divider"><span>Form Kehadiran Siswa</span></div>                    <div class="student-form-card">
+                    </div>
+                    <div class="amf-divider"><span>Form Kehadiran Siswa</span></div>
+                    <div class="student-form-card">
                         <!-- Grade Conflict Warning -->
                         <div id="grade-mismatch-warning"
                             style="display:none; color:#fb7185; background:rgba(244, 63, 94, 0.1); padding:0.75rem; border-radius:8px; margin-bottom:1rem; font-size:0.85rem; border:1px solid rgba(244, 63, 94, 0.2);">
@@ -573,7 +629,7 @@
                             Anda saat ini berada di Tab <b>Kelas <span id="current-tab-grade"></span></b>. Silakan
                             pindah
                             kelas!
-                        </div>                        <!-- Ruang Selection -->
+                        </div> <!-- Ruang Selection -->
                         <div class="amf-group" style="margin-bottom:1.5rem">
                             <label class="amf-label">Pilih Ruang <span class="amf-req">*</span></label>
                             <div class="amf-room-pills">
@@ -590,7 +646,7 @@
                                     <span class="pill-label r3"><i class="fas fa-door-open"></i> R3</span>
                                 </label>
                             </div>
-                        </div>                        <!-- Individual Inputs -->
+                        </div> <!-- Individual Inputs -->
                         <div class="amf-row">
                             <div class="amf-group">
                                 <label class="amf-label">Nomor Peserta <span class="amf-req">*</span></label>
@@ -601,7 +657,7 @@
                                 <input type="text" id="dh-nama-tunggal" class="amf-input"
                                     placeholder="Nama sesuai absen">
                             </div>
-                        </div>                        <!-- Large Signature -->
+                        </div> <!-- Large Signature -->
                         <div class="amf-group">
                             <label class="amf-label">Tanda Tangan <span class="amf-req">*</span></label>
                             <div class="large-sig-wrap" id="sig-stu-tunggal-wrap">
@@ -616,13 +672,14 @@
                                     <i class="fas fa-eraser"></i> Hapus & Ulangi
                                 </button>
                             </div>
-                        </div>                        <button class="btn-main" onclick="submitSingleStudent()"
+                        </div> <button class="btn-main" onclick="submitSingleStudent()"
                             style="width:100%; margin-top:1.5rem; justify-content:center; padding: 1rem;">
                             <i class="fas fa-paper-plane"></i> Kirim Kehadiran
                         </button>
-                    </div>                    <!-- MODE PENGAWAS (Hidden by Default) -->
+                    </div> <!-- MODE PENGAWAS (Hidden by Default) -->
                     <div id="supervisor-section">
-                        <div class="amf-divider"><span>Mode Pengawas (Administrasi)</span></div>                        <div class="amf-sigpad-grid">
+                        <div class="amf-divider"><span>Mode Pengawas (Administrasi)</span></div>
+                        <div class="amf-sigpad-grid">
                             <div class="amf-sigpad-card p1">
                                 <div class="amf-sigpad-badge p1">Pengawas 1</div>
                                 <div class="amf-row">
@@ -642,7 +699,8 @@
                                     </div>
                                 </div>
                                 <button type="button" class="amf-sig-clear" onclick="clearSig('sig-p1')">Hapus</button>
-                            </div>                            <div class="amf-sigpad-card p2">
+                            </div>
+                            <div class="amf-sigpad-card p2">
                                 <div class="amf-sigpad-badge p2">Pengawas 2</div>
                                 <div class="amf-row">
                                     <div class="amf-group">
@@ -662,7 +720,8 @@
                                 </div>
                                 <button type="button" class="amf-sig-clear" onclick="clearSig('sig-p2')">Hapus</button>
                             </div>
-                        </div>                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.5rem;">
+                        </div>
+                        <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.5rem;">
                             <button class="amf-btn-load" onclick="loadPresensiList()" style="justify-content:center">
                                 <i class="fas fa-folder-open"></i> Muat Data
                             </button>
@@ -674,9 +733,10 @@
                             style="width:100%; margin-top: 1rem; justify-content:center">
                             <i class="fas fa-save"></i> Simpan Data Pengawas
                         </button>
-                    </div>                </div>
+                    </div>
+                </div>
             </div>
-        </div>        <!-- Modal List Presensi (load dari DB) -->
+        </div> <!-- Modal List Presensi (load dari DB) -->
         <div class="modal-overlay" id="modal-load-presensi">
             <div class="admin-modal" style="max-width:620px;">
                 <div class="admin-modal-header">
@@ -706,7 +766,7 @@
                     </div>
                 </div>
             </div>
-        </div>        <!-- ========== MODAL FORM: BERITA ACARA ========== -->
+        </div> <!-- ========== MODAL FORM: BERITA ACARA ========== -->
         <div class="modal-overlay" id="modal-ba">
             <div class="admin-modal">
                 <div class="admin-modal-header">
@@ -719,7 +779,8 @@
                     </div>
                     <button class="admin-modal-close" onclick="closeModal('modal-ba')"><i
                             class="fas fa-times"></i></button>
-                </div>                <div class="admin-modal-body">
+                </div>
+                <div class="admin-modal-body">
                     <!-- Mapel & Hari -->
                     <div class="amf-row">
                         <div class="amf-group">
@@ -765,7 +826,8 @@
                             <option value="07.15 - 08.45">07.15 - 08.45</option>
                             <option value="09.15 - 10.45">09.15 - 10.45</option>
                         </select>
-                    </div>                    <div class="amf-divider"><span>Data Kehadiran</span></div>                    <!-- Jumlah Peserta -->
+                    </div>
+                    <div class="amf-divider"><span>Data Kehadiran</span></div> <!-- Jumlah Peserta -->
                     <div class="amf-row three-col">
                         <div class="amf-group">
                             <label class="amf-label">Seharusnya Hadir</label>
@@ -791,7 +853,9 @@
                             <input type="text" id="ba-nomor-tidak-hadir" class="amf-input"
                                 placeholder="Kosong jika tidak ada">
                         </div>
-                    </div>                    <div class="amf-divider"><span>Detail Soal & Lembar</span></div>                    <div class="amf-row three-col">
+                    </div>
+                    <div class="amf-divider"><span>Detail Soal & Lembar</span></div>
+                    <div class="amf-row three-col">
                         <div class="amf-group">
                             <label class="amf-label">Lembar Soal (Eksp.)</label>
                             <input type="number" id="ba-lembar-soal" class="amf-input" placeholder="0" min="0">
@@ -804,12 +868,14 @@
                             <label class="amf-label">Lembar Jawab (Eksp.)</label>
                             <input type="number" id="ba-lembar-jawab" class="amf-input" placeholder="0" min="0">
                         </div>
-                    </div>                    <!-- Catatan -->
+                    </div> <!-- Catatan -->
                     <div class="amf-group">
                         <label class="amf-label">Catatan Selama Pelaksanaan</label>
                         <textarea id="ba-catatan" class="amf-input" rows="3"
                             placeholder="Tulis catatan atau kendala jika ada..."></textarea>
-                    </div>                    <div class="amf-divider"><span>Data Pengawas</span></div>                    <!-- Pengawas with Signature Pads (Berita Acara) -->
+                    </div>
+                    <div class="amf-divider"><span>Data Pengawas</span></div>
+                    <!-- Pengawas with Signature Pads (Berita Acara) -->
                     <div class="amf-sigpad-grid">
                         <!-- Pengawas 1 -->
                         <div class="amf-sigpad-card p1">
@@ -837,7 +903,7 @@
                                     <i class="fas fa-undo"></i> Hapus / Ulangi
                                 </button>
                             </div>
-                        </div>                        <!-- Pengawas 2 -->
+                        </div> <!-- Pengawas 2 -->
                         <div class="amf-sigpad-card p2">
                             <div class="amf-sigpad-badge p2">Pengawas 2</div>
                             <div class="amf-row" style="margin-bottom:0.5rem;">
@@ -864,7 +930,8 @@
                                 </button>
                             </div>
                         </div>
-                    </div>                </div>                <!-- Footer -->
+                    </div>
+                </div> <!-- Footer -->
                 <div class="admin-modal-footer">
                     <div></div>
                     <div style="display:flex; gap:0.75rem;">
@@ -877,7 +944,7 @@
                     </div>
                 </div>
             </div>
-        </div>        <!-- ========== MODAL RIWAYAT KEHADIRAN ========== -->
+        </div> <!-- ========== MODAL RIWAYAT KEHADIRAN ========== -->
         <div class="modal-overlay" id="modal-riwayat">
             <div class="admin-modal" style="max-width: 950px;">
                 <div class="admin-modal-header">
@@ -904,7 +971,7 @@
                                 <i class="fas fa-file-alt"></i> Riwayat Berita Acara
                             </button>
                         </div>
-                    </div>                    <!-- RIWAYAT PRESENSI CONTENT -->
+                    </div> <!-- RIWAYAT PRESENSI CONTENT -->
                     <div id="riwayat-presensi-content">
                         <div
                             style="margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center;">
@@ -914,7 +981,8 @@
                                 style="padding: 0.6rem 1rem; font-size: 0.85rem;">
                                 <i class="fas fa-sync"></i> Segarkan Data
                             </button>
-                        </div>                        <div style="overflow-x: auto; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;">
+                        </div>
+                        <div style="overflow-x: auto; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;">
                             <table style="width:100%; border-collapse: collapse; font-size: 0.9rem;">
                                 <thead>
                                     <tr style="background: rgba(255,255,255,0.05); text-align: left;">
@@ -945,7 +1013,7 @@
                                 </tbody>
                             </table>
                         </div>
-                    </div>                    <!-- RIWAYAT BERITA ACARA CONTENT -->
+                    </div> <!-- RIWAYAT BERITA ACARA CONTENT -->
                     <div id="riwayat-ba-content" style="display: none;">
                         <div
                             style="margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center;">
@@ -955,7 +1023,8 @@
                                 style="padding: 0.6rem 1rem; font-size: 0.85rem;">
                                 <i class="fas fa-sync"></i> Segarkan Data
                             </button>
-                        </div>                        <div style="overflow-x: auto; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;">
+                        </div>
+                        <div style="overflow-x: auto; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px;">
                             <table style="width:100%; border-collapse: collapse; font-size: 0.9rem;">
                                 <thead>
                                     <tr style="background: rgba(255,255,255,0.05); text-align: left;">
@@ -984,10 +1053,10 @@
                     </div>
                 </div>
             </div>
-        </div>        <!-- Toast Component -->
+        </div> <!-- Toast Component -->
         <div id="toast" class="toast">
             <i class="fas fa-info-circle"></i> <span id="toast-message">Merespon...</span>
-        </div>        <!-- BROADCAST MODAL -->
+        </div> <!-- BROADCAST MODAL -->
         <div id="modal-broadcast"
             style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 10000; display: none; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(8px);">
             <div
@@ -1004,17 +1073,21 @@
                     SAYA MENGERTI
                 </button>
             </div>
-        </div>        <style>
+        </div>
+        <style>
             @keyframes popIn {
                 from {
                     opacity: 0;
                     transform: scale(0.8);
-                }                to {
+                }
+
+                to {
                     opacity: 1;
                     transform: scale(1);
                 }
             }
-        </style>        <!-- MODAL CONFIRMATION (REMOVED AND REPLACED BY FORM PRESENSI) -->        <!-- MODAL CONTROL PANEL KURIKULUM -->
+        </style> <!-- MODAL CONFIRMATION (REMOVED AND REPLACED BY FORM PRESENSI) -->
+        <!-- MODAL CONTROL PANEL KURIKULUM -->
         <div id="modal-kurikulum" class="modal-overlay" style="z-index: 22000;">
             <div class="modal-content" style="max-width: 600px; max-height: 85vh; overflow-y: auto;">
                 <div class="modal-header">
@@ -1028,7 +1101,8 @@
                     <p
                         style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 1.5rem; border-left: 3px solid #f43f5e; padding-left: 10px;">
                         Gunakan toggle di bawah untuk membuka atau menutup akses soal secara instan tanpa mengedit kode.
-                    </p>                    <div
+                    </p>
+                    <div
                         style="background: rgba(244, 63, 94, 0.1); padding: 1.5rem; border-radius: 15px; margin-bottom: 2rem;">
                         <h4 style="color: #f43f5e; margin-bottom: 1rem;">Kontrol Master (Seluruh Kelas)</h4>
                         <div style="display: flex; gap: 10px;">
@@ -1037,7 +1111,8 @@
                             <button onclick="setGlobalStatus('passed')" class="btn-card"
                                 style="background: #f43f5e; color: white; cursor: pointer;">Tutup Semua Soal</button>
                         </div>
-                    </div>                    <div
+                    </div>
+                    <div
                         style="display: flex; gap: 10px; margin-bottom: 1.5rem; background: rgba(255,255,255,0.05); padding: 5px; border-radius: 12px;">
                         <button onclick="setControlGrade('7')" class="ctrl-grade-btn" id="ctrl-grade-7"
                             style="flex:1; padding:0.8rem; border-radius:10px; border:none; background:#3b82f6; color:white; font-weight:700; cursor:pointer;">Kelas
@@ -1048,12 +1123,13 @@
                         <button onclick="setControlGrade('9')" class="ctrl-grade-btn" id="ctrl-grade-9"
                             style="flex:1; padding:0.8rem; border-radius:10px; border:none; background:transparent; color:#94a3b8; font-weight:700; cursor:pointer;">Kelas
                             9</button>
-                    </div>                    <div id="subject-control-list">
+                    </div>
+                    <div id="subject-control-list">
                         <!-- Kontrol Per Mapel Dimasukkan via JS -->
                     </div>
                 </div>
             </div>
-        </div>        <!-- Footer -->
+        </div> <!-- Footer -->
         <footer id="kontak">
             <div class="container footer-content">
                 <div class="footer-info">
@@ -1072,7 +1148,7 @@
             <div class="footer-bottom">
                 <p>&copy; 2026 SMP Tunas Hidup Harapan Kita. All Rights Reserved.</p>
             </div>
-        </footer>        <!-- GRADE SELECTION OVERLAY -->
+        </footer> <!-- GRADE SELECTION OVERLAY -->
         <div id="grade-selection-overlay"
             style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0f172a; z-index: 20000; display: flex; align-items: center; justify-content: center; padding: 20px;">
             <div
@@ -1081,7 +1157,8 @@
                         class="fas fa-graduation-cap"></i>
                 </div>
                 <h2 style="color: white; margin-bottom: 0.5rem; font-size: 1.8rem;">Selamat Datang di Portal Ujian</h2>
-                <p style="color: #94a3b8; margin-bottom: 2.5rem;">Pilih jenjang kelas Anda untuk melanjutkan</p>                <div style="display: grid; grid-template-columns: 1fr; gap: 1rem;">
+                <p style="color: #94a3b8; margin-bottom: 2.5rem;">Pilih jenjang kelas Anda untuk melanjutkan</p>
+                <div style="display: grid; grid-template-columns: 1fr; gap: 1rem;">
                     <button onclick="selectInitialGrade('7')"
                         style="background: linear-gradient(135deg, #3b82f6, #1d4ed8); border: none; padding: 1.2rem; border-radius: 16px; color: white; font-weight: 700; cursor: pointer; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; gap: 10px;">
                         <i class="fas fa-7"></i> SAYA KELAS 7
@@ -1094,11 +1171,13 @@
                         style="background: linear-gradient(135deg, #f59e0b, #d97706); border: none; padding: 1.2rem; border-radius: 16px; color: white; font-weight: 700; cursor: pointer; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; gap: 10px;">
                         <i class="fas fa-9"></i> SAYA KELAS 9
                     </button>
-                </div>                <p style="margin-top: 2rem; font-size: 0.8rem; color: #64748b;">Pastikan Anda memilih kelas yang benar
+                </div>
+                <p style="margin-top: 2rem; font-size: 0.8rem; color: #64748b;">Pastikan Anda memilih kelas yang benar
                     agar
                     link soal muncul sesuai jadwal.</p>
             </div>
-        </div>    </div>    <!-- Scripts -->
+        </div>
+    </div> <!-- Scripts -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         // Move global state to the top to avoid hoisting/initialization issues
@@ -1238,9 +1317,9 @@
             document.getElementById('current-time').textContent = timeStr;
         }
         setInterval(updateTime, 1000);
-        updateTime();        function startCountdown() {
+        updateTime(); function startCountdown() {
             const labelEl = document.querySelector('.status-text .label');
-            const countdownEl = document.getElementById('countdown');            function update() {
+            const countdownEl = document.getElementById('countdown'); function update() {
                 const now = new Date();
                 const nowMs = now.getTime();                // Konversi scheduleData ke array dan urutkan
                 const items = Object.entries(scheduleData).map(([key, val]) => ({
@@ -1248,8 +1327,8 @@
                     name: mapelNames[key] || key,
                     start: new Date(`${val.date}T${val.start}:00`).getTime(),
                     end: new Date(`${val.date}T${val.end}:00`).getTime()
-                })).sort((a, b) => a.start - b.start);                let targetItem = null;
-                let isOngoing = false;                for (let item of items) {
+                })).sort((a, b) => a.start - b.start); let targetItem = null;
+                let isOngoing = false; for (let item of items) {
                     if (nowMs >= item.start && nowMs <= item.end) {
                         targetItem = item;
                         isOngoing = true;
@@ -1260,11 +1339,11 @@
                         isOngoing = false;
                         break;
                     }
-                }                if (!targetItem) {
+                } if (!targetItem) {
                     if (labelEl) labelEl.textContent = "";
                     if (countdownEl) countdownEl.textContent = "Seluruh Ujian Selesai";
                     return;
-                }                if (isOngoing) {
+                } if (isOngoing) {
                     if (labelEl) labelEl.textContent = `Berlangsung ${targetItem.name}:`;
                     const diff = targetItem.end - nowMs;
                     if (countdownEl) countdownEl.textContent = formatTime(diff);
@@ -1273,15 +1352,15 @@
                     const diff = targetItem.start - nowMs;
                     if (countdownEl) countdownEl.textContent = formatTime(diff);
                 }
-            }            function formatTime(ms) {
+            } function formatTime(ms) {
                 const d = Math.floor(ms / (1000 * 60 * 60 * 24));
                 const h = Math.floor((ms % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 const m = Math.floor((ms % (1000 * 60 * 60)) / (1000 * 60));
-                const s = Math.floor((ms % (1000 * 60)) / 1000);                let text = "";
+                const s = Math.floor((ms % (1000 * 60)) / 1000); let text = "";
                 if (d > 0) text += `${d}h `;
                 text += `${h.toString().padStart(2, '0')}j ${m.toString().padStart(2, '0')}m ${s.toString().padStart(2, '0')}d`;
                 return text;
-            }            setInterval(update, 1000);
+            } setInterval(update, 1000);
             update();
         }        // ==========================================
         // DATA JADWAL UJIAN
@@ -1300,7 +1379,7 @@
             'informatika': { date: '2026-04-20', start: '07:15', end: '08:45' },
             'b-mandarin': { date: '2026-04-20', start: '09:15', end: '10:45' },
             'bk': { date: '2026-04-20', start: '11:00', end: '12:00' }
-        };        const mapelNames = {
+        }; const mapelNames = {
             'agama': 'Pendidikan Agama',
             'b-indo': 'Bahasa Indonesia',
             'b-inggris': 'Bahasa Inggris',
@@ -1402,7 +1481,8 @@
                     datalist.appendChild(opt);
                 });
                 document.body.appendChild(datalist);
-                document.getElementById('dh-nomor-tunggal')?.setAttribute('list', 'dh-nomor-list');            } catch (e) {
+                document.getElementById('dh-nomor-tunggal')?.setAttribute('list', 'dh-nomor-list');
+            } catch (e) {
                 console.error('Gagal memuat data siswa:', e);
             }
         }
@@ -1412,27 +1492,27 @@
                 idInput.addEventListener('input', (e) => {
                     const val = e.target.value.trim();
                     const warnEl = document.getElementById('grade-mismatch-warning');
-                    if (warnEl) warnEl.style.display = 'none';                    if (!val) return;                    const student = studentList.find(s => s.id === val);
+                    if (warnEl) warnEl.style.display = 'none'; if (!val) return; const student = studentList.find(s => s.id === val);
                     if (student) {
                         const sGrade = String(student.grade);
-                        const cGrade = String(activeClass);                        if (sGrade !== cGrade) {
+                        const cGrade = String(activeClass); if (sGrade !== cGrade) {
                             if (warnEl) {
                                 document.getElementById('warning-student-name').innerText = student.nama;
                                 document.getElementById('actual-grade').innerText = sGrade;
                                 document.getElementById('current-tab-grade').innerText = cGrade;
                                 warnEl.style.display = 'block';
                             }
-                        }                        document.getElementById('dh-nama-tunggal').value = student.nama;                        // Mapping ruang (1,2,3 -> R1,R2,R3)
+                        } document.getElementById('dh-nama-tunggal').value = student.nama;                        // Mapping ruang (1,2,3 -> R1,R2,R3)
                         const roomVal = 'R' + student.room;
                         const radio = document.querySelector(`input[name="dh-ruang-radio"][value="${roomVal}"]`);
-                        if (radio) radio.checked = true;                        showToast(`Siswa ditemukan: ${student.nama} (Ruang ${roomVal})`);
+                        if (radio) radio.checked = true; showToast(`Siswa ditemukan: ${student.nama} (Ruang ${roomVal})`);
                     }
                 });
             }
         });
         // Lazy-load Supabase hanya saat dibutuhkan
         let _supabaseClient = null;
-        let onlineChannel = null;        async function getSupabase() {
+        let onlineChannel = null; async function getSupabase() {
             if (_supabaseClient) return _supabaseClient;
             if (!SUPABASE_URL || !SUPABASE_KEY) return null;
             try {
@@ -1450,13 +1530,13 @@
         async function initPresence(client) {
             const savedName = localStorage.getItem('student_name') || 'Siswa';
             const savedClass = localStorage.getItem('student_class') || '-';
-            const savedRoom = localStorage.getItem('student_room') || '-';            onlineChannel = client.channel('exam-system', {
+            const savedRoom = localStorage.getItem('student_room') || '-'; onlineChannel = client.channel('exam-system', {
                 config: {
                     presence: {
                         key: 'user-' + Math.random().toString(36).substr(2, 9),
                     },
                 },
-            });            onlineChannel
+            }); onlineChannel
                 .on('presence', { event: 'sync' }, () => {
                     // console.log('Presence sync', onlineChannel.presenceState());
                 })
@@ -1473,13 +1553,13 @@
                         });
                     }
                 });
-        }        function handleBroadcast(payload) {
+        } function handleBroadcast(payload) {
             const savedName = localStorage.getItem('student_name') || '';
             const savedRoom = localStorage.getItem('student_room') || '';
             const target = payload.target || 'ALL';            // Filter Target: ALL, specific Room, or specific Name
             const isTargeted = (target === 'ALL') ||
                 (target === savedRoom) ||
-                (target.toLowerCase() === savedName.toLowerCase());            if (!isTargeted) return;            const modal = document.getElementById('modal-broadcast');
+                (target.toLowerCase() === savedName.toLowerCase()); if (!isTargeted) return; const modal = document.getElementById('modal-broadcast');
             const msgEl = document.getElementById('bc-message');
             if (modal && msgEl) {
                 msgEl.innerText = payload.message;
@@ -1487,10 +1567,10 @@
                 const audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3');
                 audio.play().catch(e => console.log('Audio blocked', e));
             }
-        }        window.closeBroadcast = function () {
+        } window.closeBroadcast = function () {
             document.getElementById('modal-broadcast').style.display = 'none';
         }        // ---- ROOM TABS ----
-        const ROOMS = ['R1', 'R2', 'R3'];        function switchRoomTab(room) {
+        const ROOMS = ['R1', 'R2', 'R3']; function switchRoomTab(room) {
             ROOMS.forEach(r => {
                 const panel = document.getElementById(`room-panel-${r}`);
                 panel.style.display = (r === room) ? 'block' : 'none';
@@ -1504,7 +1584,7 @@
                     }, 50);
                 }
             });
-        }        function updateRoomCounts() {
+        } function updateRoomCounts() {
             ROOMS.forEach(r => {
                 let count = 0;
                 for (let i = 1; i <= 20; i++) {
@@ -1514,38 +1594,45 @@
                 const el = document.getElementById(`count-${r}`);
                 if (el) el.textContent = count;
             });
-        }        // ---- SIGNATURE PAD LOGIC ----
-        let sigPads = {}; // Store SignaturePad instances        function initSignaturePad(id) {
+        // ---- SIGNATURE PAD LOGIC ----
+        let sigPads = {}; // Store SignaturePad instances
+        function initSignaturePad(id) {
             const canvas = document.getElementById(id);
-            if (!canvas) return;            // Don't re-init if already exists, just resize
+            if (!canvas) return;
+            // Don't re-init if already exists, just resize
             if (sigPads[id]) {
                 if (canvas._resize) canvas._resize();
                 return sigPads[id];
-            }            const pad = new SignaturePad(canvas, {
+            }
+            const pad = new SignaturePad(canvas, {
                 backgroundColor: 'rgba(0,0,0,0)',
                 penColor: 'white'
             });            // Resizing for crisp lines
             function resizeCanvas() {
-                if (canvas.offsetWidth === 0) return; // Don't resize if hidden                const ratio = Math.max(window.devicePixelRatio || 1, 1);
-                // Save current image to restore after resize
-                const data = pad.toDataURL();                canvas.width = canvas.offsetWidth * ratio;
+                if (canvas.offsetWidth === 0) return; // Don't resize if hidden
+                const ratio = Math.max(window.devicePixelRatio || 1, 1);
+                const data = pad.toDataURL();
+                canvas.width = canvas.offsetWidth * ratio;
                 canvas.height = canvas.offsetHeight * ratio;
-                canvas.getContext("2d").scale(ratio, ratio);                pad.clear(); // necessary to reset scale
-                if (data && data !== 'data:,') pad.fromDataURL(data); // restore
-            }            // Simple debounce so we don't clear on every teeny resize
+                canvas.getContext("2d").scale(ratio, ratio);
+                pad.clear();
+                if (data && data !== 'data:,') pad.fromDataURL(data);
+            }
             let resizeTimer;
             window.addEventListener("resize", () => {
                 clearTimeout(resizeTimer);
                 resizeTimer = setTimeout(resizeCanvas, 200);
-            });            // Expose resize for external calls (like tab switching)
+            });
             canvas._resize = resizeCanvas;
-            resizeCanvas();            // Hide hint/placeholder when drawing
+            resizeCanvas();
             pad.onBegin = () => {
                 const hint = document.getElementById(id + '-hint');
                 if (hint) hint.style.opacity = '0';
-            };            sigPads[id] = pad;
+            };
+            sigPads[id] = pad;
             return pad;
-        }        function clearSig(id) {
+        }
+        function clearSig(id) {
             if (sigPads[id]) {
                 sigPads[id].clear();
                 const hint = document.getElementById(id + '-hint');
@@ -1553,42 +1640,42 @@
                 updateRoomCounts();
             }
         }        // Student table generation removed for single-form model        function openModal(id) {
-            event.preventDefault();
-            document.getElementById(id).classList.add('active');
-            document.body.style.overflow = 'hidden';            if (id === 'modal-presensi') {
-                // Initialize SigPads AFTER elements are in DOM and visible
-                setTimeout(() => {
-                    initSignaturePad('sig-stu-tunggal');
-                    initSignaturePad('sig-p1');
-                    initSignaturePad('sig-p2');
-                }, 400);
-            }            if (id === 'modal-ba') {
-                const hasDraft = loadBADraft();
-                if (!hasDraft) {
-                    autoFillBADate();
-                }                setTimeout(() => {
-                    initSignaturePad('ba-sig-p1');
-                    initSignaturePad('ba-sig-p2');
-                }, 300);
-            }            if (id === 'modal-riwayat') {
-                switchRiwayatTab('presensi');
-            }
+        event.preventDefault();
+        document.getElementById(id).classList.add('active');
+        document.body.style.overflow = 'hidden'; if (id === 'modal-presensi') {
+            // Initialize SigPads AFTER elements are in DOM and visible
+            setTimeout(() => {
+                initSignaturePad('sig-stu-tunggal');
+                initSignaturePad('sig-p1');
+                initSignaturePad('sig-p2');
+            }, 400);
+        } if (id === 'modal-ba') {
+            const hasDraft = loadBADraft();
+            if (!hasDraft) {
+                autoFillBADate();
+            } setTimeout(() => {
+                initSignaturePad('ba-sig-p1');
+                initSignaturePad('ba-sig-p2');
+            }, 300);
+        } if (id === 'modal-riwayat') {
+            switchRiwayatTab('presensi');
+        }
         }        function autoFillBADate() {
             const now = new Date();
             const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
             const hari = days[now.getDay()];
-            const tanggal = now.toISOString().split('T')[0];            document.getElementById('ba-hari').value = hari;
+            const tanggal = now.toISOString().split('T')[0]; document.getElementById('ba-hari').value = hari;
             document.getElementById('ba-tanggal-full').value = tanggal;
-        }        function saveBADraft() {
+        } function saveBADraft() {
             const modal = document.getElementById('modal-ba');
-            if (!modal) return;            const data = {};
+            if (!modal) return; const data = {};
             const inputs = modal.querySelectorAll('input, select, textarea');
             inputs.forEach(el => {
                 if (el.id) data[el.id] = el.value;
-            });            localStorage.setItem('draft_ba_guru', JSON.stringify(data));
-        }        function loadBADraft() {
+            }); localStorage.setItem('draft_ba_guru', JSON.stringify(data));
+        } function loadBADraft() {
             const draftStr = localStorage.getItem('draft_ba_guru');
-            if (!draftStr) return false;            try {
+            if (!draftStr) return false; try {
                 const data = JSON.parse(draftStr);
                 Object.keys(data).forEach(id => {
                     const el = document.getElementById(id);
@@ -1600,7 +1687,7 @@
                 console.error('Gagal memuat draft:', e);
                 return false;
             }
-        }        function closeModal(id) {
+        } function closeModal(id) {
             document.getElementById(id).classList.remove('active');
             document.body.style.overflow = '';
             // Reset warning
@@ -1612,10 +1699,10 @@
             activeClass = grade;            // Update tabs UI
             document.querySelectorAll('.tab-btn:not(.riwayat-tab-btn)').forEach(b => {
                 b.classList.toggle('active', b.dataset.class === grade);
-            });            document.getElementById('grade-selection-overlay').style.display = 'none';
+            }); document.getElementById('grade-selection-overlay').style.display = 'none';
             activateButtons();
             showToast(`Mode Kelas ${grade} Aktif`);
-        };        function checkGradeGateway() {
+        }; function checkGradeGateway() {
             const saved = localStorage.getItem('user_grade');
             if (saved) {
                 document.getElementById('grade-selection-overlay').style.display = 'none';
@@ -1626,7 +1713,7 @@
                 });
             }
         }
-        document.addEventListener('DOMContentLoaded', checkGradeGateway);        function showToast(message, isError = false) {
+        document.addEventListener('DOMContentLoaded', checkGradeGateway); function showToast(message, isError = false) {
             const toast = document.getElementById('toast');
             document.getElementById('toast-message').textContent = message;
             toast.style.background = isError ? '#ef4444' : '#10b981';
@@ -1635,31 +1722,31 @@
         }        // Fungsi print Daftar Hadir - cetak dalam format tabel 20 baris
         async function printPresensiForm() {
             const mapel = document.getElementById('dh-mapel').value;
-            const tglRaw = document.getElementById('dh-tanggal').value;            if (!mapel || !tglRaw) {
+            const tglRaw = document.getElementById('dh-tanggal').value; if (!mapel || !tglRaw) {
                 showToast('Pilih Mapel & Tanggal dulu untuk mencetak!', true);
                 return;
-            }            const printWin = window.open('', '_blank', 'width=860,height=950');
-            printWin.document.write('<html><head><title>Memuat...</title></head><body><p style="font-family:sans-serif;text-align:center;margin-top:50px;">Sedang menyiapkan dokumen pendaftaran...</p></body></html>');            showToast('Menyiapkan dokumen cetak...', false);            try {
+            } const printWin = window.open('', '_blank', 'width=860,height=950');
+            printWin.document.write('<html><head><title>Memuat...</title></head><body><p style="font-family:sans-serif;text-align:center;margin-top:50px;">Sedang menyiapkan dokumen pendaftaran...</p></body></html>'); showToast('Menyiapkan dokumen cetak...', false); try {
                 const client = await getSupabase();
                 // Tarik SEMUA data (Siswa + Pengawas) untuk sesi ini
                 const { data: allRows, error } = await client.from('presensi_siswa')
                     .select('*')
                     .eq('mata_pelajaran', mapel)
-                    .eq('tanggal', tglRaw);                if (error) throw error;                if (!allRows || allRows.length === 0) {
-                    printWin.close();
-                    showToast('Data belum ditemukan di database!', true);
-                    return;
-                }                // Pisahkan data pengawas dan siswa
+                    .eq('tanggal', tglRaw); if (error) throw error; if (!allRows || allRows.length === 0) {
+                        printWin.close();
+                        showToast('Data belum ditemukan di database!', true);
+                        return;
+                    }                // Pisahkan data pengawas dan siswa
                 const sessionMeta = allRows.find(r => r.ruang === 'SESSION_METADATA') || {};
-                const studentRows = allRows.filter(r => r.ruang !== 'SESSION_METADATA');                const tgl = new Date(tglRaw).toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' });
+                const studentRows = allRows.filter(r => r.ruang !== 'SESSION_METADATA'); const tgl = new Date(tglRaw).toLocaleDateString('id-ID', { day: '2-digit', month: 'long', year: 'numeric' });
                 const pukul = sessionMeta.pukul || document.getElementById('dh-pukul').value || '...';
                 const p1Nama = sessionMeta.pengawas_1_nama || '';
                 const p1Niy = sessionMeta.pengawas_1_niy || '';
                 const p2Nama = sessionMeta.pengawas_2_nama || '';
-                const p2Niy = sessionMeta.pengawas_2_niy || '';                const p1TtdImg = sessionMeta.p1_ttd ? `<img src="${sessionMeta.p1_ttd}" style="height:50px; filter: brightness(0);">` : '';
+                const p2Niy = sessionMeta.pengawas_2_niy || ''; const p1TtdImg = sessionMeta.p1_ttd ? `<img src="${sessionMeta.p1_ttd}" style="height:50px; filter: brightness(0);">` : '';
                 const p2TtdImg = sessionMeta.p2_ttd ? `<img src="${sessionMeta.p2_ttd}" style="height:50px; filter: brightness(0);">` : '';                // Kelompokkan siswa per ruang (R1, R2, R3)
                 const dataSiswaMap = { R1: [], R2: [], R3: [] };                // Urutkan studentRows berdasarkan created_at untuk mendapatkan urutan nomor otomatis
-                studentRows.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));                studentRows.forEach(row => {
+                studentRows.sort((a, b) => new Date(a.created_at) - new Date(b.created_at)); studentRows.forEach(row => {
                     const r = row.ruang;
                     if (dataSiswaMap[r]) {
                         // Jika format baru, data_siswa adalah objek tunggal
@@ -1670,15 +1757,15 @@
                             dataSiswaMap[r] = dataSiswaMap[r].concat(row.data_siswa);
                         }
                     }
-                });                const roomColors = { R1: '#1d4ed8', R2: '#7c3aed', R3: '#b45309' };
-                let pages = '';                ROOMS.forEach((r, idx) => {
+                }); const roomColors = { R1: '#1d4ed8', R2: '#7c3aed', R3: '#b45309' };
+                let pages = ''; ROOMS.forEach((r, idx) => {
                     const list = dataSiswaMap[r] || [];
-                    if (list.length === 0 && studentRows.length > 0) return;                    let rows = '';
+                    if (list.length === 0 && studentRows.length > 0) return; let rows = '';
                     for (let i = 1; i <= 20; i++) {
                         const item = list[i - 1] || {};
                         const stuTtdImg = item.ttd ? `<img src="${item.ttd}" style="height:35px; filter: brightness(0);">` : '&nbsp;';
                         rows += `<tr><td style="text-align:center">${i}</td><td>${item.nomor_peserta || ''}</td><td>${item.nama || ''}</td><td style="text-align:center; padding:0;">${stuTtdImg}</td></tr>`;
-                    }                    pages += `
+                    } pages += `
                     <div class="page${pages.length > 0 ? ' page-break' : ''}">
                         <div class="header">
                             <img class="logo" src="logo.jpg">
@@ -1720,11 +1807,11 @@
                             </div>
                         </div>
                     </div>`;
-                });                if (!pages) {
+                }); if (!pages) {
                     printWin.close();
                     showToast('Tidak ada data siswa untuk dicetak!', true);
                     return;
-                }                printWin.document.open();
+                } printWin.document.open();
                 printWin.document.write(`<!DOCTYPE html><html><head>
                     <meta charset="UTF-8"><title>Daftar Hadir - ${mapel}</title>
                     <style>
@@ -1752,7 +1839,8 @@
                     </style>
                 </head><body>${pages}</body></html>`);
                 printWin.document.close();
-                setTimeout(() => { printWin.print(); }, 500);            } catch (err) {
+                setTimeout(() => { printWin.print(); }, 500);
+            } catch (err) {
                 console.error('Print error:', err);
                 if (printWin) printWin.close();
                 showToast('Gagal memproses data cetak!', true);
@@ -1786,7 +1874,7 @@
             const p2Nama = document.getElementById('ba-p2-nama').value;
             const p2Niy = document.getElementById('ba-p2-niy').value;            // Get signature images
             const p1TtdImg = (sigPads['ba-sig-p1'] && !sigPads['ba-sig-p1'].isEmpty()) ? `<img src="${sigPads['ba-sig-p1'].toDataURL()}" style="height:50px; filter: brightness(0);">` : '';
-            const p2TtdImg = (sigPads['ba-sig-p2'] && !sigPads['ba-sig-p2'].isEmpty()) ? `<img src="${sigPads['ba-sig-p2'].toDataURL()}" style="height:50px; filter: brightness(0);">` : '';            const printWin = window.open('', '_blank', 'width=820,height=900');
+            const p2TtdImg = (sigPads['ba-sig-p2'] && !sigPads['ba-sig-p2'].isEmpty()) ? `<img src="${sigPads['ba-sig-p2'].toDataURL()}" style="height:50px; filter: brightness(0);">` : ''; const printWin = window.open('', '_blank', 'width=820,height=900');
             printWin.document.write(`<!DOCTYPE html><html><head>
                 <meta charset="UTF-8"><title>Berita Acara - ${mapel}</title>
                 <style>
@@ -1870,13 +1958,13 @@
                     if (sigPads['sig-p2']) sigPads['sig-p2']._resize();
                 }, 100);
             }
-        }        async function submitSingleStudent() {
+        } async function submitSingleStudent() {
             const client = await getSupabase();
-            if (!client) { showToast('Supabase belum dikonfigurasi!', true); return; }            const mapel = document.getElementById('dh-mapel').value;
+            if (!client) { showToast('Supabase belum dikonfigurasi!', true); return; } const mapel = document.getElementById('dh-mapel').value;
             const tanggal = document.getElementById('dh-tanggal').value;
             const ruang = document.querySelector('input[name="dh-ruang-radio"]:checked')?.value;
             const nomor = document.getElementById('dh-nomor-tunggal').value.trim();
-            const nama = document.getElementById('dh-nama-tunggal').value.trim();            if (!mapel || !tanggal || !ruang || !nomor || !nama) {
+            const nama = document.getElementById('dh-nama-tunggal').value.trim(); if (!mapel || !tanggal || !ruang || !nomor || !nama) {
                 showToast('Mohon lengkapi semua data!', true);
                 return;
             }            // FINAL VALIDATION: Check Grade matching
@@ -1886,18 +1974,18 @@
                     showToast(`Kritikal: Siswa terdaftar di Kelas ${student.grade}, bukan Kelas ${activeClass}!`, true);
                     return;
                 }
-            }            const pad = sigPads['sig-stu-tunggal'];
+            } const pad = sigPads['sig-stu-tunggal'];
             if (!pad || pad.isEmpty()) {
                 showToast('Mohon bubuhkan tanda tangan!', true);
                 return;
-            }            showToast('Mengirim kehadiran...', false);
+            } showToast('Mengirim kehadiran...', false);
             const ttd = pad.toDataURL("image/png");            // GUNAKAN INSERT MANDIRI (Anti-Tabrakan / Anti-Race Condition)
             const payload = {
                 mata_pelajaran: mapel,
                 tanggal: tanggal,
                 ruang: ruang,
                 data_siswa: { nomor_peserta: nomor, nama: nama, ttd: ttd }
-            };            const { error } = await client.from('presensi_siswa').insert([payload]);            if (error) {
+            }; const { error } = await client.from('presensi_siswa').insert([payload]); if (error) {
                 showToast('Gagal: ' + error.message, true);
             } else {
                 localStorage.setItem('user_grade', activeClass); // Lock in his current class
@@ -1933,12 +2021,12 @@
         }        // Simpan Data Pengawas (handles Insert or Update)
         async function submitPresensiDoc() {
             const client = await getSupabase();
-            if (!client) { showToast('Supabase belum dikonfigurasi!', true); return; }            const mapel = document.getElementById('dh-mapel').value;
-            const tanggal = document.getElementById('dh-tanggal').value;            if (!mapel || !tanggal) {
+            if (!client) { showToast('Supabase belum dikonfigurasi!', true); return; } const mapel = document.getElementById('dh-mapel').value;
+            const tanggal = document.getElementById('dh-tanggal').value; if (!mapel || !tanggal) {
                 showToast('Pilih Mapel & Tanggal dulu!', true);
                 return;
-            }            showToast('Menyimpan data pengawas...', false);            const p1Ttd = (sigPads['sig-p1'] && !sigPads['sig-p1'].isEmpty()) ? sigPads['sig-p1'].toDataURL("image/png") : '';
-            const p2Ttd = (sigPads['sig-p2'] && !sigPads['sig-p2'].isEmpty()) ? sigPads['sig-p2'].toDataURL("image/png") : '';            const payload = {
+            } showToast('Menyimpan data pengawas...', false); const p1Ttd = (sigPads['sig-p1'] && !sigPads['sig-p1'].isEmpty()) ? sigPads['sig-p1'].toDataURL("image/png") : '';
+            const p2Ttd = (sigPads['sig-p2'] && !sigPads['sig-p2'].isEmpty()) ? sigPads['sig-p2'].toDataURL("image/png") : ''; const payload = {
                 mata_pelajaran: mapel,
                 tanggal: tanggal,
                 ruang: 'SESSION_METADATA', // Ruang khusus penanda metadata sesi
@@ -1955,14 +2043,14 @@
                 .eq('mata_pelajaran', mapel)
                 .eq('tanggal', tanggal)
                 .eq('ruang', 'SESSION_METADATA')
-                .maybeSingle();            let finalErr;
+                .maybeSingle(); let finalErr;
             if (existing) {
                 const { error } = await client.from('presensi_siswa').update(payload).eq('id', existing.id);
                 finalErr = error;
             } else {
                 const { error } = await client.from('presensi_siswa').insert([payload]);
                 finalErr = error;
-            }            if (finalErr) {
+            } if (finalErr) {
                 showToast('Gagal: ' + finalErr.message, true);
             } else {
                 showToast('✅ Data Pengawas berhasil disimpan!');
@@ -1970,20 +2058,20 @@
         }        // Auto-load data ketika Mapel/Tanggal dipilih
         async function autoLoadPresensi() {
             const client = await getSupabase();
-            if (!client) return;            const mapel = document.getElementById('dh-mapel').value;
-            const tanggal = document.getElementById('dh-tanggal').value;            if (mapel && tanggal) {
+            if (!client) return; const mapel = document.getElementById('dh-mapel').value;
+            const tanggal = document.getElementById('dh-tanggal').value; if (mapel && tanggal) {
                 // Cari data sesi (pengawas)
                 const { data, error } = await client.from('presensi_siswa')
                     .select('*')
                     .eq('mata_pelajaran', mapel)
                     .eq('tanggal', tanggal)
                     .eq('ruang', 'SESSION_METADATA')
-                    .maybeSingle();                if (data) {
-                    fillPresensiFields(data);
-                    // showToast('✅ Data sebelumnya berhasil dimuat secara otomatis');
-                }
+                    .maybeSingle(); if (data) {
+                        fillPresensiFields(data);
+                        // showToast('✅ Data sebelumnya berhasil dimuat secara otomatis');
+                    }
             }
-        }        function fillPresensiFields(data) {
+        } function fillPresensiFields(data) {
             document.getElementById('dh-pukul').value = data.pukul || '';
             document.getElementById('dh-p1-nama').value = data.pengawas_1_nama || '';
             document.getElementById('dh-p1-niy').value = data.pengawas_1_niy || '';
@@ -1997,23 +2085,23 @@
                 sigPads['sig-p2'].fromDataURL(data.p2_ttd);
                 const h2 = document.getElementById('sig-p2-hint'); if (h2) h2.style.opacity = '0';
             }
-        }        function updateRoomCounts() {
+        } function updateRoomCounts() {
             // Room counts will be calculated from the fetched database data if needed in Supervisor mode
         }
         // Load Data Daftar Hadir
         let cachedPresensiList = [];
         async function loadPresensiList() {
             const client = await getSupabase();
-            if (!client) { showToast('Supabase belum dikonfigurasi!', true); return; }            showToast('Memuat data...', false);
+            if (!client) { showToast('Supabase belum dikonfigurasi!', true); return; } showToast('Memuat data...', false);
             const { data, error } = await client.from('presensi_siswa')
                 .select('*')
                 .order('created_at', { ascending: false })
-                .limit(10);            if (error) {
-                showToast('Gagal memuat: ' + error.message, true);
-                return;
-            }            cachedPresensiList = data;
+                .limit(10); if (error) {
+                    showToast('Gagal memuat: ' + error.message, true);
+                    return;
+                } cachedPresensiList = data;
             const tbody = document.getElementById('presensi-list-tbody');
-            tbody.innerHTML = '';            if (data.length === 0) {
+            tbody.innerHTML = ''; if (data.length === 0) {
                 tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding: 20px;">Belum ada data</td></tr>';
             } else {
                 data.forEach((item, idx) => {
@@ -2034,19 +2122,19 @@
         }        // Terapkan data yang dipilih ke form (multi-ruang)
         function selectPresensiByIndex(idx) {
             const item = cachedPresensiList[idx];
-            if (!item) return;            document.getElementById('dh-mapel').value = item.mata_pelajaran || '';
-            document.getElementById('dh-tanggal').value = item.tanggal || '';            fillPresensiFields(item);            closeModal('modal-load-presensi');
+            if (!item) return; document.getElementById('dh-mapel').value = item.mata_pelajaran || '';
+            document.getElementById('dh-tanggal').value = item.tanggal || ''; fillPresensiFields(item); closeModal('modal-load-presensi');
             showToast('✅ Data & Tanda Tangan berhasil dimuat');
         }        // Submit Berita Acara ke Supabase
         async function submitBADoc() {
             const client = await getSupabase();
-            if (!client) { showToast('Supabase belum dikonfigurasi!', true); return; }            showToast('Menyimpan Berita Acara & TTD...', false);            const tglRaw = document.getElementById('ba-tanggal-full').value;
+            if (!client) { showToast('Supabase belum dikonfigurasi!', true); return; } showToast('Menyimpan Berita Acara & TTD...', false); const tglRaw = document.getElementById('ba-tanggal-full').value;
             const tglDate = tglRaw ? new Date(tglRaw) : null;            // Get signatures
             const p1Ttd = (sigPads['ba-sig-p1'] && !sigPads['ba-sig-p1'].isEmpty()) ? sigPads['ba-sig-p1'].toDataURL("image/png") : '';
-            const p2Ttd = (sigPads['ba-sig-p2'] && !sigPads['ba-sig-p2'].isEmpty()) ? sigPads['ba-sig-p2'].toDataURL("image/png") : '';            const pFull = document.getElementById('ba-pukul').value || ' - ';
+            const p2Ttd = (sigPads['ba-sig-p2'] && !sigPads['ba-sig-p2'].isEmpty()) ? sigPads['ba-sig-p2'].toDataURL("image/png") : ''; const pFull = document.getElementById('ba-pukul').value || ' - ';
             const pParts = pFull.split(' - ');
             const pMulai = pParts[0] || '';
-            const pSelesai = pParts[1] || '';            const payload = {
+            const pSelesai = pParts[1] || ''; const payload = {
                 mata_pelajaran: document.getElementById('ba-mapel').value,
                 hari: document.getElementById('ba-hari').value,
                 tanggal: tglDate ? String(tglDate.getDate()) : '',
@@ -2071,7 +2159,7 @@
                 pengawas_2_niy: document.getElementById('ba-p2-niy').value,
                 p1_ttd: p1Ttd,
                 p2_ttd: p2Ttd
-            };            const { error } = await client.from('berita_acara_guru').insert([payload]);
+            }; const { error } = await client.from('berita_acara_guru').insert([payload]);
             if (error) {
                 showToast('Gagal menyimpan: ' + error.message, true);
             } else {
@@ -2082,29 +2170,29 @@
         }        // Fungsi Load Riwayat Global
         async function loadRiwayatGlobal() {
             const client = await getSupabase();
-            if (!client) return;            const tbody = document.getElementById('riwayat-global-body');
-            tbody.innerHTML = '<tr><td colspan="6" style="padding: 2rem; text-align: center;"><i class="fas fa-spinner fa-spin"></i> Menghitung rekapitulasi...</td></tr>';            try {
+            if (!client) return; const tbody = document.getElementById('riwayat-global-body');
+            tbody.innerHTML = '<tr><td colspan="6" style="padding: 2rem; text-align: center;"><i class="fas fa-spinner fa-spin"></i> Menghitung rekapitulasi...</td></tr>'; try {
                 // OPTIMASI: Hanya ambil metadata (Mata Pelajaran, Tanggal, Ruang)
                 // Kita TIDAK mengambil 'data_siswa' (berisi Base64 TTD) untuk menghemat bandwidth & memori
                 const { data, error } = await client.from('presensi_siswa')
                     .select('mata_pelajaran, tanggal, ruang')
-                    .order('tanggal', { ascending: false });                if (error) throw error;                if (!data || data.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="6" style="padding: 2rem; text-align: center; opacity:0.6;">Belum ada data terekam.</td></tr>';
-                    return;
-                }                // Agregasi Data di Sisi Client
+                    .order('tanggal', { ascending: false }); if (error) throw error; if (!data || data.length === 0) {
+                        tbody.innerHTML = '<tr><td colspan="6" style="padding: 2rem; text-align: center; opacity:0.6;">Belum ada data terekam.</td></tr>';
+                        return;
+                    }                // Agregasi Data di Sisi Client
                 const summary = {}; // { "Mapel_Tanggal": { mapel, tgl, R1:0, R2:0, R3:0 } }                data.forEach(item => {
-                    const key = `${item.mata_pelajaran}_${item.tanggal}`;
-                    if (!summary[key]) {
-                        summary[key] = { mapel: item.mata_pelajaran, tgl: item.tanggal, R1: 0, R2: 0, R3: 0 };
-                    }
-                    if (item.ruang === 'R1') summary[key].R1++;
-                    else if (item.ruang === 'R2') summary[key].R2++;
-                    else if (item.ruang === 'R3') summary[key].R3++;
-                });                tbody.innerHTML = '';
-                Object.values(summary).forEach(item => {
-                    const tr = document.createElement('tr');
-                    tr.style.borderBottom = '1px solid rgba(255,255,255,0.05)';
-                    tr.innerHTML = `
+                const key = `${item.mata_pelajaran}_${item.tanggal}`;
+                if (!summary[key]) {
+                    summary[key] = { mapel: item.mata_pelajaran, tgl: item.tanggal, R1: 0, R2: 0, R3: 0 };
+                }
+                if (item.ruang === 'R1') summary[key].R1++;
+                else if (item.ruang === 'R2') summary[key].R2++;
+                else if (item.ruang === 'R3') summary[key].R3++;
+            }); tbody.innerHTML = '';
+            Object.values(summary).forEach(item => {
+                const tr = document.createElement('tr');
+                tr.style.borderBottom = '1px solid rgba(255,255,255,0.05)';
+                tr.innerHTML = `
                         <td style="padding: 1rem;"><b>${item.mapel}</b></td>
                         <td style="padding: 1rem;">${item.tgl}</td>
                         <td style="padding: 1rem; text-align: center;"><span style="background:rgba(29, 78, 216, 0.2); color:#60a5fa; padding: 2px 8px; border-radius: 10px;">${item.R1}</span></td>
@@ -2117,37 +2205,37 @@
                             </button>
                         </td>
                     `;
-                    tbody.appendChild(tr);
-                });
-            } catch (err) {
-                tbody.innerHTML = `<tr><td colspan="6" style="padding: 2rem; text-align: center; color:#ef4444;">Error: ${err.message}</td></tr>`;
-            }
+                tbody.appendChild(tr);
+            });
+        } catch (err) {
+            tbody.innerHTML = `<tr><td colspan="6" style="padding: 2rem; text-align: center; color:#ef4444;">Error: ${err.message}</td></tr>`;
+        }
         }        // Jalankan cetak dari tabel riwayat
         window.printFromRiwayat = function (mapel, tgl) {
             document.getElementById('dh-mapel').value = mapel;
             document.getElementById('dh-tanggal').value = tgl;
             printPresensiForm();
         }        // ======= RIWAYAT TABS & BA HISTORY =======        window.switchRiwayatTab = function (type) {
-            document.querySelectorAll('.riwayat-tab-btn').forEach(btn => {
-                btn.classList.toggle('active', btn.dataset.rTab === type);
-            });            document.getElementById('riwayat-presensi-content').style.display = (type === 'presensi') ? 'block' : 'none';
-            document.getElementById('riwayat-ba-content').style.display = (type === 'ba') ? 'block' : 'none';            if (type === 'ba') loadRiwayatBA();
+        document.querySelectorAll('.riwayat-tab-btn').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.rTab === type);
+        }); document.getElementById('riwayat-presensi-content').style.display = (type === 'presensi') ? 'block' : 'none';
+        document.getElementById('riwayat-ba-content').style.display = (type === 'ba') ? 'block' : 'none'; if (type === 'ba') loadRiwayatBA();
             // loadRiwayatGlobal is usually called when modal opens
-        };        async function loadRiwayatBA() {
+        }; async function loadRiwayatBA() {
             const client = await getSupabase();
-            if (!client) return;            const tbody = document.getElementById('riwayat-ba-body');
-            tbody.innerHTML = '<tr><td colspan="5" style="padding: 2rem; text-align: center;"><i class="fas fa-spinner fa-spin"></i> Menarik data berita acara...</td></tr>';            try {
+            if (!client) return; const tbody = document.getElementById('riwayat-ba-body');
+            tbody.innerHTML = '<tr><td colspan="5" style="padding: 2rem; text-align: center;"><i class="fas fa-spinner fa-spin"></i> Menarik data berita acara...</td></tr>'; try {
                 const { data, error } = await client.from('berita_acara_guru')
                     .select('*')
                     .order('created_at', { ascending: false })
-                    .limit(20);                if (error) throw error;                if (!data || data.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="5" style="padding: 2rem; text-align: center; opacity:0.6;">Belum ada berita acara tersimpan.</td></tr>';
-                    return;
-                }                tbody.innerHTML = '';
+                    .limit(20); if (error) throw error; if (!data || data.length === 0) {
+                        tbody.innerHTML = '<tr><td colspan="5" style="padding: 2rem; text-align: center; opacity:0.6;">Belum ada berita acara tersimpan.</td></tr>';
+                        return;
+                    } tbody.innerHTML = '';
                 data.forEach(item => {
                     const tr = document.createElement('tr');
                     tr.style.borderBottom = '1px solid rgba(255,255,255,0.05)';
-                    const tglNormal = `${item.tanggal || ''} ${item.bulan || ''} ${item.tahun || ''}`;                    tr.innerHTML = `
+                    const tglNormal = `${item.tanggal || ''} ${item.bulan || ''} ${item.tahun || ''}`; tr.innerHTML = `
                         <td style="padding: 1rem;"><b>${item.mata_pelajaran}</b></td>
                         <td style="padding: 1rem;">
                             <div style="font-size:0.85rem">${tglNormal}</div>
@@ -2172,19 +2260,20 @@
             } catch (err) {
                 tbody.innerHTML = `<tr><td colspan="5" style="padding: 2rem; text-align: center; color:#ef4444;">Error: ${err.message}</td></tr>`;
             }
-        }        window.printFromBAHistory = async function (id) {
+        } window.printFromBAHistory = async function (id) {
             const client = await getSupabase();
-            if (!client) return;            showToast('Memuat data berita acara...', false);            try {
+            if (!client) return; showToast('Memuat data berita acara...', false); try {
                 const { data, error } = await client.from('berita_acara_guru')
                     .select('*')
                     .eq('id', id)
-                    .single();                if (error) throw error;
-                if (!data) return;                fillBAForm(data);                setTimeout(() => {
+                    .single(); if (error) throw error;
+                if (!data) return; fillBAForm(data); setTimeout(() => {
                     printBAForm();
-                }, 500);            } catch (err) {
+                }, 500);
+            } catch (err) {
                 showToast('Gagal memuat data: ' + err.message, true);
             }
-        };        function fillBAForm(data) {
+        }; function fillBAForm(data) {
             const mapping = {
                 'ba-mapel': data.mata_pelajaran,
                 'ba-hari': data.hari,
@@ -2203,7 +2292,7 @@
                 'ba-p1-niy': data.pengawas_1_niy,
                 'ba-p2-nama': data.pengawas_2_nama,
                 'ba-p2-niy': data.pengawas_2_niy
-            };            if (data.tahun && data.bulan && data.tanggal) {
+            }; if (data.tahun && data.bulan && data.tanggal) {
                 const months = {
                     'Januari': '01', 'Februari': '02', 'Maret': '03', 'April': '04',
                     'Mei': '05', 'Juni': '06', 'Juli': '07', 'Agustus': '08',
@@ -2213,10 +2302,10 @@
                 const day = data.tanggal.toString().padStart(2, '0');
                 const tglEl = document.getElementById('ba-tanggal-full');
                 if (tglEl) tglEl.value = `${data.tahun}-${mon}-${day}`;
-            }            Object.entries(mapping).forEach(([id, val]) => {
+            } Object.entries(mapping).forEach(([id, val]) => {
                 const el = document.getElementById(id);
                 if (el) el.value = val || '';
-            });            if (data.p1_ttd && sigPads['ba-sig-p1']) {
+            }); if (data.p1_ttd && sigPads['ba-sig-p1']) {
                 sigPads['ba-sig-p1'].fromDataURL(data.p1_ttd);
                 const h1 = document.getElementById('ba-sig-p1-hint'); if (h1) h1.style.opacity = '0';
             }
@@ -2245,17 +2334,17 @@
         async function syncControlFromSupabase() {
             try {
                 const client = await getSupabase();
-                if (!client) return;                const { data, error } = await client
+                if (!client) return; const { data, error } = await client
                     .from('exam_settings')
                     .select('data')
                     .eq('id', 'master_config')
-                    .single();                if (data && data.data) {
-                    examControl = data.data;
-                    activateButtons();
-                    if (document.getElementById('modal-kurikulum').classList.contains('active')) {
-                        renderControlList();
+                    .single(); if (data && data.data) {
+                        examControl = data.data;
+                        activateButtons();
+                        if (document.getElementById('modal-kurikulum').classList.contains('active')) {
+                            renderControlList();
+                        }
                     }
-                }
             } catch (e) {
                 console.error('Gagal fetch kontrol kurikulum:', e);
             }
@@ -2263,9 +2352,9 @@
         async function syncControlToSupabase() {
             try {
                 const client = await getSupabase();
-                if (!client) return;                const { error } = await client
+                if (!client) return; const { error } = await client
                     .from('exam_settings')
-                    .upsert({ id: 'master_config', data: examControl });                if (error) throw error;
+                    .upsert({ id: 'master_config', data: examControl }); if (error) throw error;
                 showToast("Pengaturan disinkronkan ke seluruh perangkat!");
             } catch (e) {
                 console.error('Gagal simpan ke cloud:', e);
@@ -2274,7 +2363,7 @@
         }        // Listener Real-time agar otomatis berubah di semua HP siswa tanpa refresh
         async function setupControlListener() {
             const client = await getSupabase();
-            if (!client) return;            client
+            if (!client) return; client
                 .channel('exam-control-sync')
                 .on('postgres_changes', {
                     event: 'UPDATE',
@@ -2295,10 +2384,10 @@
         document.addEventListener('DOMContentLoaded', () => {
             syncControlFromSupabase();
             setupControlListener();
-        });        function saveControl() {
+        }); function saveControl() {
             syncControlToSupabase();
             activateButtons();
-        }        function authKurikulum() {
+        } function authKurikulum() {
             const pass = prompt("Masukkan Kata Sandi Kurikulum:");
             if (pass === "qwerty12345") {
                 setControlGrade(activeClass);
@@ -2306,7 +2395,7 @@
             } else if (pass !== null) {
                 showToast("Kata sandi salah!", "error");
             }
-        }        window.setControlGrade = function (grade) {
+        } window.setControlGrade = function (grade) {
             controlActiveGrade = grade;
             document.querySelectorAll('.ctrl-grade-btn').forEach(btn => {
                 btn.style.background = 'transparent';
@@ -2318,7 +2407,7 @@
                 activeBtn.style.color = 'white';
             }
             renderControlList();
-        };        window.setGlobalStatus = function (status) {
+        }; window.setGlobalStatus = function (status) {
             if (confirm(`Apakah Anda yakin ingin mengatur SEMUA KELAS menjadi ${status === 'active' ? 'TERBUKA' : 'TERTUTUP'}?`)) {
                 examControl.global = status;
                 examControl['7'].subjects = {};
@@ -2328,17 +2417,17 @@
                 renderControlList();
                 showToast(`Status Global Diubah ke: ${status === 'active' ? 'TERBUKA' : 'TERTUTUP'}`);
             }
-        };        window.toggleSubject = function (key) {
+        }; window.toggleSubject = function (key) {
             const current = examControl[controlActiveGrade].subjects[key] || examControl.global;
             examControl[controlActiveGrade].subjects[key] = (current === 'active' ? 'passed' : 'active');
             saveControl();
             renderControlList();
-        };        function renderControlList() {
+        }; function renderControlList() {
             const list = document.getElementById('subject-control-list');
             if (!list) return;
-            list.innerHTML = `<h4 style="margin-bottom:1rem; color:white;">Status Mapel Kelas ${controlActiveGrade}:</h4>`;            Object.keys(mapelNames).forEach(key => {
+            list.innerHTML = `<h4 style="margin-bottom:1rem; color:white;">Status Mapel Kelas ${controlActiveGrade}:</h4>`; Object.keys(mapelNames).forEach(key => {
                 const status = examControl[controlActiveGrade].subjects[key] || examControl.global;
-                const isActive = status === 'active';                const item = document.createElement('div');
+                const isActive = status === 'active'; const item = document.createElement('div');
                 item.style = "display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: rgba(255,255,255,0.05); border-radius: 12px; margin-bottom: 0.5rem; border: 1px solid rgba(255,255,255,0.1); transition: all 0.3s;";
                 item.innerHTML = `
                     <div style="text-align: left;">
@@ -2358,7 +2447,7 @@
                 return examControl[grade].subjects[subjectKey];
             }
             return examControl.global;
-        }        let gkCurrentUrl = '';        function confirmExamLink(url, subjectName) {
+        } let gkCurrentUrl = ''; function confirmExamLink(url, subjectName) {
             gkCurrentUrl = url;            // Buka Modal Presensi Formal
             openModal('modal-presensi');            // Pre-fill data otomatis berdasarkan konteks ujian
             const mapelSelect = document.getElementById('dh-mapel');
@@ -2380,13 +2469,13 @@
                 const day = String(now.getDate()).padStart(2, '0');
                 tglInput.value = `${year}-${month}-${day}`;
             }            // Trigger auto-load metadata (pengawas/jam) jika ada
-            autoLoadPresensi();            showToast(`Sila isi Daftar Hadir untuk membuka soal ${subjectName}`);
-        }        function closeExamModal() {
+            autoLoadPresensi(); showToast(`Sila isi Daftar Hadir untuk membuka soal ${subjectName}`);
+        } function closeExamModal() {
             closeModal('modal-presensi');
         }        // Fungsi untuk mengaktifkan tombol jika link tersedia & waktu cocok
         function activateButtons() {
             const classLinks = linkUjian[activeClass];
-            const now = new Date();            const subjects = [
+            const now = new Date(); const subjects = [
                 { id: 'agama-islam', key: 'agama' }, { id: 'agama-kristen', key: 'agama' },
                 { id: 'agama-katolik', key: 'agama' }, { id: 'agama-budha', key: 'agama' },
                 { id: 'agama-khonghucu', key: 'agama' }, { id: 'b-indo', key: 'b-indo' },
@@ -2396,18 +2485,18 @@
                 { id: 'ips', key: 'ips' }, { id: 'b-jawa', key: 'b-jawa' },
                 { id: 'informatika', key: 'informatika' },
                 { id: 'b-mandarin', key: 'b-mandarin' }, { id: 'bk', key: 'bk' }
-            ];            const relNames = {
+            ]; const relNames = {
                 'agama-islam': 'Islam', 'agama-kristen': 'Kristen',
                 'agama-katolik': 'Katolik', 'agama-budha': 'Budha',
                 'agama-khonghucu': 'Khonghucu'
-            };            subjects.forEach(sub => {
+            }; subjects.forEach(sub => {
                 const btn = document.getElementById(`btn-${sub.id}`);
                 const card = document.getElementById(`card-${sub.key}`);
                 const statusBadge = card ? card.querySelector('.card-status') : null;
                 const url = classLinks[sub.id];
                 const sched = scheduleData[sub.key];
                 const status = getExamStatus(sub.key, sub.id, activeClass);
-                const namaMapelLengkap = mapelNames[sub.key] || sub.key;                if (btn) {
+                const namaMapelLengkap = mapelNames[sub.key] || sub.key; if (btn) {
                     if (status === 'passed') {
                         // Waktu Sudah Habis -> Selesai
                         btn.href = '#';
@@ -2490,7 +2579,7 @@
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         const closeMenuBtn = document.getElementById('close-menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
-        const mobileLinks = document.querySelectorAll('.mobile-nav-links a');        function toggleMenu() {
+        const mobileLinks = document.querySelectorAll('.mobile-nav-links a'); function toggleMenu() {
             mobileMenu.classList.toggle('active');
             document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
         }        // Start Sync
@@ -2514,4 +2603,6 @@
         });
 
     </script>
-</body></html>
+</body>
+
+</html>
