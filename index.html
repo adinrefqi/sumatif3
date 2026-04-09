@@ -121,7 +121,7 @@
             <p>Sumatif IV Online · SMP THHK</p>
             <div id="login-form">
                 <input type="text" id="login-no-ujian" class="login-input" placeholder="Contoh: 2526001" autofocus>
-                <button onclick="validateLogin()" class="login-btn">Masuk ke Dashboard</button>
+                <button onclick="validateLogin(event)" class="login-btn">Masuk ke Dashboard</button>
                 <p id="login-error">Nomor Ujian tidak ditemukan atau salah!</p>
             </div>
         </div>
@@ -1133,14 +1133,17 @@
                 if (loginScreen) loginScreen.style.display = 'flex';
                 if (mainContent) mainContent.style.display = 'none';
             }
-        }        window.validateLogin = async function () {
-            console.log("Memulai proses login...");
+        window.validateLogin = async function (e) {
+            if (e) e.preventDefault();
+            console.log('Cek Login...');
+            
             const inputNo = document.getElementById('login-no-ujian');
             const inputVal = inputNo.value.trim();
             const errorEl = document.getElementById('login-error');
             const btn = document.querySelector('.login-btn');
 
             if (!inputVal) {
+                alert("Peringatan: ID atau Nomor Ujian tidak boleh kosong!");
                 showToast("Masukkan ID / Nomor Ujian!", "error");
                 return;
             }
@@ -1152,7 +1155,10 @@
 
                 console.log("Menghubungkan ke Supabase...");
                 const client = await getSupabase();
-                if (!client) throw new Error("Koneksi Supabase Gagal");
+                if (!client) {
+                    alert("Gagal terhubung ke database. Periksa koneksi internet Anda.");
+                    throw new Error("Koneksi Supabase Gagal");
+                }
 
                 // 1. CEK SEBAGAI SISWA
                 console.log("Mengecek data siswa untuk ID:", inputVal);
@@ -1166,25 +1172,16 @@
                     console.log("Siswa ditemukan:", student.nama);
                     // PENCEGAHAN DOUBLE LOGIN
                     if (student.is_login === true) {
-                        errorEl.innerHTML = 'Akun sedang digunakan di perangkat lain! Lapor ke pengawas untuk mereset sesi jika HP Anda baru saja mati/keluar mendadak.';
+                        const msg = 'Akun sedang digunakan di perangkat lain! Lapor ke pengawas untuk mereset sesi.';
+                        alert(msg);
+                        errorEl.innerHTML = msg;
                         errorEl.style.display = 'block';
-                        const card = document.querySelector('.login-card');
-                        card.style.animation = 'shake 0.5s ease';
-                        setTimeout(() => card.style.animation = '', 500);
                         return;
                     }
 
                     // UPDATE IS_LOGIN MENJADI TRUE
-                    const { error: updErr } = await client
-                        .from('master_siswa')
-                        .update({ is_login: true })
-                        .eq('id', student.id);
+                    await client.from('master_siswa').update({ is_login: true }).eq('id', student.id);
 
-                    if (updErr) {
-                        console.error("Gagal update status login:", updErr);
-                    }
-
-                    // LOGIN SEBAGAI SISWA
                     sessionStorage.setItem('isLoggedIn', 'true');
                     sessionStorage.setItem('role', 'siswa');
                     sessionStorage.setItem('nomorUjian', student.id);
@@ -1207,7 +1204,6 @@
 
                 if (guru) {
                     console.log("Guru ditemukan:", guru.nama);
-                    // LOGIN SEBAGAI GURU
                     sessionStorage.setItem('isLoggedIn', 'true');
                     sessionStorage.setItem('role', 'guru');
                     sessionStorage.setItem('namaGuru', guru.nama);
@@ -1217,17 +1213,14 @@
                     return;
                 }
 
-                // DATA TIDAK ADA DI KEDUA TABEL
-                console.warn("ID tidak terdaftar di database.");
-                errorEl.innerHTML = `ID <b>${inputVal}</b> tidak terdaftar sebagai Siswa atau Guru!`;
+                // DATA TIDAK ADA
+                alert(`ID ${inputVal} tidak terdaftar! Pastikan Anda memasukkan kode yang benar.`);
+                errorEl.innerHTML = `ID <b>${inputVal}</b> tidak terdaftar!`;
                 errorEl.style.display = 'block';
-                const card = document.querySelector('.login-card');
-                card.style.animation = 'shake 0.5s ease';
-                setTimeout(() => card.style.animation = '', 500);
 
             } catch (err) {
                 console.error("Login Error:", err);
-                showToast("Terjadi gangguan server atau koneksi.", "error");
+                alert("Terjadi kesalahan saat memproses login. Silakan coba lagi.");
             } finally {
                 btn.disabled = false;
                 btn.innerHTML = 'Masuk ke Dashboard';
