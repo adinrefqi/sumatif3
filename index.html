@@ -27,7 +27,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">    <!-- AOS Animation Library -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">    <link rel="stylesheet" href="style.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
     <script src="data_siswa.js"></script>
     <style>
@@ -1132,22 +1134,36 @@
                 if (mainContent) mainContent.style.display = 'none';
             }
         }        window.validateLogin = async function () {
+            console.log("Memulai proses login...");
             const inputNo = document.getElementById('login-no-ujian');
             const inputVal = inputNo.value.trim();
             const errorEl = document.getElementById('login-error');
-            const btn = document.querySelector('.login-btn');            if (!inputVal) {
+            const btn = document.querySelector('.login-btn');
+
+            if (!inputVal) {
                 showToast("Masukkan ID / Nomor Ujian!", "error");
                 return;
-            }            try {
+            }
+
+            try {
                 btn.disabled = true;
                 btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Memverifikasi...';
-                errorEl.style.display = 'none';                const client = await getSupabase();
-                if (!client) throw new Error("Koneksi Supabase Gagal");                // 1. CEK SEBAGAI SISWA
+                errorEl.style.display = 'none';
+
+                console.log("Menghubungkan ke Supabase...");
+                const client = await getSupabase();
+                if (!client) throw new Error("Koneksi Supabase Gagal");
+
+                // 1. CEK SEBAGAI SISWA
+                console.log("Mengecek data siswa untuk ID:", inputVal);
                 let { data: student, error: errS } = await client
                     .from('master_siswa')
                     .select('*')
                     .eq('id', inputVal)
-                    .maybeSingle();                if (student) {
+                    .maybeSingle();
+
+                if (student) {
+                    console.log("Siswa ditemukan:", student.nama);
                     // PENCEGAHAN DOUBLE LOGIN
                     if (student.is_login === true) {
                         errorEl.innerHTML = 'Akun sedang digunakan di perangkat lain! Lapor ke pengawas untuk mereset sesi jika HP Anda baru saja mati/keluar mendadak.';
@@ -1156,58 +1172,98 @@
                         card.style.animation = 'shake 0.5s ease';
                         setTimeout(() => card.style.animation = '', 500);
                         return;
-                    }                    // UPDATE IS_LOGIN MENJADI TRUE
+                    }
+
+                    // UPDATE IS_LOGIN MENJADI TRUE
                     const { error: updErr } = await client
                         .from('master_siswa')
                         .update({ is_login: true })
-                        .eq('id', student.id);                    if (updErr) {
+                        .eq('id', student.id);
+
+                    if (updErr) {
                         console.error("Gagal update status login:", updErr);
-                    }                    // LOGIN SEBAGAI SISWA
+                    }
+
+                    // LOGIN SEBAGAI SISWA
                     sessionStorage.setItem('isLoggedIn', 'true');
                     sessionStorage.setItem('role', 'siswa');
                     sessionStorage.setItem('nomorUjian', student.id);
                     sessionStorage.setItem('namaSiswa', student.nama);
-                    sessionStorage.setItem('user_grade', student.grade.toString());                    activeClass = student.grade.toString();
+                    sessionStorage.setItem('user_grade', student.grade.toString());
+
+                    activeClass = student.grade.toString();
                     localStorage.setItem('user_grade', activeClass);
                     proceedToDashboard(student.nama, false);
                     return;
-                }                // 2. JIKA BUKAN SISWA, CEK SEBAGAI GURU
+                }
+
+                // 2. JIKA BUKAN SISWA, CEK SEBAGAI GURU
+                console.log("Mengecek data guru untuk ID:", inputVal);
                 let { data: guru, error: errG } = await client
                     .from('master_guru')
                     .select('*')
                     .eq('id', inputVal)
-                    .maybeSingle();                if (guru) {
+                    .maybeSingle();
+
+                if (guru) {
+                    console.log("Guru ditemukan:", guru.nama);
                     // LOGIN SEBAGAI GURU
                     sessionStorage.setItem('isLoggedIn', 'true');
                     sessionStorage.setItem('role', 'guru');
-                    sessionStorage.setItem('namaGuru', guru.nama);                    // Guru dianggap admin otomatis, bisa buka kontrol panel
-                    sessionStorage.setItem('isAdmin', 'true');                    proceedToDashboard(guru.nama, true);
+                    sessionStorage.setItem('namaGuru', guru.nama);
+                    sessionStorage.setItem('isAdmin', 'true');
+
+                    proceedToDashboard(guru.nama, true);
                     return;
-                }                // DATA TIDAK ADA DI KEDUA TABEL
+                }
+
+                // DATA TIDAK ADA DI KEDUA TABEL
+                console.warn("ID tidak terdaftar di database.");
                 errorEl.innerHTML = `ID <b>${inputVal}</b> tidak terdaftar sebagai Siswa atau Guru!`;
                 errorEl.style.display = 'block';
                 const card = document.querySelector('.login-card');
                 card.style.animation = 'shake 0.5s ease';
-                setTimeout(() => card.style.animation = '', 500);            } catch (err) {
-                console.error(err);
-                showToast("Terjadi gangguan server.", "error");
+                setTimeout(() => card.style.animation = '', 500);
+
+            } catch (err) {
+                console.error("Login Error:", err);
+                showToast("Terjadi gangguan server atau koneksi.", "error");
             } finally {
                 btn.disabled = false;
                 btn.innerHTML = 'Masuk ke Dashboard';
             }
-        };        function proceedToDashboard(name, isGuru) {
+        };
+
+        function proceedToDashboard(name, isGuru) {
+            console.log("Mengarahkan ke dashboard. IsGuru:", isGuru);
+            if (isGuru) {
+                showToast(`Selamat datang, ${name} (Guru)!`);
+                setTimeout(() => {
+                    window.location.href = 'dashboard_pengawas.html';
+                }, 1000);
+                return;
+            }
+
             const loginScreen = document.getElementById('login-screen');
-            const mainContent = document.getElementById('main-content');            loginScreen.style.opacity = '0';
+            const mainContent = document.getElementById('main-content');
+            loginScreen.style.opacity = '0';
+
             setTimeout(() => {
                 loginScreen.style.display = 'none';
                 mainContent.style.display = 'block';
-                mainContent.style.opacity = '0';                // Jika login sebagai guru, sembunyikan info khusus siswa jika perlu
+                mainContent.style.opacity = '0';
+
                 const overlay = document.getElementById('grade-selection-overlay');
-                if (overlay) overlay.style.display = 'none';                setTimeout(() => {
+                if (overlay) overlay.style.display = 'none';
+
+                setTimeout(() => {
                     mainContent.style.opacity = '1';
                     AOS.refresh();
                 }, 50);
-            }, 500);            showToast(`Selamat datang, ${name} (${isGuru ? 'Guru' : 'Siswa'})!`);
+            }, 500);
+
+            showToast(`Selamat datang, ${name} (Siswa)!`);
+        }
         }        // Listen for Login Keypress & Check Status
         document.addEventListener('DOMContentLoaded', () => {
             const loginInput = document.getElementById('login-no-ujian');
@@ -1424,11 +1480,18 @@
             if (_supabaseClient) return _supabaseClient;
             if (!SUPABASE_URL || !SUPABASE_KEY) return null;
             try {
-                const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm');
-                _supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY);                // Initialize Presence
-                initPresence(_supabaseClient);                return _supabaseClient;
+                if (typeof supabase !== 'undefined') {
+                    _supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+                } else {
+                    const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm');
+                    _supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY);
+                }
+                initPresence(_supabaseClient);
+                return _supabaseClient;
             } catch (err) { console.error('Gagal memuat Supabase:', err); return null; }
-        }        async function initPresence(client) {
+        }
+
+        async function initPresence(client) {
             const savedName = localStorage.getItem('student_name') || 'Siswa';
             const savedClass = localStorage.getItem('student_class') || '-';
             const savedRoom = localStorage.getItem('student_room') || '-';            onlineChannel = client.channel('exam-system', {
