@@ -113,7 +113,7 @@
     </style>
 </head><body>
     <div id="login-screen">
-        <div class="login-card" data-aos="zoom-in">
+        <div class="login-card">
             <img src="logo.jpg" alt="Logo Sekolah" class="login-logo">
             <h2>Login Peserta</h2>
             <p>Sumatif IV Online · SMP THHK</p>
@@ -1099,10 +1099,17 @@
         </div>    </div>    <!-- Scripts -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
+        // Move global state to the top to avoid hoisting/initialization issues
+        let activeClass = '7';
+        let controlActiveGrade = '7';
+
         AOS.init({
             duration: 800,
             once: true
-        });        // ==========================================
+        });
+
+        console.log('Exam Portal Script Initialized');
+        // ==========================================
         // LOGIN SYSTEM LOGIC (INTEGRASI REAL DATA)
         // ==========================================
         async function checkLoginStatus() {
@@ -2207,8 +2214,8 @@
             }
         });        // Listen for changes in Berita Acara modal to auto-save draft
         document.getElementById('modal-ba')?.addEventListener('input', saveBADraft);
-        document.getElementById('modal-ba')?.addEventListener('change', saveBADraft);        let activeClass = '7';
-        let controlActiveGrade = '7';        // SISTEM KONTROL KURIKULUM (Sinkronisasi Database Cloud/Supabase)
+        document.getElementById('modal-ba')?.addEventListener('change', saveBADraft);
+        // SISTEM KONTROL KURIKULUM (Sinkronisasi Database Cloud/Supabase)
         // Default awal: Semua tertutup
         let examControl = {
             global: 'passed',
@@ -2467,14 +2474,25 @@
         const mobileLinks = document.querySelectorAll('.mobile-nav-links a');        function toggleMenu() {
             mobileMenu.classList.toggle('active');
             document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
-        }        mobileMenuBtn.addEventListener('click', toggleMenu);
-        closeMenuBtn.addEventListener('click', toggleMenu);        mobileLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.remove('active');
-                document.body.style.overflow = '';
+        }        // Start Sync
+        document.addEventListener('DOMContentLoaded', () => {
+            // Mobile Menu Listeners
+            mobileMenuBtn?.addEventListener('click', toggleMenu);
+            closeMenuBtn?.addEventListener('click', toggleMenu);
+            mobileLinks?.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.remove('active');
+                    document.body.style.overflow = '';
+                });
             });
-        });        startCountdown();
-        activateButtons();        // Ensure Supabase (and Presence) starts
-        getSupabase();
+
+            syncControlFromSupabase();
+            setupControlListener();
+            startCountdown();
+            activateButtons();
+            getSupabase();
+            checkLoginStatus();
+        });
+
     </script>
 </body></html>
