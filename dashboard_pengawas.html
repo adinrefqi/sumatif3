@@ -1,0 +1,1484 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Monitor Dashboard - SMP THHK</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --success: #10b981;
+            --bg-dark: #0f172a;
+            --card-bg: #1e293b;
+            --text-white: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-white);
+            min-height: 100vh;
+            padding: 2rem 1.5rem;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 1rem 0.8rem;
+            }
+        }
+
+        .container {
+            max-width: 950px;
+            /* Diperkecil agar lebih kompak */
+            margin: 0 auto;
+        }
+
+        /* HEADER & STATS */
+        .dashboard-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2.5rem;
+        }
+
+        .header-title h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header-title p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-top: 0.3rem;
+        }
+
+        .stats-badge {
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            padding: 1rem 2rem;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .stats-badge:hover {
+            transform: translateY(-5px);
+        }
+
+        .stats-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            color: white;
+        }
+
+        .stats-info .val {
+            font-size: 1.8rem;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .stats-info .lab {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 4px;
+        }
+
+        .room-filter-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 2rem;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+
+        .filter-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            color: var(--text-white);
+            padding: 8px 16px;
+            border-radius: 12px;
+            cursor: pointer;
+            white-space: nowrap;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+
+        /* CLASS STATS GRID */
+        .class-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .class-stat-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 1.2rem;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s;
+        }
+
+        .class-stat-card:hover {
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        .class-stat-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            color: var(--text-muted);
+        }
+
+        .class-stat-info b {
+            display: block;
+            font-size: 1.3rem;
+            line-height: 1;
+        }
+
+        .class-stat-info span {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+        }
+
+        /* AUDIO TOGGLE */
+        .audio-toggle {
+            cursor: pointer;
+            padding: 8px 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-muted);
+            transition: all 0.2s;
+        }
+
+        .audio-toggle.active {
+            color: var(--success);
+            border-color: var(--success);
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .class-stats-grid {
+                grid-template-columns: 1fr;
+                gap: 0.8rem;
+            }
+
+            .dashboard-header {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 1.5rem;
+            }
+
+            .stats-badge {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .header-title h1 {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* TABLE CONTAINER */
+        .table-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .table-toolbar {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .status-pill {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            color: var(--success);
+            padding: 6px 14px;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 100px;
+            font-weight: 500;
+        }
+
+        .pulse-dot {
+            width: 10px;
+            height: 10px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: pulseRealtime 1.5s infinite;
+        }
+
+        @keyframes pulseRealtime {
+            0% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+            }
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th {
+            padding: 1.2rem 2rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: rgba(255, 255, 255, 0.01);
+            border-bottom: 2px solid var(--border);
+        }
+
+        td {
+            padding: 1.2rem 2rem;
+            font-size: 1rem;
+            border-bottom: 1px solid var(--border);
+            transition: background 0.2s;
+        }
+
+        tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        tr:last-child td {
+            border: none;
+        }
+
+        /* MOBILE TABLE OPTIMIZATION */
+        @media (max-width: 600px) {
+            th {
+                padding: 1rem 0.8rem;
+                font-size: 0.75rem;
+            }
+
+            td {
+                padding: 1rem 0.8rem;
+                font-size: 0.9rem;
+            }
+
+            .hide-mobile {
+                display: none;
+            }
+
+            /* Make room and class badges smaller on mobile */
+            .class-tag,
+            .room-tag {
+                padding: 2px 8px;
+                font-size: 0.7rem;
+            }
+
+            .time-text {
+                font-size: 0.8rem;
+                padding: 2px 5px;
+            }
+        }
+
+        .no-badge {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .time-text {
+            color: #60a5fa;
+            font-family: monospace;
+            font-weight: 600;
+            background: rgba(96, 165, 250, 0.1);
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        .class-tag {
+            background: rgba(167, 139, 250, 0.15);
+            color: #c4b5fd;
+            padding: 4px 12px;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .room-tag {
+            background: rgba(245, 158, 11, 0.15);
+            color: #fbbf24;
+            padding: 4px 12px;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        /* EMPTY STATE */
+        #empty-state {
+            padding: 5rem 0;
+            text-align: center;
+        }
+
+        #empty-state i {
+            font-size: 4rem;
+            color: var(--text-muted);
+            padding-bottom: 1.5rem;
+            display: block;
+            opacity: 0.3;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .dashboard-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1.5rem;
+            }
+
+            .stats-badge {
+                width: 100%;
+                justify-content: center;
+            }
+
+            th,
+            td {
+                padding: 1rem;
+            }
+
+            .hide-mobile {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <!-- HEADER SECTION -->
+        <header class="dashboard-header">
+            <div class="header-title">
+                <h1>Dashboard Pengawas</h1>
+                <p>Monitor real-time progres penyelesaian ujian siswa.</p>
+                <div style="margin-top: 1rem; display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                    <div style="background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.2); padding: 0.4rem 0.8rem; border-radius: 10px; font-size: 0.75rem; color: #818cf8;">
+                        <b>S1:</b> 07.15-08.45
+                    </div>
+                    <div style="background: rgba(167, 139, 250, 0.1); border: 1px solid rgba(167, 139, 250, 0.2); padding: 0.4rem 0.8rem; border-radius: 10px; font-size: 0.75rem; color: #a78bfa;">
+                        <b>S2:</b> 09.15-10.45
+                    </div>
+                    <div style="background: rgba(251, 191, 36, 0.1); border: 1px solid rgba(251, 191, 36, 0.2); padding: 0.4rem 0.8rem; border-radius: 10px; font-size: 0.75rem; color: #fbbf24;">
+                        <b>S3:</b> 11.00-12.00
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                <!-- Siswa Online -->
+                <div class="stats-badge"
+                    style="background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.2);">
+                    <div class="stats-icon" style="background: var(--success);"><i class="fas fa-signal"></i></div>
+                    <div class="stats-info">
+                        <div class="val" id="total-online">0</div>
+                        <div class="lab">Siswa Online</div>
+                    </div>
+                    <div id="online-list-indicator" style="cursor: pointer; margin-left: 10px; color: var(--success);">
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+
+                <!-- Siswa Selesai -->
+                <div class="stats-badge">
+                    <div class="stats-icon"><i class="fas fa-user-graduate"></i></div>
+                    <div class="stats-info">
+                        <div class="val" id="total-finished">0</div>
+                        <div class="lab">Siswa Selesai</div>
+                    </div>
+                </div>
+
+                <!-- Siswa Belum Masuk -->
+                <div class="stats-badge" style="background: rgba(239, 68, 68, 0.1); border-color: rgba(239, 68, 68, 0.2);">
+                    <div class="stats-icon" style="background: #ef4444;"><i class="fas fa-user-clock"></i></div>
+                    <div class="stats-info">
+                        <div class="val" id="total-absent">0</div>
+                        <div class="lab">Belum Masuk</div>
+                    </div>
+                    <div id="absent-list-indicator" style="cursor: pointer; margin-left: 10px; color: #ef4444;">
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- ABSENT STUDENTS LIST (Expandable) -->
+        <div id="absent-students-panel"
+            style="display: none; background: var(--card-bg); border: 1px solid var(--border); border-radius: 18px; padding: 1.5rem; margin-bottom: 2rem; animation: slideDown 0.3s ease;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                <h3 style="font-size: 1.1rem; color: #ef4444;"><i class="fas fa-user-slash"></i> Siswa Belum Masuk</h3>
+                <span id="absent-date-label" style="font-size: 0.8rem; color: var(--text-muted);">Menampilkan siswa yang belum ada di daftar selesai</span>
+            </div>
+
+            <div id="absent-room-container"
+                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
+                <!-- Grouped by room sections will appear here -->
+            </div>
+        </div>
+
+
+        <!-- ONLINE STUDENTS LIST (Expandable) -->
+        <div id="online-students-panel"
+            style="display: none; background: var(--card-bg); border: 1px solid var(--border); border-radius: 18px; padding: 1.5rem; margin-bottom: 2rem; animation: slideDown 0.3s ease;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                <h3 style="font-size: 1.1rem; color: var(--success);"><i class="fas fa-users-viewfinder"></i> Pantauan
+                    Aktivitas Sekarang</h3>
+                <span style="font-size: 0.8rem; color: var(--text-muted);">Hanya menampilkan siswa yang sedang mengakses
+                    portal/ujian</span>
+            </div>
+
+            <div id="online-room-container"
+                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+                <!-- Grouped by room sections will appear here -->
+            </div>
+        </div>
+
+        <style>
+            @keyframes slideDown {
+                from {
+                    opacity: 0;
+                    transform: translateY(-10px);
+                }
+
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            .working-badge {
+                background: rgba(16, 185, 129, 0.1);
+                color: var(--success);
+                padding: 4px 10px;
+                border-radius: 6px;
+                font-size: 0.75rem;
+                font-weight: 600;
+                border: 1px solid rgba(16, 185, 129, 0.2);
+            }
+
+            .portal-badge {
+                background: rgba(99, 102, 241, 0.1);
+                color: var(--primary);
+                padding: 4px 10px;
+                border-radius: 6px;
+                font-size: 0.75rem;
+                font-weight: 600;
+                border: 1px solid rgba(99, 102, 241, 0.2);
+            }
+
+            .online-dot {
+                width: 8px;
+                height: 8px;
+                background: var(--success);
+                border-radius: 50%;
+                box-shadow: 0 0 5px var(--success);
+                display: inline-block;
+                margin-right: 5px;
+            }
+
+            .online-room-card {
+                background: rgba(255, 255, 255, 0.02);
+                border: 1px solid var(--border);
+                border-radius: 14px;
+                padding: 1rem;
+            }
+
+            .online-room-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding-bottom: 0.8rem;
+                margin-bottom: 0.8rem;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .online-room-title {
+                font-weight: 700;
+                font-size: 0.95rem;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+
+            .online-room-badge {
+                font-size: 0.7rem;
+                padding: 2px 8px;
+                border-radius: 20px;
+                background: rgba(16, 185, 129, 0.2);
+                color: var(--success);
+            }
+
+            .room-r1 {
+                border-left: 4px solid #1d4ed8;
+            }
+
+            .room-r2 {
+                border-left: 4px solid #7c3aed;
+            }
+
+            .room-r3 {
+                border-left: 4px solid #b45309;
+            }
+
+            .room-other {
+                border-left: 4px solid #64748b;
+            }
+
+            .absent-room-card {
+                background: rgba(239, 68, 68, 0.02);
+                border: 1px solid var(--border);
+                border-radius: 14px;
+                padding: 1rem;
+            }
+
+            .absent-name-item {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 8px 0;
+                border-bottom: 1px solid rgba(255,255,255,0.03);
+            }
+
+            .absent-name-item:last-child {
+                border-bottom: none;
+            }
+
+        </style>
+
+        <!-- CONTROL AREA: BROADCAST & RESET -->
+        <div class="control-grid" style="display: grid; grid-template-columns: 1.5fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+            <!-- BROADCAST SECTION -->
+            <div
+                style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(167, 139, 250, 0.1)); border: 1px solid rgba(99, 102, 241, 0.2); border-radius: 18px; padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem;">
+                <div
+                    style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                    <h3 style="font-size: 1rem; color: var(--primary);"><i class="fas fa-bullhorn"></i> Kirim Pesan
+                        (Broadcast)</h3>
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <label style="font-size: 0.8rem; color: var(--text-muted);">Target:</label>
+                        <select id="broadcast-target"
+                            style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 8px 15px; border-radius: 10px; color: white; outline: none; font-size: 0.85rem;"
+                            onchange="updateBroadcastPlaceholder()">
+                            <option value="ALL">📢 Semua Siswa</option>
+                            <option value="R1">🚪 Hanya Ruang 1</option>
+                            <option value="R2">🚪 Hanya Ruang 2</option>
+                            <option value="R3">🚪 Hanya Ruang 3</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <input type="text" id="broadcast-msg" placeholder="Ketik pesan untuk semua siswa..."
+                        style="flex: 1; min-width: 200px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 12px 15px; border-radius: 12px; color: white; outline: none; transition: border 0.3s;"
+                        onfocus="this.style.borderColor='var(--primary)'"
+                        onblur="this.style.borderColor='rgba(255,255,255,0.1)'">
+                    <button onclick="sendBroadcast()"
+                        style="background: var(--primary); border: none; padding: 0 25px; border-radius: 12px; color: white; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; transition: all 0.3s;">
+                        KIRIM <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+                <div id="broadcast-hint" style="font-size: 0.75rem; color: var(--text-muted);">
+                    <i class="fas fa-info-circle"></i> Pesan akan muncul sebagai notifikasi pop-up di layar target.
+                </div>
+            </div>
+
+            <!-- RESET SESSION SECTION -->
+            <div
+                style="background: rgba(239, 68, 68, 0.05); border: 1px solid rgba(239, 68, 68, 0.2); border-radius: 18px; padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem;">
+                <h3 style="font-size: 1rem; color: #ef4444;"><i class="fas fa-user-lock"></i> Reset Sesi (Mati Lampu/HP)</h3>
+                <div style="display: flex; gap: 10px;">
+                    <input type="text" id="reset-stu-id" placeholder="Nomor Ujian..."
+                        style="width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 12px 15px; border-radius: 12px; color: white; outline: none;">
+                    <button onclick="resetStudentSession()"
+                        style="background: #ef4444; border: none; padding: 0 20px; border-radius: 12px; color: white; font-weight: 600; cursor: pointer; white-space: nowrap; transition: all 0.3s;">
+                        RESET SESI <i class="fas fa-undo"></i>
+                    </button>
+                </div>
+                <div style="font-size: 0.75rem; color: var(--text-muted);">
+                    <i class="fas fa-exclamation-triangle"></i> Gunakan ini jika akun siswa 'nyangkut' di perangkat lain.
+                </div>
+            </div>
+        </div>
+
+        <style>
+            @media (max-width: 800px) {
+                .control-grid {
+                    grid-template-columns: 1fr !important;
+                }
+            }
+        </style>
+        <div
+            style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem;">
+            <div class="room-filter-container" style="margin-bottom: 0; flex-grow: 1;">
+                <button class="filter-btn active" onclick="setFilter('ALL')">Semua</button>
+                <button class="filter-btn" onclick="setFilter('R1')">R1</button>
+                <button class="filter-btn" onclick="setFilter('R2')">R2</button>
+                <button class="filter-btn" onclick="setFilter('R3')">R3</button>
+            </div>
+
+            <div style="display: flex; gap: 10px; align-items: center;">
+                <input type="date" id="date-filter" class="filter-btn" onchange="setDateFilter(this.value)"
+                    style="padding: 6px 12px;">
+                <button id="sound-toggle" class="audio-toggle" onclick="toggleSound()">
+                    <i class="fas fa-volume-mute"></i> <span>Suara Mati</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- CLASS STATS -->
+        <div class="class-stats-grid">
+            <div class="class-stat-card">
+                <div class="class-stat-icon"><i class="fas fa-graduation-cap"></i></div>
+                <div class="class-stat-info">
+                    <b id="count-7">0</b>
+                    <span>Kelas 7</span>
+                </div>
+            </div>
+            <div class="class-stat-card">
+                <div class="class-stat-icon"><i class="fas fa-graduation-cap"></i></div>
+                <div class="class-stat-info">
+                    <b id="count-8">0</b>
+                    <span>Kelas 8</span>
+                </div>
+            </div>
+            <div class="class-stat-card">
+                <div class="class-stat-icon"><i class="fas fa-graduation-cap"></i></div>
+                <div class="class-stat-info">
+                    <b id="count-9">0</b>
+                    <span>Kelas 9</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- DATA SECTION -->
+        <div class="table-card">
+            <div class="table-toolbar">
+                <div class="status-pill">
+                    <div class="pulse-dot"></div> Live Monitoring Aktif
+                </div>
+                <div style="font-size: 0.85rem; color: var(--text-muted);">
+                    Tabel diperbarui otomatis
+                </div>
+            </div>
+
+            <div style="overflow-x: auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 50px;" class="hide-mobile">No</th>
+                            <th style="width: 100px;">Tanggal</th>
+                            <th style="width: 80px;">Jam</th>
+                            <th>Nama Siswa</th>
+                            <th style="text-align: center; width: 70px;">Ruang</th>
+                            <th style="text-align: center; width: 70px;">Kelas</th>
+                        </tr>
+                    </thead>
+                    <tbody id="finished-list-body">
+                        <!-- Data will be injected here -->
+                    </tbody>
+                </table>
+
+                <div id="empty-state" style="display: none;">
+                    <i class="fas fa-inbox"></i>
+                    <p style="color: var(--text-muted);">Belum ada siswa yang menyelesaikan ujian.</p>
+                </div>
+            </div>
+        </div>
+
+        <footer style="margin-top: 2.5rem; text-align: center; color: var(--text-muted); font-size: 0.85rem;">
+            &copy; 2026 Admin SMP THHK - Dikelola melalui Sistem Real-Time Supabase
+        </footer>
+    </div>
+
+    <!-- NOTIFICATION SYSTEM (BONUS) -->
+    <div id="new-alert"
+        style="position: fixed; top: 2rem; right: 2rem; background: var(--success); color: white; padding: 1rem 1.5rem; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: none; z-index: 10000; animation: slideIn 0.5s ease;">
+        <i class="fas fa-bell"></i> Siswa baru saja selesai!
+    </div>
+    <style>
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+            }
+
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        /* Diagnostic Log Style */
+        #debug-log {
+            margin: 20px auto;
+            max-width: 900px;
+            background: #000;
+            color: #0f0;
+            padding: 15px;
+            font-family: monospace;
+            font-size: 12px;
+            border-radius: 8px;
+            border: 1px solid #333;
+            max-height: 150px;
+            overflow-y: auto;
+            display: block;
+            /* Selalu tampilkan untuk saat ini agar mudah diagnosa */
+        }
+    </style>
+    <!-- Diagnostic Log Area -->
+    <div id="debug-log">
+        <div>[SYSTEM] Menunggu inisialisasi...</div>
+    </div>
+    <!-- Toast System -->
+    <div id="toast-wrapper" style="position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%); z-index: 20000; display: none;">
+        <div id="toast-msg" style="background: #10b981; color: white; padding: 12px 25px; border-radius: 100px; font-weight: 600; box-shadow: 0 10px 25px rgba(0,0,0,0.4); display: flex; align-items: center; gap: 10px;">
+            <i class="fas fa-check-circle"></i> <span id="toast-text">Berhasil!</span>
+        </div>
+    </div>
+
+    <!-- Load Student Data (Static Fallback) -->
+    <script src="data_siswa.js"></script>
+    <!-- Load Supabase from CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script type="module">
+        // ======= DIAGNOSTIC HELPER =======
+        const logArea = document.getElementById('debug-log');
+        function logDebug(msg, type = 'INFO') {
+            if (!logArea) return;
+            const div = document.createElement('div');
+            const time = new Date().toLocaleTimeString();
+            div.textContent = `[${time}] [${type}] ${msg}`;
+            if (type === 'ERROR') div.style.color = '#ff4444';
+            if (type === 'WARN') div.style.color = '#ffcc00';
+            logArea.appendChild(div);
+            logArea.scrollTop = logArea.scrollHeight;
+        }
+
+        // ======= CONFIGURATION =======
+        const SUPABASE_URL = 'https://jbmhfwfckmneivztsizc.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable_lkdD9wXKswBi-r0PegxHhQ_6QTnitLL';
+
+        let supabase = null;
+        let studentsData = [];
+        let studentMasterList = [];
+        let currentFilter = 'ALL';
+        
+        // Initialize selectedDate with Local Date immediately to avoid race conditions
+        const nowInit = new Date();
+        const yInit = nowInit.getFullYear();
+        const mInit = String(nowInit.getMonth() + 1).padStart(2, '0');
+        const dInit = String(nowInit.getDate()).padStart(2, '0');
+        let selectedDate = `${yInit}-${mInit}-${dInit}`; 
+
+        let isSoundEnabled = false;
+
+        async function loadStudentMasterList() {
+            try {
+                logDebug('Memuat master data siswa...');
+                
+                // Coba ambil dari window.STUDENT_MASTER_DATA dulu (Statik)
+                if (window.STUDENT_MASTER_DATA) {
+                    studentMasterList = window.STUDENT_MASTER_DATA;
+                    logDebug(`Master data dimuat via Script: ${studentMasterList.length} siswa.`);
+                } else {
+                    // Fallback ke Fetch jika skrip gagal/tidak ada
+                    logDebug('Memuat master data via Fetch JSON...');
+                    const resp = await fetch('data_siswa.json');
+                    if (resp.ok) {
+                        studentMasterList = await resp.json();
+                        logDebug(`Master data dimuat via Fetch: ${studentMasterList.length} siswa.`);
+                    } else {
+                        // ULTIMATE FALLBACK: Ambil dari Database Supabase
+                        logDebug('Mencoba memuat master data dari Cloud Database...', 'WARN');
+                        const { data, error } = await supabase.from('master_siswa').select('*');
+                        if (!error && data && data.length > 0) {
+                            studentMasterList = data;
+                            logDebug(`Master data dimuat via Cloud: ${studentMasterList.length} siswa.`);
+                        } else {
+                            throw new Error('Semua metode pemuatan master data gagal.');
+                        }
+                    }
+                }
+                
+                // Debug details for Grade 9
+                const k9 = studentMasterList.filter(s => String(s.grade) === '9').length;
+                logDebug(`Detail Master: Kelas 9 (${k9}), Kelas 8 (${studentMasterList.filter(s => String(s.grade) === '8').length}), Kelas 7 (${studentMasterList.filter(s => String(s.grade) === '7').length})`);
+                
+                updateStats();
+            } catch (e) {
+                logDebug('Gagal memuat master data: ' + e.message, 'ERROR');
+                console.error('Gagal memuat master data:', e);
+            }
+        }
+        // Pastikan loadStudentMasterList dipanggil stlh Supabase siap jika perlu database
+
+
+        // Sound effect (Notification)
+        const notificationSound = new Audio('https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3');
+
+        window.toggleSound = function () {
+            isSoundEnabled = !isSoundEnabled;
+            const btn = document.getElementById('sound-toggle');
+            if (isSoundEnabled) {
+                btn.classList.add('active');
+                btn.innerHTML = '<i class="fas fa-volume-up"></i> <span>Suara Aktif</span>';
+                // Play tiny silent sound to unlock audio on mobile
+                notificationSound.play().catch(() => { });
+                notificationSound.pause();
+                notificationSound.currentTime = 0;
+            } else {
+                btn.classList.remove('active');
+                btn.innerHTML = '<i class="fas fa-volume-mute"></i> <span>Suara Mati</span>';
+            }
+        }
+
+        async function init() {
+            logDebug('Memulai Aplikasi (ESM Mode)...');
+
+            // Set default date to today
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const day = String(today.getDate()).padStart(2, '0');
+            selectedDate = `${year}-${month}-${day}`;
+
+            const dateInput = document.getElementById('date-filter');
+            if (dateInput) dateInput.value = selectedDate;
+
+            try {
+                logDebug('Memuat library Supabase...');
+                const { createClient } = await import('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm');
+
+                supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+                logDebug('Library termuat, koneksi dibuka.');
+
+                // 1. Ambil data awal
+                await loadStudentMasterList(); // Pindahkan ke sini agar bisa akses supabase
+                await fetchInitialData();
+
+                // 2. Aktifkan Realtime & Presence
+                logDebug('Mencoba berlangganan Realtime & Presence...');
+
+                window.mainChannel = supabase.channel('exam-system')
+                    .on('presence', { event: 'sync' }, () => {
+                        updateOnlineStatus(window.mainChannel.presenceState());
+                    })
+                    .subscribe(async (status) => {
+                        logDebug('Status Channel: ' + status);
+                        if (status === 'SUBSCRIBED') {
+                            // Ready to broadcast and receive presence
+                        }
+                    });
+
+                // Laporan Selesai Realtime
+                const reportChannel = supabase.channel('monitor-selesai')
+                    .on('postgres_changes',
+                        { event: 'INSERT', schema: 'public', table: 'laporan_selesai' },
+                        payload => {
+                            logDebug('SISWA BARU MASUK: ' + payload.new.nama_siswa + ' (' + (payload.new.ruangan || '-') + ')');
+                            handleNewInsert(payload.new);
+                        }
+                    )
+                    .subscribe((status) => {
+                        logDebug('Status Realtime: ' + status);
+                        const pill = document.querySelector('.status-pill');
+                        if (status === 'SUBSCRIBED') {
+                            if (pill) pill.innerHTML = '<div class="pulse-dot"></div> Live Monitoring Berhasil';
+                        } else {
+                            if (pill) pill.innerHTML = '<div class="pulse-dot" style="background:#ef4444;"></div> ' + status;
+                        }
+                    });
+
+            } catch (err) {
+                logDebug('ERROR KRITIS: ' + err.message, 'ERROR');
+                const pill = document.querySelector('.status-pill');
+                if (pill) pill.innerHTML = '❌ Koneksi Gagal';
+            }
+        }
+
+        async function fetchInitialData() {
+            logDebug('Mengambil data dari database...');
+            const { data, error } = await supabase
+                .from('laporan_selesai')
+                .select('*')
+                .order('created_at', { ascending: false });
+
+            if (error) {
+                logDebug('Gagal mengambil data: ' + error.message, 'ERROR');
+                return;
+            }
+
+            logDebug('Berhasil mengambil ' + (data ? data.length : 0) + ' data siswa.');
+            studentsData = data || [];
+            updateStats();
+            renderTable();
+        }
+
+        function handleNewInsert(newRecord) {
+            const alertBox = document.getElementById('new-alert');
+            if (alertBox) {
+                alertBox.style.display = 'block';
+                setTimeout(() => alertBox.style.display = 'none', 3500);
+            }
+
+            // Play sound if enabled
+            if (isSoundEnabled) {
+                notificationSound.play().catch(e => console.log('Audio play blocked:', e));
+            }
+
+            studentsData.unshift(newRecord);
+            updateStats();
+            renderTable();
+        }
+
+        function updateStats() {
+            const filteredData = getFilteredData();
+            const counts = { '7': 0, '8': 0, '9': 0 };
+            const totals = { '7': 0, '8': 0, '9': 0 };
+
+            // Hitung total dari master data
+            studentMasterList.forEach(s => {
+                const k = String(s.grade);
+                if (totals[k] !== undefined) totals[k]++;
+            });
+
+            filteredData.forEach(s => {
+                if (counts[s.kelas] !== undefined) counts[s.kelas]++;
+            });
+
+            const displayCount = (grade) => {
+                const current = counts[grade];
+                const total = totals[grade];
+                return total > 0 ? `${current}/${total}` : current;
+            }
+
+            document.getElementById('count-7').textContent = displayCount('7');
+            document.getElementById('count-8').textContent = displayCount('8');
+            document.getElementById('count-9').textContent = displayCount('9');
+
+            const totalEl = document.getElementById('total-finished');
+            if (totalEl) totalEl.textContent = filteredData.length;
+
+            // Updated for Absent Students
+            updateAbsentList();
+        }
+
+        function updateAbsentList() {
+            if (!studentMasterList || studentMasterList.length === 0) {
+                logDebug('Penundaan updateAbsentList: Master data belum dimuat.', 'WARN');
+                return;
+            }
+
+            const tableData = getFilteredData(); 
+            const finishedNames = new Set(tableData.map(s => (s.nama_siswa || '').trim().toLowerCase()));
+            const onlineNames = new Set();
+            if (window.currentOnlineNames) {
+                window.currentOnlineNames.forEach(name => onlineNames.add((name || '').trim().toLowerCase()));
+            }
+            
+            // Check if selected date matches local today date
+            const d = new Date();
+            const todayStr = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+            const isToday = selectedDate === todayStr;
+
+            // Diagnostic Log for calculations
+            logDebug(`[DIAGNOSA] Filter: ${currentFilter}, Tanggal: ${selectedDate}, IsToday: ${isToday}`, 'INFO');
+            logDebug(`[DIAGNOSA] Master: ${studentMasterList.length}, Selesai: ${finishedNames.size}, Online: ${onlineNames.size}`, 'INFO');
+
+            let absentStudents = studentMasterList.filter(s => {
+                const roomTag = 'R' + s.room;
+                if (currentFilter !== 'ALL' && roomTag !== currentFilter) return false;
+                
+                const normalizedName = (s.nama || '').trim().toLowerCase();
+                
+                // Jika sudah ada di daftar selesai, dia TIDAK absen
+                if (finishedNames.has(normalizedName)) return false;
+                
+                // Jika sedang online hari ini, dia TIDAK absen
+                if (isToday && onlineNames.has(normalizedName)) return false;
+                
+                return true;
+            });
+
+            logDebug(`[DIAGNOSA] Ditemukan ${absentStudents.length} siswa absen setelah filter.`, 'INFO');
+
+            const totalAbsentEl = document.getElementById('total-absent');
+            if (totalAbsentEl) totalAbsentEl.textContent = absentStudents.length;
+
+            const container = document.getElementById('absent-room-container');
+            if (!container) return;
+
+            if (absentStudents.length === 0) {
+                const reason = studentMasterList.length === 0 ? 'Master data kosong.' : 
+                              isToday ? 'Semua siswa sudah masuk atau selesai.' : 
+                              'Tidak ada data absen untuk tanggal ini.';
+                container.innerHTML = `<div style="grid-column: 1/-1; padding: 2.5rem; text-align: center; color: var(--text-muted); opacity: 0.6;">
+                    ${reason}
+                </div>`;
+                return;
+            }
+
+            // Group by Room
+            const grouped = { 'R1': [], 'R2': [], 'R3': [] };
+            absentStudents.forEach(s => {
+                const r = 'R' + s.room;
+                if (grouped[r]) grouped[r].push(s);
+            });
+
+            let html = '';
+            ['R1', 'R2', 'R3'].forEach(roomKey => {
+                const list = grouped[roomKey];
+                if (currentFilter !== 'ALL' && roomKey !== currentFilter) return;
+                
+                html += `
+                    <div class="absent-room-card room-${roomKey.toLowerCase()}">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 1px solid var(--border); padding-bottom: 8px;">
+                            <span style="font-weight: 700; font-size: 0.9rem;">Ruang ${roomKey}</span>
+                            <span style="font-size: 0.75rem; color: #ef4444; background: rgba(239, 68, 68, 0.1); padding: 2px 8px; border-radius: 10px;">${list.length} Absen</span>
+                        </div>
+                        <div style="max-height: 250px; overflow-y: auto;">
+                            ${list.length === 0 ? '<div style="font-size:0.8rem; color:var(--text-muted); padding:10px;">Lengkap</div>' : list.map(s => `
+                                <div class="absent-name-item">
+                                    <div style="flex: 1;">
+                                        <div style="font-weight: 500; font-size: 0.85rem; color: #fff; line-height: 1.2;">${s.nama}</div>
+                                        <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 2px;">Kelas ${s.grade}</div>
+                                    </div>
+                                    <i class="fas fa-user-slash" style="color: #ef4444; font-size: 0.8rem; opacity: 0.5;"></i>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+
+            const dateLabel = document.getElementById('absent-date-label');
+            if (dateLabel && selectedDate) {
+                const formattedDate = new Date(selectedDate).toLocaleDateString('id-ID', { day: 'numeric', month: 'long' });
+                dateLabel.textContent = `Siswa yang belum masuk pada tanggal ${formattedDate}`;
+            }
+        }
+
+
+
+
+        function updateOnlineStatus(presenceState) {
+            const onlineList = [];
+            for (const id in presenceState) {
+                presenceState[id].forEach(p => {
+                    onlineList.push(p);
+                });
+            }
+
+            // Update Global Online Names for Absent Filtering
+            window.currentOnlineNames = new Set(onlineList.map(s => s.nama));
+
+            // Update Total Count
+            const totalOnlineEl = document.getElementById('total-online');
+            if (totalOnlineEl) totalOnlineEl.textContent = onlineList.length;
+
+            // Group by Room
+            const grouped = { 'R1': [], 'R2': [], 'R3': [], 'Lainnya': [] };
+            onlineList.forEach(s => {
+                const r = (s.ruang || '').toUpperCase();
+                if (grouped[r]) grouped[r].push(s);
+                else grouped['Lainnya'].push(s);
+            });
+
+            // Refresh Absent List whenever online status changes
+            updateAbsentList();
+
+            // Render detailed list by groups
+            const container = document.getElementById('online-room-container');
+            if (container) {
+                if (onlineList.length === 0) {
+                    container.innerHTML = '<div style="grid-column: 1/-1; padding: 2.5rem; text-align: center; color: var(--text-muted); opacity: 0.6;">Belum ada siswa terpantau aktif.</div>';
+                    return;
+                }
+
+                let html = '';
+                const roomOrder = ['R1', 'R2', 'R3', 'Lainnya'];
+
+                roomOrder.forEach(roomKey => {
+                    const list = grouped[roomKey];
+                    if (list.length === 0 && roomKey === 'Lainnya') return;
+
+                    const roomClass = roomKey.toLowerCase();
+                    html += `
+                        <div class="online-room-card room-${roomClass}">
+                            <div class="online-room-header">
+                                <div class="online-room-title">
+                                    <i class="fas fa-door-open"></i> Ruang ${roomKey}
+                                </div>
+                                <div class="online-room-badge">${list.length} Online</div>
+                            </div>
+                            <table style="width: 100%; font-size: 0.85rem; border-collapse: collapse;">
+                                <tbody>
+                                    ${list.length === 0 ? '<tr><td style="color:var(--text-muted); padding:10px; font-style:italic;">Kosong</td></tr>' : list.map(s => {
+                        const statusClass = s.status === 'Sedang Mengerjakan' ? 'working-badge' : 'portal-badge';
+                        const lastActive = s.online_at ? new Date(s.online_at).toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' }) : '-';
+                        return `
+                                            <tr style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                                <td style="padding: 10px 5px;">
+                                                    <div style="font-weight: 600; color:#fff;">${s.nama || 'Siswa'}</div>
+                                                    <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 3px;">
+                                                        Kl ${s.kelas || '-'} · ${lastActive}
+                                                    </div>
+                                                </td>
+                                                <td style="padding: 10px 5px; text-align: right;">
+                                                    <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 5px;">
+                                                        <span class="${statusClass}" style="font-size: 0.65rem; padding: 2px 6px;">
+                                                            ${s.status === 'Sedang Mengerjakan' ? 'Aktif' : 'Portal'}
+                                                        </span>
+                                                        <button onclick="setDirectMessage('${s.nama}')" style="background: rgba(99, 102, 241, 0.2); border: none; color: var(--primary); font-size: 0.7rem; padding: 2px 6px; border-radius: 4px; cursor: pointer;" title="Kirim pesan pribadi">
+                                                            <i class="fas fa-comment-dots"></i> Pesan
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        `;
+                    }).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    `;
+                });
+                container.innerHTML = html;
+            }
+        }
+
+
+        // Toggle Panels
+        window.addEventListener('load', () => {
+            const onlineIndicator = document.getElementById('online-list-indicator');
+            const onlinePanel = document.getElementById('online-students-panel');
+            if (onlineIndicator && onlinePanel) {
+                onlineIndicator.addEventListener('click', () => {
+                    const isHidden = onlinePanel.style.display === 'none';
+                    onlinePanel.style.display = isHidden ? 'block' : 'none';
+                    onlineIndicator.style.transform = isHidden ? 'rotate(180deg)' : 'rotate(0deg)';
+                });
+            }
+
+            const absentIndicator = document.getElementById('absent-list-indicator');
+            const absentPanel = document.getElementById('absent-students-panel');
+            if (absentIndicator && absentPanel) {
+                absentIndicator.addEventListener('click', () => {
+                    const isHidden = absentPanel.style.display === 'none';
+                    absentPanel.style.display = isHidden ? 'block' : 'none';
+                    absentIndicator.style.transform = isHidden ? 'rotate(180deg)' : 'rotate(0deg)';
+                });
+            }
+        });
+
+
+        // BROADCAST LOGIC
+        window.updateBroadcastPlaceholder = function () {
+            const target = document.getElementById('broadcast-target').value;
+            const input = document.getElementById('broadcast-msg');
+            const hint = document.getElementById('broadcast-hint');
+
+            if (target === 'ALL') {
+                input.placeholder = "Ketik pesan untuk semua siswa...";
+                hint.innerHTML = '<i class="fas fa-info-circle"></i> Pesan akan muncul di layar SEMUA siswa.';
+            } else if (target.startsWith('R')) {
+                input.placeholder = `Ketik pesan khusus Ruang ${target}...`;
+                hint.innerHTML = `<i class="fas fa-info-circle"></i> Pesan hanya akan muncul untuk siswa di Ruang ${target}.`;
+            } else {
+                input.placeholder = `Ketik pesan pribadi untuk ${target}...`;
+                hint.innerHTML = `<i class="fas fa-info-circle"></i> Pesan hanya akan muncul untuk ${target}.`;
+            }
+        }
+
+        window.setDirectMessage = function (studentName) {
+            const targetSelect = document.getElementById('broadcast-target');
+            // Remove previous temporary student option if exists
+            Array.from(targetSelect.options).forEach(opt => {
+                if (opt.getAttribute('data-temp')) opt.remove();
+            });
+
+            // Add the specific student to the select
+            const opt = document.createElement('option');
+            opt.value = studentName;
+            opt.text = `👤 Siswa: ${studentName}`;
+            opt.selected = true;
+            opt.setAttribute('data-temp', 'true');
+            targetSelect.add(opt);
+
+            updateBroadcastPlaceholder();
+            document.getElementById('broadcast-msg').focus();
+
+            // Scroll to broadcast section
+            document.getElementById('broadcast-msg').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        window.sendBroadcast = async function () {
+            // ... (sendBroadcast logic) ...
+            const input = document.getElementById('broadcast-msg');
+            const targetSelect = document.getElementById('broadcast-target');
+            const target = targetSelect.value;
+            const msg = input.value.trim();
+
+            if (!msg) return;
+
+            if (!window.mainChannel) {
+                alert('Koneksi sedang bermasalah. Silakan refresh halaman.');
+                return;
+            }
+
+            try {
+                const resp = await window.mainChannel.send({
+                    type: 'broadcast',
+                    event: 'announcement',
+                    payload: {
+                        message: msg,
+                        target: target,
+                        sender: 'Pengawas Pusat',
+                        time: new Date().toLocaleTimeString('id-ID')
+                    }
+                });
+
+                if (resp === 'ok') {
+                    showToast('✅ Pesan dikirim ke ' + (target === 'ALL' ? 'Semua' : target));
+                    input.value = '';
+
+                    if (targetSelect.options[targetSelect.selectedIndex].getAttribute('data-temp')) {
+                        targetSelect.value = 'ALL';
+                        targetSelect.remove(targetSelect.selectedIndex);
+                        updateBroadcastPlaceholder();
+                    }
+                } else {
+                    throw new Error(resp);
+                }
+            } catch (err) {
+                alert('Gagal mengirim broadcast: ' + err.message);
+            }
+        }
+
+        // RESET SESSION LOGIC
+        window.resetStudentSession = async function () {
+            const idInput = document.getElementById('reset-stu-id');
+            const stuId = idInput.value.trim();
+            const btn = event.currentTarget;
+
+            if (!stuId) {
+                alert("Masukkan Nomor Ujian siswa!");
+                return;
+            }
+
+            if (!confirm(`Yakin ingin mereset sesi ID: ${stuId}?`)) return;
+
+            btn.disabled = true;
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+
+            try {
+                const { error } = await supabase
+                    .from('master_siswa')
+                    .update({ is_login: false })
+                    .eq('id', stuId);
+
+                if (error) throw error;
+
+                showToast("✅ Sesi berhasil direset!");
+                idInput.value = '';
+            } catch (err) {
+                console.error(err);
+                alert("Gagal reset sesi: " + err.message);
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = originalHTML;
+            }
+        }
+
+        // TOAST SYSTEM
+        window.showToast = function (text, isError = false) {
+            const wrapper = document.getElementById('toast-wrapper');
+            const msg = document.getElementById('toast-msg');
+            const textEl = document.getElementById('toast-text');
+
+            if (!wrapper || !msg) return;
+
+            textEl.textContent = text;
+            msg.style.background = isError ? '#ef4444' : '#10b981';
+            
+            wrapper.style.display = 'block';
+            wrapper.style.animation = 'fadeInUp 0.3s forwards';
+            
+            setTimeout(() => {
+                wrapper.style.display = 'none';
+            }, 3500);
+        }
+
+        function getFilteredData() {
+            // 1. Filter Ruangan
+            let filtered = currentFilter === 'ALL'
+                ? studentsData
+                : studentsData.filter(s => s.ruangan === currentFilter);
+
+            // 2. Filter Tanggal
+            if (selectedDate) {
+                filtered = filtered.filter(item => {
+                    // Convert created_at to local date YYYY-MM-DD
+                    const d = new Date(item.created_at);
+                    const localDate = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+                    return localDate === selectedDate;
+                });
+            }
+            return filtered;
+        }
+
+        window.setFilter = function (filter) {
+            currentFilter = filter;
+            updateActiveFilterUI();
+            updateStats(); // Pastikan statistik ikut terupdate
+            renderTable();
+        }
+
+        window.setDateFilter = function (dateStr) {
+            selectedDate = dateStr;
+            updateStats(); // Pastikan statistik ikut terupdate
+            renderTable();
+        }
+
+        function updateActiveFilterUI() {
+            document.querySelectorAll('.room-filter-container .filter-btn').forEach(btn => {
+                if (btn.getAttribute('onclick').includes(`'${currentFilter}'`)) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+        }
+
+        function formatDate(isoString) {
+            if (!isoString) return '-';
+            const date = new Date(isoString);
+            return date.toLocaleDateString('id-ID', { day: '2-digit', month: '2-digit' });
+        }
+
+        function renderTable() {
+            const tbody = document.getElementById('finished-list-body');
+            const emptyEl = document.getElementById('empty-state');
+
+            const filteredData = getFilteredData();
+
+            if (!tbody) return;
+
+            if (filteredData.length === 0) {
+                tbody.innerHTML = '';
+                if (emptyEl) emptyEl.style.display = 'block';
+                return;
+            }
+
+            if (emptyEl) emptyEl.style.display = 'none';
+            tbody.innerHTML = '';
+
+            filteredData.forEach((item, index) => {
+                const tr = document.createElement('tr');
+                const displayNumber = filteredData.length - index;
+                const tglDisplay = formatDate(item.created_at);
+
+                tr.innerHTML = `
+                    <td class="hide-mobile"><span class="no-badge">${displayNumber}</span></td>
+                    <td><span style="font-size: 0.85rem; color: #94a3b8;">${tglDisplay}</span></td>
+                    <td><span class="time-text">${item.jam_selesai || '-'}</span></td>
+                    <td><b style="color: #fff; display: block; font-size: 0.95rem;">${item.nama_siswa}</b></td>
+                    <td style="text-align: center;"><span class="room-tag">${item.ruangan || '-'}</span></td>
+                    <td style="text-align: center;"><span class="class-tag">Kl ${item.kelas}</span></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Jalankan Segera
+        init();
+    </script>
+</body>
+
+</html>
