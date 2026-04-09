@@ -2180,7 +2180,8 @@
                         tbody.innerHTML = '<tr><td colspan="6" style="padding: 2rem; text-align: center; opacity:0.6;">Belum ada data terekam.</td></tr>';
                         return;
                     }                // Agregasi Data di Sisi Client
-                const summary = {}; // { "Mapel_Tanggal": { mapel, tgl, R1:0, R2:0, R3:0 } }                data.forEach(item => {
+                const summary = {}; 
+                data.forEach(item => {
                 const key = `${item.mata_pelajaran}_${item.tanggal}`;
                 if (!summary[key]) {
                     summary[key] = { mapel: item.mata_pelajaran, tgl: item.tanggal, R1: 0, R2: 0, R3: 0 };
